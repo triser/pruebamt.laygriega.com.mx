@@ -1,0 +1,101 @@
+/*Mediaqueries para dispositivos mobiles*/
+@media (max-width: 480px) { 
+    h1{font-size: 23px;}
+    
+    p{
+       font-size: 12px; 
+    } 
+    
+    .logos_GnuLinux{
+        width: 150px;
+    }
+    
+    h3{
+        font-size: 19px;
+    }
+    
+     h4{
+        font-size: 16px;
+    }
+    
+     h5{
+        font-size: 14px;
+    }
+    
+    a{
+       font-size: 12px; 
+    }
+    
+    .label{
+       font-size: 10px;  
+    }
+    
+    form{
+        font-size: 12px;
+    }
+    
+    .panel{
+        font-size: 13px;
+    }
+    div[data-toggle="buttons"] label {
+display: inline-block;
+padding: 6px 12px;
+margin-bottom: 0;
+font-size: 12px;
+font-weight: normal;
+line-height: 2em;
+text-align: left;
+white-space: nowrap;
+vertical-align: top;
+cursor: pointer;
+background-color: none;
+border: 0px solid 
+#000000;
+border-radius: 3px;
+color:#000000;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+-o-user-select: none;
+user-select: none;
+}
+
+}
+
+/*Mediaqueries para tablets*/
+@media (min-width: 481px) and (max-width: 768px) {
+     h1{font-size: 27px}
+       .dropdown-menu li a {
+  color: #f39c12 !important;
+}
+.dropdown-menu li a:hover, .dropdown-menu li.active a {
+      color: #e74c3c !important;
+      background-color: #58d68d !important;
+}
+     
+}
+
+
+@media (max-width: 600px) {
+   .dropdown-menu li a {
+  color: #f39c12 !important;
+}
+.dropdown-menu li a:hover, .dropdown-menu li.active a {
+      color: #e74c3c !important;
+      background-color: #58d68d !important;
+}
+	footer .footer-left,
+	footer .footer-right{
+		text-align: center;
+	}
+
+	footer .footer-right{
+		float: none;
+		margin: 0 auto 20px;
+	}
+
+	footer .footer-left p.footer-links{
+		line-height: 1.8;
+	}
+}
+
