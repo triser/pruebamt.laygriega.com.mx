@@ -1,26 +1,68 @@
 <link rel="shortcut icon" href="./img/logo2.ico" />
-<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<link rel="stylesheet" href="./css/bootstrap.css"> 
-<link rel="stylesheet" href="./css/style.css">  
-<link rel="stylesheet" href="./css/animate.css">
-<link rel="stylesheet" href="./css/MediaQueries.css">
-<link rel="stylesheet" href="./css/font-awesome.min.css">
-<link rel="stylesheet" href="./css/profile.css">
-<link rel="stylesheet" rel="stylesheet" href="./css/ui-lightness/jquery-ui-1.10.4.custom.min.css"> 
-<link rel="stylesheet" href="./css/lightbox.css">
-<script src="./js/jquery-2.1.0.min.js"></script>
-<script src="./js/jquery-ui-1.10.4.custom.min.js"></script>
-<script src="./js/moment.min.js"></script>
-<script src="./js/bootstrap-datetimepicker.min.js"></script>
-<script src="./js/bootstrap-datetimepicker.es.js"></script>
-<link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet"> 
- <!-- Latest compiled and minified CSS -->
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+ <!-- estilos ING. JESUS VILLATORO -->
+  <link rel="stylesheet" href="./css/estilo-boton-table.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />
+ <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <!-- Morris chart -->
+  <link rel="stylesheet" href="bower_components/morris.js/morris.css">
+  <!-- jvectormap -->
+  <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
+  <!-- Date Picker -->
+  <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <!-- bootstrap lightbox -->
+ <link rel="stylesheet" href="lightbox/css/lightbox.min.css">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+ <script src="lightbox/js/lightbox-plus-jquery.min.js"></script>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
 
-<link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
-<link rel="canonical" href="https://codepen.io/wolfgang1983/pen/yNJYYq?q=note&limit=all&type=type-pens" />
-<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.6.6/summernote.min.css'>
- <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
+<!-- ChartJS -->
+<script src="bower_components/chart.js/Chart.js"></script>
+<!-- FastClick -->
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<!-- page script -->
+
+ <style>
+    .example-modal .modal {
+      position: relative;
+      top: auto;
+      bottom: auto;
+      right: auto;
+      left: auto;
+      display: block;
+      z-index: 1;
+    }
+
+    .example-modal .modal {
+      background: transparent !important;
+    }
+  </style>

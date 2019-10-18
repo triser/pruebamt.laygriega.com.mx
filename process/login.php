@@ -1,34 +1,34 @@
 <?php 
-    $nombre=MysqlQuery::RequestPost("nombre_login");
-    $clave=md5(MysqlQuery::RequestPost("contrasena_login"));
-    $radio=MysqlQuery::RequestPost('optionsRadios');
-    if($nombre!="" && $clave!="" && $radio!=""){
-        if($radio=="admin"){
-            $sql=Mysql::consulta("SELECT * FROM administrador WHERE nombre_admin= '$nombre' AND clave='$clave'");
+    $email=MysqlQuery::RequestPost("email_login");
+    $clave=md5(MysqlQuery::RequestPost("pass_login"));
+    if($email!="" && $clave!=""){
+            $sql=Mysql::consulta("SELECT U.idusuario,U.email_usuario, U.usuario,G.grado,EL.nombre,EL.apellidos,U.clave,U.foto_perfil, U.rol, U.estatus,U.fecha_alta_sis
+FROM usuario  AS U INNER JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idlaboral INNER JOIN grado_estudio AS G ON EL.id_grado = G.id_grado WHERE email_usuario= '$email' AND clave='$clave' AND rol='2' AND estatus ='1'");
             if(mysqli_num_rows($sql)>=1){
                 $reg=mysqli_fetch_array($sql, MYSQLI_ASSOC);
-                $_SESSION['nombre']=$reg['nombre_admin'];
-                $_SESSION['id']=$reg['id_admin'];
-                $_SESSION['nombre_completo']=$reg['nombre_completo'];
-                $_SESSION['email']=$reg['email_admin'];
+               $_SESSION['active'] = true;
+                $_SESSION['id']=$reg['idusuario'];
+                $_SESSION['email']=$reg['email_usuario'];
                 $_SESSION['clave']=$clave;
-                $_SESSION['tipo']="admin";
-                $_SESSION['nombreadmin']=$reg['nombre_admin'];
-                     
+                $_SESSION['rol']="2";
+                $_SESSION['usuario']=$reg['usuario'];
+                $_SESSION['foto_perfil']=$reg['foto_perfil'];
+                $_SESSION['fecha_alta']=$reg['fecha_alta_sis'];
+                $_SESSION['nombreadmin']=$reg['nombre'];
+                
+             if($_SESSION['rol']="2"){   
            echo '
                 <div class="alert alert-info alert-dismissible fade in col-sm-3 animated bounceInDown" role="alert" style="position:fixed; top:70px; right:10px; z-index:10;"> 
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="text-center"> Te damos la más cordial Bienvenida: ' . $nombre . ' </h4>
+                    <h4 class="text-center"> Te damos la más cordial Bienvenida: ' . $email . ' </h4>
                     <p class="text-center">
                         ¡¡ Inicio de Session Exitoso !!
                     </p>
                 </div>
             ';
-              
   echo '<script>
-  location.href="admin.php?view=ticketadmin";
-  </script>';       
-                
+  location.href="admin.php?view=administrador";
+  </script>' ;   
             }else{
                echo '
                     <div class="alert alert-danger alert-dismissible fade in col-sm-3 animated bounceInDown" role="alert" style="position:fixed; top:70px; right:10px; z-index:10;"> 
@@ -41,31 +41,25 @@
                 '; 
             }
         
-        }elseif($radio=="user"){
-            $sql=Mysql::consulta("SELECT * FROM cliente WHERE email_cliente= '$nombre' AND clave='$clave'");
-            if(mysqli_num_rows($sql)>=1){   
+        }       
+           elseif($_SESSION['rol']="1") {   
+            $sql=Mysql::consulta("SELECT U.idusuario,U.email_usuario, U.usuario,G.grado,EL.nombre,EL.apellidos,U.clave,U.foto_perfil, U.rol, U.estatus,U.fecha_alta_sis
+FROM usuario  AS U INNER JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idlaboral INNER JOIN grado_estudio AS G ON EL.id_grado = G.id_grado WHERE email_usuario= '$email' AND clave='$clave' AND rol='1' AND estatus ='1'");
+            if(mysqli_num_rows($sql)>=1){
                 $reg=mysqli_fetch_array($sql, MYSQLI_ASSOC);
-                $_SESSION['nombre']=$reg['nombre_usuario'];
-                $_SESSION['nombre_completo']=$reg['nombre_completo'];
-                $_SESSION['email']=$reg['email_cliente'];
+               $_SESSION['active'] = true;
+                $_SESSION['id']=$reg['idusuario'];
+                $_SESSION['email']=$reg['email_usuario'];
                 $_SESSION['clave']=$clave;
-                $_SESSION['tipo']="user";
-                $_SESSION['nombre_usuario']=$nombre_usuario;
-                $_SESSION['id_cliente']=$reg['id_cliente'];
-                $_SESSION['nombreusuario']=$reg['nombre_usuario'];
+                $_SESSION['rol']="1";
+                $_SESSION['usuario']=$reg['usuario'];
+                $_SESSION['foto_perfil']=$reg['foto_perfil'];
+                $_SESSION['fecha_alta']=$reg['fecha_alta_sis'];
+                $_SESSION['nombreusuario']=$reg['nombre'];
                
-  echo '<script>
-  location.href="index.php?view=soporte";
-  </script>';     
-           echo '
-                <div class="alert alert-info alert-dismissible fade in col-sm-3 animated bounceInDown" role="alert" style="position:fixed; top:70px; right:10px; z-index:10;"> 
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="text-center">¡¡ Te damos la más Cordial Bienvenida: ' . $nombre . ' !! </h4>
-                    <p class="text-center">
-                       ¡ Inicio de Session Exitoso !
-                    </p>
-                </div>
-            ';
+ echo '<script>
+  location.href="index.php?view=usuario";
+  </script>'; 
        
             }else{
                 echo '
@@ -77,8 +71,46 @@
                         </p>
                     </div>
                 '; 
+           }
+        } elseif($_SESSION['rol']="4") {   
+            $sql=Mysql::consulta("SELECT U.idusuario,U.email_usuario, U.usuario,G.grado,EL.nombre,EL.apellidos,U.clave,U.foto_perfil, U.rol, U.estatus,U.fecha_alta_sis
+FROM usuario  AS U INNER JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idlaboral INNER JOIN grado_estudio AS G ON EL.id_grado = G.id_grado WHERE email_usuario= '$email' AND clave='$clave' AND rol='4' AND estatus ='1'");
+            if(mysqli_num_rows($sql)>=1){
+                $reg=mysqli_fetch_array($sql, MYSQLI_ASSOC);
+               $_SESSION['active'] = true;
+                $_SESSION['id']=$reg['idusuario'];
+                $_SESSION['email']=$reg['email_usuario'];
+                $_SESSION['clave']=$clave;
+                $_SESSION['rol']="4";
+                $_SESSION['usuario']=$reg['usuario'];
+                $_SESSION['foto_perfil']=$reg['foto_perfil'];
+                $_SESSION['fecha_alta']=$reg['fecha_alta_sis'];
+           echo '
+                <div class="alert alert-info alert-dismissible fade in col-sm-3 animated bounceInDown" role="alert" style="position:fixed; top:70px; right:10px; z-index:10;"> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="text-center"> Te damos la más cordial Bienvenida: ' . $email . ' </h4>
+                    <p class="text-center">
+                        ¡¡ Inicio de Session Exitoso !!
+                    </p>
+                </div>
+            ';
+  echo '<script>
+  location.href="index.php?view=usuario";
+  </script>' ;   
+            }else{
+               echo '
+                    <div class="alert alert-danger alert-dismissible fade in col-sm-3 animated bounceInDown" role="alert" style="position:fixed; top:70px; right:10px; z-index:10;"> 
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="text-center">OCURRIÓ UN ERROR</h4>
+                        <p class="text-center">
+                            Nombre de usuario o contraseña incorrectos
+                        </p>
+                    </div>
+                '; 
             }
-        }else{
+        
+        }       
+else{
             echo '
                 <div class="alert alert-danger alert-dismissible fade in col-sm-3 animated bounceInDown" role="alert" style="position:fixed; top:70px; right:10px; z-index:10;"> 
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -99,6 +131,5 @@
                 </p>
             </div>
         ';
-        
-        
     }
+
