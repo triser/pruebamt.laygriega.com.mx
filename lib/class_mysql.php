@@ -73,7 +73,7 @@ class MysqlQuery {
 
         return $sql;
     }
-
+    
     public static function Actualizar($tabla, $campos, $condicion) {
         if (!$sql = Mysql::consulta("UPDATE $tabla SET $campos WHERE $condicion")) {
             die("Error al actualizar datos en la tabla $tabla");
