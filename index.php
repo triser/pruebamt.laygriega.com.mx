@@ -3,53 +3,24 @@ header('Content-Type: text/html; charset=UTF-8');
 session_start();
 include './lib/class_mysql.php';
 include './lib/config.php';
-if(isset($_POST['nombre_login']) && isset($_POST['contrasena_login'])){
+if(isset($_POST['email_login']) && isset($_POST['pass_login'])){
         include "./process/login.php";
-
-    }
-     
+    }  
 ?>
-<?php 
 
-function ae_nocache() 
-{
-    header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
-    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache");
-}
-
-?>
 <!DOCTYPE html>
 <html>
-    <head> 
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF8" />
-        <title>Sistema OM</title>
+ <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | Log in</title>
         <?php include "./inc/links.php"; ?>        
     </head>
-    
-    <body>   
-        <?php include "./inc/navbar.php"; ?>
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="page-header">
-                <h1 class="animated lightSpeedIn">Sistema MT 2019<small> MULTIPLE</small></h1>
-                <span class="label label-danger">Distribuidora de la Y Griega S.A de C.V.</span>
-                <p class="pull-right text-success">
-                  <strong>
-                    <!--<span class="glyphicon glyphicon-time"></span>&nbsp;<?php //include "./inc/timezone.php"; ?>-->
-                 </strong>
-               </p>
-              </div>
-            </div>
-          </div>
-        </div>  
-        <?php
+    <body class="hold-transition skin-blue sidebar-mini">
+         <?php
             if(isset($_GET['view'])){
                 $content=$_GET['view'];
-                $WhiteList=["index","soporte","ticket","ticketcon","registro","configuracion","actividaddiaria"];
+    $WhiteList=["index","cuenta-datos","perfil-usuario","edit-perfil-usuario","usuario","tickets","alta-tickets","tickets-recibidos","detalle-tickets"];
                 if(in_array($content, $WhiteList) && is_file("./user/".$content."-view.php")){
                     include "./user/".$content."-view.php";
                 }else{
@@ -68,15 +39,11 @@ function ae_nocache()
                         <div class="col-sm-1">&nbsp;</div>
                     </div>
                 </div>     
-               
           <?php
                 }
             }else{
                 //include "./user/index-view.php";
                 ?>
-              
-
-        
               <div class="container">    
         <div id="loginbox" style="margin-top:30px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
             <div class="panel panel-primary" >
@@ -85,25 +52,19 @@ function ae_nocache()
                     </div>     
                     <div style="padding-top:25px" class="panel-body" >
                     <div class="avatar">
-                    <center><img src="img/lay.png" class="img-responsive" alt="Image"></center>
+                    <center><a title="Iniciar Session Administradores" href="super-dmin.php"><img src="img/lay.png" href="" class="img-responsive" alt="Image"></a></center>
                 </div>
                         <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>  
                         <form action="" method="POST" id="loginform" class="form-horizontal" role="form">     
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-                                        <input id="login-username" type="text" class="form-control"  name="nombre_login" value="" placeholder="Correo Corporativo" required>                                        
+                                        <input id="login-username" type="text" class="form-control"  name="email_login" value="" placeholder="Correo Corporativo" required>            
                                     </div>
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                        <input id="login-password" type="password" class="form-control" name="contrasena_login"  placeholder="Contraseña" required>
-                                    <!-- Button -->
-                                     <input type="hidden" name="optionsRadios" id="radio3" value="user">
-                                        <label for="radio3">
-                                        </label>
+                                        <input id="login-password" type="password" class="form-control" name="pass_login"  placeholder="Contraseña" required>
                                     </div>
                                 <div class="form-group">
-                        
-                            
                                     <div class="col-sm-offset-4 col-sm-10">
                                    <button type="submit"  class="btn btn-primary btn-lg login-btn "><i class="glyphicon glyphicon-log-in"></i>&nbsp; &nbsp;Iniciar sesión</button>
                                     </div>
@@ -119,23 +80,15 @@ function ae_nocache()
                                     </div>
                                 </div>    
                             </form>     
-
-
-
                         </div>                     
                     </div>  
         </div>
-             
-      
-                 
-      
     </div>
-    
-
 <br>
                 <?php
             }
         ?>
-      <?php include './inc/footer.php'; ?>
-    </body>
+       <!-- footer link-->
+        <?php include "./inc/links-footer.php"; ?> 
+</body>
 </html>

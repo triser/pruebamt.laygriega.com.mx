@@ -4,8 +4,7 @@ include './lib/class_mysql.php';
 include './lib/config.php';
 header('Content-Type: text/html; charset=UTF-8');
 
-if($_SESSION['tipo']!="admin"){
-    session_start(); 
+if($_SESSION['rol']!="2"){
     session_unset();
     session_destroy();
     header("Location: ./index.php"); 
@@ -14,36 +13,21 @@ if($_SESSION['tipo']!="admin"){
 <!DOCTYPE html>
 <html>
     <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=gb18030">
         <title>Administracion</title>
-        <?php include "./inc/links.php"; ?>        
+        <?php include "./inc/links.php"; ?>    
     </head>
-    <body>   
-        <?php include "./inc/navbar.php"; ?>
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="page-header">
-                <h1 class="animated lightSpeedIn">Panel Administrativo</h1>
-                <span class="label label-danger">Sistema de Ordenes de Mejora LA Y GRIEGA</span>
-                <p class="pull-right text-success">
-                  <strong>
-                  <span class="glyphicon glyphicon-time"></span>&nbsp;<?php include "./inc/timezone.php"; ?>
-                 </strong>
-               </p>
-              </div>
-            </div>
-          </div>
-        </div>
+    <body class="hold-transition skin-blue sidebar-mini">
         <?php
-            $WhiteList=["ticketadmin","ticketedit","ticketeditAE","ticketeditHS","ticketeditCS","users","admin","config","reporteAE","reporteHS","reporteCS","admindetalleticket"];
+            $WhiteList=["administrador","asesor-externo","usuarios","alta-usuario","config","edit-usuario","perfil","edit-perfil","actualizacion-cuenta","bajauser","tickets","alta-ticket","asunto-ticket","alta-asunto","alta-asunto-ticket","baja-asunto-ticket","tickets-recibidos-view"];
             if(isset($_GET['view']) && in_array($_GET['view'], $WhiteList) && is_file("./admin/".$_GET['view']."-view.php")){
                 include "./admin/".$_GET['view']."-view.php";
             }else{
-                echo '<h2 class="text-center">Lo sentimos, la opcion que ha seleccionado no se encuentra disponible</h2>';
+                echo '<h2 class="text-center">Lo sentimos, la opción que ha seleccionado no se encuentra disponible</h2>';
             }
         ?>
-        <?php include './inc/footer.php'; ?>
+
+
+      <?php include "./inc/links-footer.php"; ?>   
         <script>
         $(document).ready(function (){
 
@@ -55,6 +39,8 @@ if($_SESSION['tipo']!="admin"){
                     }
                 });
             });
+
+
             $("#input_user2").keyup(function(){
                 $.ajax({
                     url:"./process/val_admin.php?id="+$(this).val(),
@@ -65,6 +51,6 @@ if($_SESSION['tipo']!="admin"){
             });
 
         });
-        </script>
-    </body>
+ </script>
+</body>
 </html>
