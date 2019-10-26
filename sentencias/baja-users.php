@@ -1,7 +1,6 @@
 <?php  
  include '../lib/config2.php'; // MySQL Connection
 	/*Inicia validacion del lado del servidor*/
-	/*Inicia validacion del lado del servidor*/
 	 if (empty($_POST['idusuario'])){
 			$errors[] = "ID vacío";
 		}   else if (

@@ -1,5 +1,4 @@
 <?php include './lib/config2.php'; if(!$_SESSION['email']=="" && !$_SESSION['rol']==""){ $nombre_user= $_SESSION['email']; $id_clien= $_SESSION['id']; ?>
-<?php include('./sentencias/consulta.php');?>
     <?php       
      /*Script para actualizar datos de cuenta*/
       if(isset($_POST['id_edit']) && isset($_POST['usuario']) && isset($_POST['clave'])){
@@ -24,7 +23,7 @@
             $sql=("UPDATE usuario AS U
             INNER JOIN empleado_laboral AS EL ON U.id_laboral = EL.idlaboral
             INNER JOIN empleado_personal AS EP ON U.id_personal = EP.idpersonal
-            SET U.usuario='$usuario_update',U.clave='$clave_update', EL.nombre='$nombre_update', EL.apellidos='$apellidos_update', EL.nss='$nss_update', EL.id_puesto='$puesto_update', EL.id_departamento='$departamento_update', EL.id_grado='$titulo_update',  EP.colonia='$colonia_update', EP.direccion='$direccion_update',EP.id_sangre='$tsangre_update',EP.id_civil='$civil_update', EP.telefono='$telefono_update'
+            SET U.usuario='$usuario_update',U.clave='$clave_update', EL.nombre='$nombre_update', EL.apellidos='$apellidos_update', EL.nss='$nss_update', EL.id_puesto='$puesto_update', EL.id_grado='$titulo_update',  EP.colonia='$colonia_update', EP.direccion='$direccion_update',EP.id_sangre='$tsangre_update',EP.id_civil='$civil_update', EP.telefono='$telefono_update'
             WHERE idusuario = '$id_edit'");
           $query_update = mysqli_query($con,$sql);
         if ($query_update){
@@ -252,7 +251,7 @@ CE.nombre_eme,CE.apellidos_eme,CE.colonia_eme,CE.direccion_eme,CE.telefono_eme,C
                              <label class="col-md-2 control-label">Depto</label>
                             <div class='col-sm-8'>
                                   <div class="input-group">
-                                 <input class="form-control" name="departamento" type="text" readonly value="<?php echo utf8_encode($reg['departamento']); ?> ">
+                                 <input class="form-control" name="departamento" type="text"  value="<?php echo utf8_encode($reg['departamento']); ?> ">
                                     <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                 </div>
                             </div> </div>
@@ -262,7 +261,7 @@ CE.nombre_eme,CE.apellidos_eme,CE.colonia_eme,CE.direccion_eme,CE.telefono_eme,C
                              <label class="col-md-2 control-label">Puesto</label>
                             <div class='col-sm-8'>
                                     <div class="input-group">
-                                 <input class="form-control" name="puesto" type="text" readonly value="<?php echo utf8_encode($reg['puesto']); ?> ">
+                                 <input class="form-control" name="puesto" type="text" value="<?php echo utf8_encode($reg['puesto']); ?> ">
                                     <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                 </div>
                             </div>

@@ -8,13 +8,15 @@
         $clave_reg2=MysqlQuery::RequestPost('clave_reg');
         $rol_reg=MysqlQuery::RequestPost('rol_acceso');
         $email_reg=MysqlQuery::RequestPost('email_reg');
+        $titulo_reg=MysqlQuery::RequestPost('titulo');
         $foto_perfil_reg="default.png";
         $estatus="1";
         $f_alta=date("Y-m-d");
         $f_ingreso=date("Y-m-d");
+ 
 
 
-$sql="INSERT INTO empleado_laboral (idlaboral, nombre, apellidos) VALUES (null,'$nombre_reg','$apellidos_reg')";
+$sql="INSERT INTO empleado_laboral (idlaboral, nombre, apellidos, id_grado) VALUES (null,'$nombre_reg','$apellidos_reg','$titulo_reg')";
  $res=mysqli_query($con,$sql);//El campo ID de esta tabla es AUTO_INCREMENT
 $last_id = mysqli_insert_id($con);  //<<<---Aqui--->>>
         
@@ -78,6 +80,9 @@ $res3=mysqli_query($con,$sql3);//En esta consulta quisiera guardar el mismo id g
     
     }
 ?>
+<?php
+   $titu = Mysql::consulta("SELECT * FROM grado_estudio");   
+ ?>
 <div class="wrapper">
   <!-- Main Header -->
   <?php include "./inc/main-header.php"; ?>  
@@ -111,7 +116,18 @@ $res3=mysqli_query($con,$sql3);//En esta consulta quisiera guardar el mismo id g
           <!-- form start -->
           <form role="form" class="form-horizontal" accept-charset="utf-8" action="" method="POST" >
             <div class="box-body">
-
+                <div class="form-group">
+                <label class="col-sm-2 control-label">Titulo</label>
+                      <div class="col-sm-5">
+                 <select class="form-control" name="titulo">
+                                      
+                                    <?php while($gra = mysqli_fetch_array($titu))   
+                                             { ?>
+                                  <option value="<?php echo $gra['id_grado'] ?>"><?php echo utf8_encode($gra['grado']) ?></option>
+                                 <?php }   ?>
+                                </select>
+              </div>
+                </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-5">

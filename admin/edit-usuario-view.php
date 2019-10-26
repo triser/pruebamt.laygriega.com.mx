@@ -1,116 +1,8 @@
 <?php include './lib/config2.php'; if(!$_SESSION['email']=="" && $_SESSION['rol']=="2"){ ?>
 <?php include('./sentencias/consulta.php');?>
- <?php       
-     /*Script para actualizar datos de cuenta*/
-      if(isset($_POST['id_edit']) && isset($_POST['usuario']) && isset($_POST['clave'])){
-         $id_edit=MysqlQuery::RequestPost('id_edit');
-         $usuario_update=MysqlQuery::RequestPost('usuario');
-         $clave_update=md5(MysqlQuery::RequestPost('clave'));
-         $clave_update2=MysqlQuery::RequestPost('clave');
-         $nombre_update=MysqlQuery::RequestPost('nombre');
-         $apellidos_update=MysqlQuery::RequestPost('apellidos'); 
-         $titulo_update=MysqlQuery::RequestPost('titulo');
-         $departamento_update=MysqlQuery::RequestPost('departamento');
-         $puesto_update=MysqlQuery::RequestPost('puesto');
-         $colonia_update=MysqlQuery::RequestPost('colonia');
-         $direccion_update=MysqlQuery::RequestPost('direccion');
-         $telefono_update=MysqlQuery::RequestPost('telefono');
-         $tsangre_update=MysqlQuery::RequestPost('sangre');
-         $nss_update=MysqlQuery::RequestPost('nss');
-         $civil_update=MysqlQuery::RequestPost('estado_civil');
-           
-
-                 
-            $sql=("UPDATE usuario AS U
-              INNER JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idlaboral
-  INNER  JOIN puestos AS P ON   EL.id_puesto = P.id_puesto
- INNER  JOIN departamento AS D ON  P.id_depa = D.id_departamento
-  INNER JOIN grado_estudio AS GE ON EL.id_grado = GE.id_grado 
-  INNER  JOIN empleado_personal AS EP ON  U.id_personal = EP.idpersonal
-  INNER  JOIN estado_civil AS E ON  EP.id_civil = E.id_civil
-  INNER  JOIN genero AS G ON  EP.id_genero = G.id_genero
-  INNER  JOIN tipo_sangre AS T ON EP.id_sangre = T.id_sangre 
-  INNER  JOIN contacto_emergencia AS CE ON U.id_emergencia
-            SET U.usuario='$usuario_update',U.clave='$clave_update', EL.nombre='$nombre_update', EL.apellidos='$apellidos_update', EL.nss='$nss_update', P.id_puesto='$puesto_update', D.id_departamento='$departamento_update', GE.id_grado='$titulo_update',  EP.colonia='$colonia_update', EP.direccion='$direccion_update',EP.id_sangre='$tsangre_update',EP.id_civil='$civil_update', EP.telefono='$telefono_update'
-            WHERE idusuario = '$id_edit'");
-          $query_update = mysqli_query($con,$sql);
-        if ($query_update){
-       /*  
-         //Importamos las variables del formulario    && isset($_POST['titulo']) && isset($_POST['departamento']) && isset($_POST['puesto']) && isset($_POST['colonia']) && isset($_POST['direccion']) && isset($_POST['telefono']) && isset($_POST['sangre']) && isset($_POST['nss'])
-         
-         
-            if(MysqlQuery::Actualizar("usuario", "nombre='$nombre_update', apellidos='$apellidos_update',usuario='$usuario_update', clave='$clave_update',colonia='$colonia_update', direccion='$direccion_update', tipo_sangre='$tsangre_update', telefono='$telefono_update', nss='$nss_update', id_titulo='$titulo_update', id_departamento=' $departamento_update', id_puesto=' $puesto_update'", "idusuario='$id_edit'")){
-         
-         
-            $email_update=MysqlQuery::RequestPost('correo');
-         $titulo_update=MysqlQuery::RequestPost('titulo');
-         $departamento_update=MysqlQuery::RequestPost('departamento');
-         $puesto_update=MysqlQuery::RequestPost('puesto');
-         $colonia_update=MysqlQuery::RequestPost('colonia');
-         $direccion_update=MysqlQuery::RequestPost('direccion');
-         $telefono_update=MysqlQuery::RequestPost('telefono');
-         $tsangre_update=MysqlQuery::RequestPost('sangre');
-         $nss_update=MysqlQuery::RequestPost('nss');
-         
-         
-         
-         
-         
-         / /
-			
-        $nombre_complete_update =utf8_decode($_POST['name_complete_update']);
-        $new_user_update= $_POST['new_user_update'];
-        $new_pass_update = $_POST['new_pass_update'];
-        $message = utf8_decode($_POST['message']);
-        $email_update = $_POST['email_update'];
-
-
-        //Preparamos el mensaje de contacto
-        $cabeceras = "From: Tu cuenta fue actualizado Exitosamente"; //La persona que envia el correo
-        $asunto = "Actualizacion de cuenta"; //El asunto
-        $email_to = "$email_update, sistemaom@laygriega.com.mx"; //cambiar por tu email
-        $mensaje_mail="Hola ".$nombre_complete_update.", los siguientes datos de tu cuenta fueron Actualizados y son los siguientes:
-        \nNombre Completo: ".$nombre_complete_update."
-        \nNombre de usuario : ".$new_user_update."
-        \nNueva Clave: ".$new_pass_update."
-        \nEmail: ".$email_update."
-        \nDudas y Sugerencias Por favor de comunicarse al departamento de Sistemas";
-
-          //Enviamos el mensaje y comprobamos el resultado
-        if (@mail($email_to, $asunto ,$mensaje_mail ,$cabeceras )) ;
-
-            $_SESSION['nombre']=$new_user_update;
-            $_SESSION['clave']=$new_pass_update; */
-
-            echo '
-              <div class="alert alert-info alert-dismissible fade in col-sm-3 animated bounceInDown" role="alert" style="position:fixed; top:70px; right:10px; z-index:10;"> 
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                  <h4 class="text-center">CUENTA ACTUALIZADA</h4>
-                  <p class="text-center">
-                    ¡Se le ha enviado un correo electrónico con sus Nuevos datos de Actualización!
-                  </p>
-              </div>
-            ';
-          }else{
-            echo '
-              <div class="alert alert-danger alert-dismissible fade in col-sm-3 animated bounceInDown" role="alert" style="position:fixed; top:70px; right:10px; z-index:10;"> 
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                  <h4 class="text-center">OCURRIO UN ERROR</h4>
-                  <p class="text-center">
-                    Asegurese que los datos ingresados son validos. Por favor intente nuevamente</p>
-                  </p>
-              </div>
-            '; 
-          }
-        }
-	     
-	$id = MysqlQuery::RequestGet('id');
-	$sql = Mysql::consulta("SELECT * FROM usuario WHERE idusuario = '$id'");
-	$reg=mysqli_fetch_array($sql, MYSQLI_ASSOC);
-
-?>
-	 <?php
-  $query = Mysql::consulta("SELECT U.idusuario,GE.grado ,EL.nombre,EL.apellidos,U.email_usuario,U.usuario,U.foto_perfil,R.rol,U.estatus,U.fecha_alta_sis,
+                        <?php
+           $id = intval($_GET['id']);
+			$sql = mysqli_query($con, "SELECT U.idusuario,GE.grado ,EL.nombre,EL.apellidos,U.email_usuario,U.usuario,U.foto_perfil,R.rol,U.estatus,U.fecha_alta_sis,
 EP.direccion,D.departamento,P.puesto,T.sangre,EP.telefono,EP.colonia,EP.edad,EP.fecha_naci,E.estado_civil,EL.nss,EL.f_alta_el,EP.fecha_ingreso,U.fecha_update,
 CE.nombre_eme,CE.apellidos_eme,CE.colonia_eme,CE.direccion_eme,CE.telefono_eme,CE.telefono_eme2 
 FROM  usuario AS U
@@ -118,21 +10,28 @@ FROM  usuario AS U
   LEFT JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idlaboral
   LEFT JOIN puestos AS P ON   EL.id_puesto = P.id_puesto
   LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento
-  LEFT JOIN grado_estudio AS GE ON EL.id_grado = GE.id_grado 
+  LEFT JOIN grado_estudio AS GE ON EL.idgrado = GE.id_grado 
   LEFT JOIN empleado_personal AS EP ON  U.id_personal = EP.idpersonal
-  LEFT JOIN estado_civil AS E ON  EP.id_civil = E.id_civil
+  LEFT JOIN estado_civil AS E ON  EP.idcivil = E.id_civil
   LEFT JOIN genero AS G ON  EP.id_genero = G.id_genero
   LEFT JOIN tipo_sangre AS T ON EP.id_sangre = T.id_sangre 
   LEFT JOIN contacto_emergencia AS CE ON U.id_emergencia = CE.idemergencia
-  WHERE idusuario = '$id'");  
-	$row=mysqli_fetch_array($query, MYSQLI_ASSOC);
- ?>
+  WHERE idusuario = '$id'");
+			if(mysqli_num_rows($sql) == 0){
+				header("Location: index.php");
+			}else{
+				$user = mysqli_fetch_assoc($sql);
+			}
+			?>
  <?php
-  $pues = Mysql::consulta("SELECT id_puesto, puesto FROM puestos");   
- ?>
- <?php
-   $depa = Mysql::consulta("SELECT id_departamento, departamento FROM departamento");   
- ?>
+
+//Get all departamento data
+$query = mysqli_query($con,"SELECT * FROM departamento WHERE estatus_dep = 1");
+
+//Count total number of rows
+$rowCount = $query-> num_rows;
+?>
+
  <?php
    $titu = Mysql::consulta("SELECT id_grado, grado FROM grado_estudio");   
  ?>
@@ -142,6 +41,48 @@ FROM  usuario AS U
 <?php
    $civil = Mysql::consulta("SELECT id_civil,estado_civil FROM estado_civil");   
  ?>
+
+      <?php
+if(isset($_POST['update'])){
+				$id			= intval($_POST['id']);
+                $usuario_update = mysqli_real_escape_string($con,(strip_tags($_POST['usuario'], ENT_QUOTES)));
+                $clave_update  	= md5(mysqli_real_escape_string($con,(strip_tags($_POST['clave'], ENT_QUOTES))));
+                $clave_update2  	= mysqli_real_escape_string($con,(strip_tags($_POST['clave'], ENT_QUOTES)));
+    	        $nombre_update	= mysqli_real_escape_string($con,(strip_tags($_POST['nombre'], ENT_QUOTES)));
+				$apellidos_update  	= mysqli_real_escape_string($con,(strip_tags($_POST['apellidos'], ENT_QUOTES)));
+				$nss_update		= mysqli_real_escape_string($con,(strip_tags($_POST['nss'], ENT_QUOTES)));
+                $grado_update		= mysqli_real_escape_string($con,(strip_tags($_POST['titulo'], ENT_QUOTES)));
+             $puesto_update		= mysqli_real_escape_string($con,(strip_tags($_POST['puesto'], ENT_QUOTES)));
+              $vicil_update		= mysqli_real_escape_string($con,(strip_tags($_POST['civil'], ENT_QUOTES)));
+               
+				
+				$update = mysqli_query($con, "UPDATE usuario AS U
+            LEFT JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idlaboral
+             LEFT JOIN empleado_personal AS EP ON  U.id_personal = EP.idpersonal
+            SET U.usuario='$usuario_update', U.clave='$clave_update',EL.id_grado='$grado_update' ,EL.nombre='$nombre_update', EL.apellidos='$apellidos_update', EL.nss='$nss_update', EL.id_puesto='$puesto_update', EP.idcivil='$vicil_update' WHERE idusuario='$id'") or die(mysqli_error($con)); 
+				if($update){
+					echo  '
+              <div class="alert alert-info alert-dismissible fade in col-sm-3 animated bounceInDown" role="alert" style="position:fixed; top:70px; right:10px; z-index:10;"> 
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <h4 class="text-center">CUENTA ACTUALIZADA</h4>
+                  <p class="text-center">
+                    ¡Se le ha enviado un correo electrónico con sus Nuevos datos de Actualización!
+                  </p>
+              </div>
+            ';
+				}else{
+					echo '
+              <div class="alert alert-danger alert-dismissible fade in col-sm-3 animated bounceInDown" role="alert" style="position:fixed; top:70px; right:10px; z-index:10;"> 
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  <h4 class="text-center">OCURRIO UN ERROR</h4>
+                  <p class="text-center">
+                    Asegurese que los datos ingresados son validos. Por favor intente nuevamente</p>
+                  </p>
+              </div>
+            '; 
+				}
+			}
+  ?>
 <div class="wrapper">
   <!-- Main Header -->
   <?php include "./inc/main-header.php"; ?>  
@@ -173,11 +114,11 @@ FROM  usuario AS U
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="img/profiles/<?php echo $reg['foto_perfil']?>" alt="User profile picture">
+              <img class="profile-user-img img-responsive img-circle" src="img/profiles/<?php echo $user['foto_perfil']?>" alt="User profile picture">
 
-              <h3 class="profile-username text-center text-color"><?php echo utf8_encode($row['grado']); ?> <?php echo utf8_encode($row['nombre']); ?> <?php echo utf8_encode($row['apellidos']); ?></h3>
+              <h3 class="profile-username text-center text-color"><?php echo utf8_encode($user['grado']); ?> <?php echo utf8_encode($user['nombre']); ?> <?php echo utf8_encode($user['apellidos']); ?></h3>
 
-              <p class="text-muted text-center"><?php echo utf8_encode ($row['departamento'])?></p>
+              <p class="text-muted text-center"><?php echo utf8_encode ($user['departamento'])?></p>
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
@@ -208,21 +149,21 @@ FROM  usuario AS U
               <strong><i class="fa fa-book margin-r-5"></i> Puesto</strong>
 
               <p class="text-muted">
-            <?php echo utf8_encode ($row['puesto'])?>
+            <?php echo utf8_encode ($user['puesto'])?>
               </p>
 
               <hr>
 
               <strong><i class="fa fa-map-marker margin-r-5"></i> Direccion y telefono</strong>
 
-              <p class="text-muted"><?php echo utf8_encode ($row['direccion'])?>   </p>   <span class="label label-primary"><i class="fa fa-phone margin-r-5"></i> <?php echo utf8_encode ($row['telefono'])?></span>
+              <p class="text-muted"><?php echo utf8_encode ($user['direccion'])?>   </p>   <span class="label label-primary"><i class="fa fa-phone margin-r-5"></i> <?php echo utf8_encode ($user['telefono'])?></span>
 
               <hr>
 
               <strong><i class="fa fa-pencil margin-r-5"></i> Nuemro de Seguro Social y Tipo de Sangre</strong>
 
               <p>
-                <span class="label label-info"><?php echo utf8_encode ($row['nss'])?></span>  <span class="label label-danger"><?php echo utf8_encode ($row['sangre'])?></span>
+                <span class="label label-info"><?php echo utf8_encode ($user['nss'])?></span>  <span class="label label-danger"><?php echo utf8_encode ($user['sangre'])?></span>
               </p>
               <hr>
 
@@ -243,15 +184,16 @@ FROM  usuario AS U
             <div class="tab-content">
               <div class="active tab-pane" id="activity">
                           <hr>
-                    <form role="form" class="form-horizontal" accept-charset="utf-8" action="" method="POST" >
-                         <input type="hidden" name="id_edit" value="<?php echo $reg['idusuario']?>">
+                 
+                        <form name="form1" id="form1" class="form-horizontal row-fluid" action="" method="POST" >
+                         <input type="hidden" name="id" id="id" value="<?php echo $user['idusuario']?>">
             <div class="col-md-4">
               <!-- /.form-group -->
               <div class="form-group">
                              <label class="col-md-2 control-label">ID</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" type="text" value="<?php echo $reg['idusuario']; ?>"  readonly>
+                                    <input class="form-control" type="text" value="<?php echo $user['idusuario']; ?>"  readonly>
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                 </div>
                             </div>
@@ -262,7 +204,7 @@ FROM  usuario AS U
                              <label class="col-md-2 control-label">Email</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" type="text" value="<?php echo $reg['email_usuario']; ?>"  readonly>
+                                    <input class="form-control" type="text" value="<?php echo $user['email_usuario']; ?>"  readonly>
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                 </div>
                             </div>
@@ -274,7 +216,7 @@ FROM  usuario AS U
                              <label class="col-md-2 control-label">Registro</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" type="text" value="<?php echo $reg['fecha_alta_sis']; ?>"  readonly>
+                                    <input class="form-control" type="text" value="<?php echo $user['fecha_alta_sis']; ?>"  readonly>
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                 </div>
                             </div>
@@ -285,7 +227,7 @@ FROM  usuario AS U
                              <label class="col-md-2 control-label">Rol</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" type="text" value="<?php echo utf8_encode($row['rol']); ?>" readonly>
+                                    <input class="form-control" type="text" value="<?php echo utf8_encode($user['rol']); ?>" readonly>
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                 </div>
                             </div>
@@ -297,7 +239,7 @@ FROM  usuario AS U
                              <label class="col-md-2 control-label">Usuario</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="usuario" type="text" value="<?php echo utf8_encode($reg['usuario']); ?>">
+                                    <input class="form-control" name="usuario" type="text" value="<?php echo utf8_encode($user['usuario']); ?>">
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                 </div>
                             </div>
@@ -309,7 +251,7 @@ FROM  usuario AS U
                              <label class="col-md-2 control-label">Cambio pass</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="clave" type="password" value="" required>
+                                    <input class="form-control" name="clave" type="password" value="">
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                 </div>
                             </div>
@@ -320,7 +262,7 @@ FROM  usuario AS U
                              <label class="col-md-2 control-label">Nombre</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="nombre" type="text" value="<?php echo utf8_encode($row['nombre']); ?>">
+                                    <input class="form-control" name="nombre" type="text" value="<?php echo utf8_encode($user['nombre']); ?>">
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                 </div>
                             </div>
@@ -331,7 +273,7 @@ FROM  usuario AS U
                              <label class="col-md-2 control-label">Apellidos</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="apellidos" type="text" value="<?php echo utf8_encode($row['apellidos']); ?>">
+                                    <input class="form-control" name="apellidos" type="text" value="<?php echo utf8_encode($user['apellidos']); ?>">
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                 </div>
                             </div>
@@ -343,7 +285,7 @@ FROM  usuario AS U
                             <div class='col-sm-8'>
                                       <div class="input-group">
                                     <select class="form-control" name="titulo">
-                                      <option value="<?php echo $row['id_grado']?>"><?php echo utf8_encode ($row['grado'])?>  (Actual)</option>
+                                      <option value="<?php echo $user['id_grado']?>"><?php echo utf8_encode ($user['grado'])?>  (Actual)</option>
                                     <?php while($gra = mysqli_fetch_array($titu))   
                                              { ?>
                                   <option value="<?php echo $gra['id_grado'] ?>"><?php echo utf8_encode($gra['grado']) ?></option>
@@ -354,34 +296,37 @@ FROM  usuario AS U
                             </div>
                    </div>
               </div>
-                        <div class="col-md-4">
-                              <div class="form-group">
+                     <div class="col-md-4">
+                 <div class="form-group">
                              <label class="col-md-2 control-label">Depto</label>
                             <div class='col-sm-8'>
-                                  <div class="input-group">
-                                    <select class="form-control" name="departamento">
-                                     <option value="<?php echo $row['id_departamento']?>"><?php echo utf8_encode ($row['departamento'])?> (Actual)</option>
-                                    <?php
-                                        while($dep = mysqli_fetch_array($depa)) {?>
-                                  <option value="<?php echo $dep['id_departamento'] ?>"><?php echo utf8_encode($dep['departamento']) ?></option>
-                                 <?php }  ?>
-                                </select>
+                                    <div class="input-group">
+                                            <select class="form-control" id="departamento">
+   <option value="<?php echo $user['id_departamento']?>"><?php echo utf8_encode ($user['departamento'])?>  (Actual)</option>
+    <?php
+    if($rowCount > 0){
+         
+        while($row = mysqli_fetch_array($query)){ 
+            echo '<option value="'.$row['id_departamento'].'">'.utf8_encode($row['departamento']).'</option>';
+        }
+    }else{
+        echo '<option value="">departamento no disponible</option>';
+    }
+    ?>
+</select>
                                     <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                 </div>
-                            </div> </div>
+                            </div>
                    </div>
+              </div>
                   <div class="col-md-4">
                  <div class="form-group">
                              <label class="col-md-2 control-label">Puesto</label>
                             <div class='col-sm-8'>
                                     <div class="input-group">
-                                    <select class="form-control" name="puesto">
-                                  <option value="<?php echo $row['id_puesto']?>"><?php echo utf8_encode ($row['puesto'])?> (Actual)</option>
-                                    <?php
-                                        while($reg = mysqli_fetch_array($pues )) {?>
-                                  <option value="<?php echo $reg['id_puesto'] ?>"><?php echo utf8_encode($reg['puesto']) ?></option>
-                                 <?php  }  ?>
-                                </select>
+                                    <select class="form-control" name="puesto" id="puesto">
+    <option value="<?php echo $user['id_puesto']?>"><?php echo utf8_encode ($user['puesto'])?>  (Actual)</option>
+</select>
                                     <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                 </div>
                             </div>
@@ -392,7 +337,7 @@ FROM  usuario AS U
                              <label class="col-md-2 control-label">Colonia</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="colonia" type="text" value="<?php echo utf8_encode($row['colonia']); ?>">
+                                    <input class="form-control" name="colonia" type="text" value="<?php echo utf8_encode($user['colonia']); ?>">
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                 </div>
                             </div>
@@ -403,7 +348,7 @@ FROM  usuario AS U
                              <label class="col-md-2 control-label">Direccion</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="direccion" type="text" value="<?php echo utf8_encode($row['direccion']); ?>">
+                                    <input class="form-control" name="direccion" type="text" value="<?php echo utf8_encode($user['direccion']); ?>">
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                 </div>
                             </div>
@@ -414,7 +359,7 @@ FROM  usuario AS U
                              <label class="col-md-2 control-label">Telefono</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="telefono" type="text" value="<?php echo utf8_encode($row['telefono']); ?>">
+                                    <input class="form-control" name="telefono" type="text" value="<?php echo utf8_encode($user['telefono']); ?>">
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                 </div>
                             </div>
@@ -426,10 +371,10 @@ FROM  usuario AS U
                                   <div class='col-sm-8'>
                                     <div class="input-group">
                                     <select class="form-control" name="estado_civil">
-                                  <option value="<?php echo $row['id_civil']?>"><?php echo utf8_encode ($row['estado_civil'])?> (Actual)</option>
+                                  <option value="<?php echo $user['id_civil']?>"><?php echo utf8_encode ($user['estado_civil'])?> (Actual)</option>
                                     <?php
-                                        while($reg = mysqli_fetch_array($civil)) {?>
-                                  <option value="<?php echo $reg['id_civil'] ?>"><?php echo utf8_encode($reg['estado_civil']) ?></option>
+                                        while($civ = mysqli_fetch_array($civil)) {?>
+                                  <option value="<?php echo $civ['id_civil'] ?>"><?php echo utf8_encode($civ['estado_civil']) ?></option>
                                  <?php  }  ?>
                                 </select>
                                     <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
@@ -442,7 +387,7 @@ FROM  usuario AS U
                              <label class="col-md-2 control-label">NSS</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="nss" type="text" value="<?php echo utf8_encode($row['nss']); ?>">
+                                    <input class="form-control" name="nss" type="text" value="<?php echo utf8_encode($user['nss']); ?>">
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                 </div>
                             </div>
@@ -455,10 +400,10 @@ FROM  usuario AS U
                                   <div class='col-sm-8'>
                                     <div class="input-group">
                                     <select class="form-control" name="sangre">
-                                  <option value="<?php echo $row['id_sangre']?>"><?php echo utf8_encode ($row['sangre'])?> (Actual)</option>
+                                  <option value="<?php echo $user['id_sangre']?>"><?php echo utf8_encode ($user['sangre'])?> (Actual)</option>
                                     <?php
-                                        while($reg = mysqli_fetch_array($sangre )) {?>
-                                  <option value="<?php echo $reg['id_sangre'] ?>"><?php echo utf8_encode($reg['sangre']) ?></option>
+                                        while($san = mysqli_fetch_array($sangre )) {?>
+                                  <option value="<?php echo $san['id_sangre'] ?>"><?php echo utf8_encode($san['sangre']) ?></option>
                                  <?php  }  ?>
                                 </select>
                                     <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
@@ -469,7 +414,8 @@ FROM  usuario AS U
                       <div class="form-group">
                            <div class="col-xs-12">
                                 <br>
-                                       <button type="submit" class="btn btn-sm btn-primary pull-right"><i class="fa fa-refresh fa-spin fa-1x fa-fw"></i>&nbsp;Actualizar</button>
+                                       <button type="submit" class="btn btn-sm btn-primary pull-right" name="update" id="update"><i class="fa fa-refresh fa-spin fa-1x fa-fw"></i>&nbsp;Actualizar</button>
+                               		<input type="submit" name="update" id="update" value="Actualizar" class="btn btn-sm btn-primary"/>
                               <a href="./admin.php?view=usuarios" class="btn btn-sm btn-success"><i class="fa fa-reply"></i>&nbsp;&nbsp;Volver</a>
                             </div>
                       </div>
@@ -529,7 +475,27 @@ FROM  usuario AS U
 <?php
 }
 ?>
-
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#departamento').on('change',function(){
+        var departamentoID = $(this).val();
+        if(departamentoID){
+            $.ajax({
+                type:'POST',
+                url:'./sentencias/select-departamento-puesto.php',
+                data:'departamento_id='+departamentoID,
+                success:function(html){
+                    $('#puesto').html(html);
+                
+                }
+            }); 
+        }else{
+            $('#puesto').html('<option value="">Seleccione puesto primero</option>');
+        }
+    });
+    
+});
+</script>
    <script>
 
 $(document).ready(function () {
@@ -542,4 +508,6 @@ window.setTimeout(function() {
  
 });
 </script>
+
+
     

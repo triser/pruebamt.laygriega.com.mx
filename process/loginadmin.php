@@ -1,10 +1,8 @@
 <?php 
     $email=MysqlQuery::RequestPost("email_login");
     $clave=md5(MysqlQuery::RequestPost("pass_login"));
-    $rol=MysqlQuery::RequestPost('rol');
-    if($email!="" && $clave!="" && $rol!=""){
-           if($rol=="2"){
-            $sql=Mysql::consulta("SELECT * FROM super_admin WHERE email_admin= '$email' AND clave='$clave'  AND rol='$rol'");
+    if($email!="" && $clave!=""){
+         $sql=Mysql::consulta("SELECT * FROM super_admin WHERE email_admin= '$email' AND clave='$clave' AND rol='2' AND estatus ='1'");
             if(mysqli_num_rows($sql)>=1){
                 $reg=mysqli_fetch_array($sql, MYSQLI_ASSOC);
                $_SESSION['active'] = true;
@@ -16,6 +14,8 @@
                 $_SESSION['fecha_alta']=$reg['alta'];
                 $_SESSION['clave']=$clave;
                 $_SESSION['rol']="2";  
+                
+                  if($_SESSION['rol']="2"){  
            echo '
                 <div class="alert alert-info alert-dismissible fade in col-sm-3 animated bounceInDown" role="alert" style="position:fixed; top:70px; right:10px; z-index:10;"> 
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>

@@ -190,6 +190,7 @@ FROM  usuario AS U
                                         <button type="button" name="view" value="view" id="<?php echo $row["idusuario"]; ?>" class="btn btn-sm btn-default view_data "><span class="glyphicon glyphicon-eye-open"></span></button>
                                         <a href="admin.php?view=edit-usuario&id=<?php echo $row['idusuario']; ?>" 
                                             class="btn btn-sm btn btn-info red-tooltip" data-toggle="tooltip" data-placement="right" id="tooltipex" title="Editar Usuario"><span class="glyphicon glyphicon-edit"></span></a>
+                                   <a href="edit.php?nik=<?php echo $row['idusuario']; ?>" title="Editar datos" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                                            <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-default<?php echo $row['idusuario']; ?>"><i class="fa fa-trash-o" aria-hidden="true" data-toggle="tooltip" data-placement="left" id="tooltipex" title="Eliminar Usuario"></i></a>
 
                                         </td> 
