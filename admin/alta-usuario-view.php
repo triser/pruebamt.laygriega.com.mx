@@ -8,33 +8,48 @@
         $clave_reg2=MysqlQuery::RequestPost('clave_reg');
         $rol_reg=MysqlQuery::RequestPost('rol_acceso');
         $email_reg=MysqlQuery::RequestPost('email_reg');
-        $titulo_reg=MysqlQuery::RequestPost('titulo');
         $foto_perfil_reg="default.png";
         $estatus="1";
         $f_alta=date("Y-m-d");
         $f_ingreso=date("Y-m-d");
+        $relacion="1";
  
 
-
-$sql="INSERT INTO empleado_laboral (idlaboral, nombre, apellidos, id_grado) VALUES (null,'$nombre_reg','$apellidos_reg','$titulo_reg')";
+        
+$sql="INSERT INTO usuario (idusuario,email_usuario, usuario, clave, foto_perfil, rol, estatus, fecha_alta_sis) VALUES (null,'$email_reg', '$user_reg', '$clave_reg', '$foto_perfil_reg', '$rol_reg', '$estatus', '$f_alta')";
  $res=mysqli_query($con,$sql);//El campo ID de esta tabla es AUTO_INCREMENT
-$last_id = mysqli_insert_id($con);  //<<<---Aqui--->>>
+   $last_id = mysqli_insert_id($con);  //<<<---Aqui--->>>
+        
+$sql1="INSERT INTO empleado_laboral (nombre, apellidos,f_alta_el,idpuesto,idgrado,idusuario) VALUES ('$nombre_reg','$apellidos_reg','$f_alta','$relacion','$relacion','$last_id')";
+$res2=mysqli_query($con,$sql1);//El campo ID de esta tabla es AUTO_INCREMENT  
+        
+                
+$sql2="INSERT INTO empleado_personal (fecha_ingreso, idsangre, idgenero, idcivil, idusuario) VALUES ('$f_ingreso','$relacion','$relacion','$relacion','$last_id')";
+$res3=mysqli_query($con,$sql2);//El campo ID de esta tabla es AUTO_INCREMENT  
+        
+                
+$sql3="INSERT INTO contacto_emergencia (idusuario) VALUES ('$last_id')";
+$res4=mysqli_query($con,$sql3);//El campo ID de esta tabla es AUTO_INCREMENT  
+        
+// $sql="INSERT INTO empleado_laboral (idusuario, nombre, apellidos) VALUES (null,'$nombre_reg','$apellidos_reg')";
+// $res=mysqli_query($con,$sql);//El campo ID de esta tabla es AUTO_INCREMENT
+//$last_id = mysqli_insert_id($con);  //<<<---Aqui--->>>
         
         
-$sql1="INSERT INTO empleado_personal (idpersonal, fecha_ingreso) VALUES (null,'$f_ingreso')";
- $res1=mysqli_query($con,$sql1);//El campo ID de esta tabla es AUTO_INCREMENT
-$last_id1 = mysqli_insert_id($con);  //<<<---Aqui--->>>
+//$sql1="INSERT INTO empleado_personal (idpersonal, fecha_ingreso) VALUES (null,'$f_ingreso')";
+// $res1=mysqli_query($con,$sql1);//El campo ID de esta tabla es AUTO_INCREMENT
+//$last_id1 = mysqli_insert_id($con);  //<<<---Aqui--->>>
         
-$sql2="INSERT INTO contacto_emergencia (idemergencia, f_alta) VALUES (null,'$f_ingreso')";
- $res2=mysqli_query($con,$sql2);//El campo ID de esta tabla es AUTO_INCREMENT
-$last_id2 = mysqli_insert_id($con);  //<<<---Aqui--->>>
+//$sql2="INSERT INTO contacto_emergencia (idemergencia, f_alta) VALUES (null,'$f_ingreso')";
+//$res2=mysqli_query($con,$sql2);//El campo ID de esta tabla es AUTO_INCREMENT
+//$last_id2 = mysqli_insert_id($con);  //<<<---Aqui--->>>
 
 
-   $sql3="INSERT INTO usuario (email_usuario, usuario, clave, foto_perfil, rol, estatus, fecha_alta_sis, id_laboral,id_personal,id_emergencia) VALUES ('$email_reg', '$user_reg', '$clave_reg', '$foto_perfil_reg', '$rol_reg', '$estatus', '$f_alta' ,'$last_id' ,'$last_id1' ,'$last_id2')";
-$res3=mysqli_query($con,$sql3);//En esta consulta quisiera guardar el mismo id generado con el formulario anterior para guardarlo en id_empresa
+ //  $sql3="INSERT INTO usuario (email_usuario, usuario, clave, foto_perfil, rol, estatus, fecha_alta_sis, id_laboral,id_personal,id_emergencia) VALUES ('$email_reg', '$user_reg', '$clave_reg', '$foto_perfil_reg', '$rol_reg', '$estatus', '$f_alta' ,'$last_id' ,'$last_id1' ,'$last_id2')";
+//$res3=mysqli_query($con,$sql3); //En esta consulta quisiera guardar el mismo id generado con el formulario anterior para guardarlo en id_empresa
 
         
-        if ($res3){
+        if ($res4){
             
         $nombre_reg = utf8_decode($_POST['nom_complete_reg']);
         $apellidos_reg= utf8_decode($_POST['apellidos_reg']);
@@ -80,6 +95,7 @@ $res3=mysqli_query($con,$sql3);//En esta consulta quisiera guardar el mismo id g
     
     }
 ?>
+<?php include('./sentencias/consulta.php');?>
 <?php
    $titu = Mysql::consulta("SELECT * FROM grado_estudio");   
  ?>
@@ -116,18 +132,6 @@ $res3=mysqli_query($con,$sql3);//En esta consulta quisiera guardar el mismo id g
           <!-- form start -->
           <form role="form" class="form-horizontal" accept-charset="utf-8" action="" method="POST" >
             <div class="box-body">
-                <div class="form-group">
-                <label class="col-sm-2 control-label">Titulo</label>
-                      <div class="col-sm-5">
-                 <select class="form-control" name="titulo">
-                                      
-                                    <?php while($gra = mysqli_fetch_array($titu))   
-                                             { ?>
-                                  <option value="<?php echo $gra['id_grado'] ?>"><?php echo utf8_encode($gra['grado']) ?></option>
-                                 <?php }   ?>
-                                </select>
-              </div>
-                </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-5">

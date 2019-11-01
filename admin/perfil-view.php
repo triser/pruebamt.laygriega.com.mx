@@ -3,19 +3,18 @@
 <?php 
             $idA=$_SESSION['id'];
             /* Todos los admins*/
-        $users= Mysql::consulta("SELECT U.idusuario,GE.grado ,EL.nombre,EL.apellidos,U.email_usuario,U.usuario,U.foto_perfil,R.rol,U.estatus,U.fecha_alta_sis,
-EP.direccion,D.departamento,P.puesto,T.sangre,EP.telefono,EP.colonia,EP.edad,EP.fecha_naci,E.estado_civil,EL.nss,EL.f_alta_el,EP.fecha_ingreso,U.fecha_update,
-CE.nombre_eme,CE.apellidos_eme,CE.colonia_eme,CE.direccion_eme,CE.telefono_eme,CE.telefono_eme2 FROM  usuario AS U
-   LEFT JOIN rol AS R ON U.rol = R.idrol 
-   LEFT JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idlaboral
-   LEFT JOIN puestos AS P ON   EL.id_puesto = P.id_puesto
-   LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento
-   LEFT JOIN grado_estudio AS GE ON EL.id_grado = GE.id_grado
-   LEFT JOIN empleado_personal AS EP ON  U.id_personal = EP.idpersonal
-   LEFT JOIN estado_civil AS E ON  EP.id_civil = E.id_civil
-   LEFT JOIN genero AS G  ON  EP.id_genero = G.id_genero
-   LEFT JOIN tipo_sangre AS T ON EP.id_sangre = T.id_sangre
-   LEFT JOIN contacto_emergencia AS CE ON U.id_emergencia = CE.idemergencia WHERE idusuario='$idA'");
+        $users= Mysql::consulta("SELECT * FROM  usuario AS U
+  LEFT JOIN rol AS R ON U.rol = R.idrol
+ LEFT JOIN empleado_laboral AS EL ON  EL.idusuario = U.idusuario 
+  LEFT JOIN puestos AS P ON   EL.idpuesto = P.id_puesto
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento
+  LEFT JOIN grado_estudio AS GE ON EL.idgrado = GE.id_grado 
+  LEFT JOIN empleado_personal AS EP ON   EP.idusuario = U.idusuario 
+  LEFT JOIN estado_civil AS E ON  EP.idcivil = E.id_civil
+  LEFT JOIN genero AS G ON  EP.idgenero = G.id_genero
+  LEFT JOIN tipo_sangre AS T ON EP.idsangre = T.id_sangre 
+  LEFT JOIN contacto_emergencia AS CE ON U.idusuario = CE.idusuario
+  WHERE U.idusuario='$idA'");
 	$reg=mysqli_fetch_array($users, MYSQLI_ASSOC);
         ?>
 <div class="wrapper">
@@ -69,7 +68,7 @@ CE.nombre_eme,CE.apellidos_eme,CE.colonia_eme,CE.direccion_eme,CE.telefono_eme,C
                         </div>
                     </div>
                     <div class="col-md-2">
-                          <a href="admin.php?view=edit-perfil&id=<?php echo $reg['idusuario']; ?>" 
+                          <a href="admin.php?view=actualizacion-cuenta" 
                                             class="btn btn-sm btn btn-info red-tooltip" data-toggle="tooltip" data-placement="right" id="tooltipex" title="Editar Perfil"><span class="glyphicon glyphicon-edit"></span> Editar Perfil</a>
                     </div>
                 </div>

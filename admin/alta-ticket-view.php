@@ -1,17 +1,18 @@
-
-<?php if($_SESSION['email']!="" && $_SESSION['rol']=="2"){ ?> 
-
-<?php
-$nombrefoto=$_FILES['foto']['name'];
-$ruta1=$_FILES['foto']['tmp_name'];
+<?php include './lib/config2.php'; if($_SESSION['email']!="" && $_SESSION['rol']=="2"){ ?> 
+<?php include('./sentencias/consulta.php');?>
+<?php 
+if(isset($_POST['fecha_ticket']) && isset($_POST['descripcion_ticket'])){
+    
+$nombrefoto1=$_FILES['foto1']['name'];
+$ruta1=$_FILES['foto1']['tmp_name'];
 if(is_uploaded_file($ruta1))
 { 
-if($_FILES['foto']['type'] == 'image/png' OR $_FILES['foto']['type'] == 'image/gif' OR $_FILES['foto']['type'] == 'image/jpeg')
+if($_FILES['foto1']['type'] == 'image/png' OR $_FILES['foto1']['type'] == 'image/gif' OR $_FILES['foto1']['type'] == 'image/jpeg')
 		{
 $tips = 'jpg';
 $type = array('image/jpeg' => 'jpg');
-$name = $nombrefoto.'.'.$tips;
-$destino1 =  "imagenes/".$name;
+$name = $nombrefoto1.'.'.$tips;
+$destino1 =  "upload_ticket/".$name;
 copy($ruta1,$destino1);
 
 $ruta_imagen = $destino1;
@@ -44,11 +45,7 @@ imagecopyresampled($lienzo, $imagen, 0, 0, 0, 0, $miniatura_ancho_maximo, $minia
 imagejpeg($lienzo, $destino1, 80);
 }
 }
-
-?>
-<?php 
-        if(isset($_POST['fecha_ticket']) && isset($_POST['descripcion_ticket']) && isset($_POST['puesto_ticket'])){
-
+    
           /*Este codigo nos servira para generar un numero diferente para cada Orden*/
           $codigo = ""; 
           $longitud = 2; 
@@ -63,21 +60,43 @@ imagejpeg($lienzo, $destino1, 80);
           $id_ticket="OY".$codigo."N".$numero_filas_total;
 			
           /*Fin codigo numero de ticket*/
-          $idA=$_SESSION['id'];
           $fecha_ticket=  MysqlQuery::RequestPost('fecha_ticket');
-          $hra_ticket=  MysqlQuery::RequestPost('hra_ticket');
-         /* $nombre_ticket=  MysqlQuery::RequestPost('name_ticket');*/
-         /* $email_ticket= MysqlQuery::RequestPost('email_ticket');*/
+          $hra_ticket=  date_default_timezone_set('America/Mexico_city'); echo date("h:i:s A");
+         $nombre_asignado=  MysqlQuery::RequestPost('nombre_asignado');
+         $email_asignado= MysqlQuery::RequestPost('email_asignado');
           $puesto_ticket= MysqlQuery::RequestPost('puesto_ticket');
-          /*$departamento_ticket= MysqlQuery::RequestPost('departamento_ticket');*/
+          $departamento_ticket= MysqlQuery::RequestPost('departamento_ticket');
 	      $prioridad_ticket= MysqlQuery::RequestPost('prioridad_ticket');
           $asunto_ticket= MysqlQuery::RequestPost('asunto_ticket');        
           $descripcion_ticket=  MysqlQuery::RequestPost('descripcion_ticket');
 			
 			//Enviamos el mensaje ala Bd
 			
-			if(MysqlQuery::Guardar("tickets", "fecha_alta, hra_creacion,id_asunto, mensaje, imagen_tk, id_prioridad_tk, idusuario, serie","'$fecha_ticket', '$hra_ticket', ' $asunto_ticket', '$descripcion_ticket', '$destino1', '$prioridad_ticket','$idA', '$id_ticket'")){
+			 
+$sql3 = "INSERT INTO tickets (asignado, fecha_alta, hra_creacion, serie ,id_usuario_tk, id_asunto, mensaje, imagen_tk , id_prioridad_tk) VALUES ('$nombre_asignado','$fecha_ticket', '$hra_ticket', '$id_ticket', '$iduser', '$asunto_ticket', '$descripcion_ticket', '$destino1', '$prioridad_ticket')";
+$res4=mysqli_query($con,$sql3);//El campo ID de esta tabla es AUTO_INCREMENT  
+    
+    
+           if ($res4){
+        $nombre_asignado = utf8_decode($_POST['nombre_asignado']);
+        $nombre_s = utf8_decode($_POST['nombre_s']);
+        $user_reg = $_POST['user_reg'];
+        $clave_reg2 = $_POST['clave_reg'];
+        $email_reg = $_POST['email_reg'];
 
+        //Preparamos el mensaje de contacto/ /
+        $cabeceras = "From: Registro de cuenta al Sistema de Orden de Mejora LA Y GRIEGA"; //La persona que envia el correo
+        $asunto = "Datos de cuenta"; //El asunto
+        $email_to = "$email_reg, sistemaom@laygriega.com.mx"; //cambiar por tu email
+        $mensaje_mail="Hola ".$nombre_asignado.", Gracias por registrarte al Sistema OM de Abarrotes LA Y GRIEGA. Los datos de tu cuenta son los siguientes:
+         \nNombre Completo: ".$nombre_s."
+         \nNombre de usuario: ".$user_reg."
+        \nClave: ".$clave_reg2."
+        \nEmail: ".$email_reg."
+        \n Para poder accesar Visitanos: http://www.sistemaom.laygriega.com.mx";
+
+        //Enviamos el mensaje y comprobamos el resultado
+        if (@mail($email_to, $asunto ,$mensaje_mail ,$cabeceras ));
 /*
 
 
@@ -126,6 +145,15 @@ imagejpeg($lienzo, $destino1, 80);
           }
         } 
 ?>
+ <?php
+
+//Get all departamento data
+$query = mysqli_query($con,"SELECT * FROM departamento WHERE estatus_dep = 1 LIMIT 1,12");
+
+//Count total number of rows
+$rowCount = $query-> num_rows;
+?>
+
 <div class="wrapper">
   <!-- Main Header -->
   <?php include "./inc/main-header.php"; ?>  
@@ -181,6 +209,78 @@ imagejpeg($lienzo, $destino1, 80);
                 <!-- /.input group -->
               </div>
                 
+                       <div class="form-group">
+              	<label>Departamento Asignado:</label>
+		<select class="form-control" id="departamento">
+    <option value="">Seleccione depto</option>
+    <?php
+    if($rowCount > 0){
+         
+        while($row = mysqli_fetch_assoc($query)){ 
+            echo '<option value="'.$row['id_departamento'].'">'.$row['departamento'].'</option>';
+        }
+    }else{
+        echo '<option value="">departamento no disponible</option>';
+    }
+    ?>
+</select>
+                        
+   
+                  <!-- /.input group -->
+                </div>
+              <!-- /.form-group -->
+               
+              <!-- /.form-group -->
+     		  <div class="form-group">
+
+                <label>Nombre Asignado:</label>
+        <select class="form-control" name="nombre_asignado" id="nombre_asignado" readonly>
+    <option value="">Seleccione asunto primero</option>
+</select> 
+                <!-- /.input group -->
+              </div>
+              <!-- /.form-group -->
+
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3">
+              <div class="form-group">
+                 <div class="form-group">
+                  <label>Nombre del Solicitante:</label>
+
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="nombre_s" readonly value="<?php echo $grado." ".utf8_encode($nombre)." ".utf8_encode($apellidos);?>
+">
+
+                    <div class="input-group-addon">
+                      <i class="fa fa-clock-o"></i>
+                    </div>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                </div>
+              <!-- /.form-group -->
+       <div class="form-group">
+                   <label>Puesto Asignado:</label>
+<select class="form-control" name="puesto" id="puesto">
+    <option value="">Seleccione departamento primero</option>
+</select>
+
+              </div>
+              <!-- /.form-group -->
+  		<div class = "form-group">
+              <label>Email Asignado:</label>
+						<select class="form-control" name="email_asignado" id="email_asignado" readonly>
+    <option value="">Seleccione puesto primero</option>
+</select>
+						</div>
+                
+                         <!-- /.form-group -->
+        
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3">
             <div class="form-group">
                 <label >Correo del Solicitante:</label>
                 <div class="input-group">
@@ -191,72 +291,13 @@ imagejpeg($lienzo, $destino1, 80);
                 </div>
                 <!-- /.input group -->
               </div>
-              <!-- /.form-group -->
-               
-              <!-- /.form-group -->
-     		  <div class="form-group">
-
-                <label>Nombre Asignado:</label>
-        <select id="usuario" class="form-control"  readonly></select>
-                  
-                <!-- /.input group -->
-              </div>
-              <!-- /.form-group -->
-
-            </div>
-            <!-- /.col -->
-            <div class="col-md-3">
-              <div class="form-group">
-                  <label>Hora Alta:</label>
-
-                  <div class="input-group">
-                    <input type="text" class="form-control" readonly name="hra_ticket" value="<?php date_default_timezone_set('America/Mexico_city'); echo date("h:i:s A");?>">
-
-                    <div class="input-group-addon">
-                      <i class="fa fa-clock-o"></i>
-                    </div>
-                  </div>
-                  <!-- /.input group -->
-                </div>
-              <!-- /.form-group -->
-                    <div class="form-group">
-              	<label>Departamento Asignado:</label>
-		<select id="departamento"  class="form-control" name="departamento_ticket"></select>
-                        
-   
-                  <!-- /.input group -->
-                </div>
-              <!-- /.form-group -->
+               <!-- /.form-group -->
   		<div class = "form-group">
               <label>Asunto:</label>
-						<select id="asunto"  class="form-control" name="asunto_ticket" ></select>
+						<select class="form-control" name="asunto_ticket" id="asunto">
+    <option value="">Seleccione puesto primero</option>
+</select>
 						</div>
-                
-                         <!-- /.form-group -->
-        
-              <!-- /.form-group -->
-            </div>
-            <!-- /.col -->
-            <div class="col-md-3">
-              <div class="form-group">
-                  <label>Nombre del Solicitante:</label>
-
-                  <div class="input-group">
-                    <input type="text" class="form-control" name="name_ticket" readonly value="<?php echo utf8_encode($_SESSION['usuario']); ?>">
-
-                    <div class="input-group-addon">
-                      <i class="fa fa-clock-o"></i>
-                    </div>
-                  </div>
-                  <!-- /.input group -->
-                </div>
-              <!-- /.form-group -->
-              <div class="form-group">
-                   <label>Puesto Asignado:</label>
-
-               		<select id="puesto"  class="form-control" name="puesto_ticket"></select>
-
-              </div>
               <!-- /.form-group -->
                     <div class="form-group">
                    <label>Prioridad:</label>
@@ -283,14 +324,14 @@ imagejpeg($lienzo, $destino1, 80);
             </div>-->
                  <div class="col-md-9">
   		<div class = "form-group">
-					<label>Descripcion:</label>
+					<label>Requerimiento:</label>
                   <textarea class="form-control" rows="4"  name="descripcion_ticket" placeholder="Por favor de Describir el problema que presenta"  pattern="[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-]+{1,400}" ></textarea>
 						</div></div>
                     
               <div class="col-md-9">
               <div class="form-group">
                   <label for="exampleInputFile">Subir Imagen:</label>
-                  <input id="file_url" type="file" name="foto" id="foto">
+ <input id="file_url" name="foto1" type="file" id="foto1">
                   <p class="help-block">Formatos Soportado Jpg, Png y Gif</p>
                 <img id="img_destino" alt="Tu imagen" width="300" class="img-responsive" >
                 <!-- /.input group -->
@@ -348,38 +389,79 @@ imagejpeg($lienzo, $destino1, 80);
 <?php
 }
 ?>
-		<script>
-			$("document").ready(function(){
-				$( "#departamento" ).load( "./admin/departamento.php" );
-                	$( "#puesto" ).load( "./admin/puesto.php" );
-                $( "#asunto" ).load( "./admin/asunto-consulta.php" );
+		<script type="text/javascript">
+$(document).ready(function(){
+    $('#departamento').on('change',function(){
+        var departamentoID = $(this).val();
+        if(departamentoID){
+            $.ajax({
+                type:'POST',
+                url:'./sentencias/select-departamento-puesto.php',
+                data:'departamento_id='+departamentoID,
+                success:function(html){
+                    $('#puesto').html(html);
+                    $('#asunto').html('<option value="">Seleccione departamento primero</option>'); 
+                    $('#nombre_asignado').html('<option value="">Seleccione nombre primero</option>'); 
+                     $('#email_asignado').html('<option value="">Seleccione email primero</option>'); 
+                }
+            }); 
+        }else{
+            $('#puesto').html('<option value="">Seleccione puesto primero</option>');
+            $('#asunto').html('<option value="">Seleccione asunto primero</option>'); 
+            $('#nombre_asignado').html('<option value="">Seleccione nombre primero</option>'); 
+            $('#email_asignado').html('<option value="">Seleccione email primero</option>'); 
+        }
+    });
+    
+    $('#puesto').on('change',function(){
+        var puestoID = $(this).val();
+        if(puestoID){
+            $.ajax({
+                type:'POST',
+                url:'./sentencias/select-departamento-puesto.php',
+                data:'puesto_id='+puestoID,
+                success:function(html){
+                    $('#asunto').html(html);
+                }
+            }); 
+        }else{
+            $('#asunto').html('<option value="">Seleccione puesto primero</option>'); 
+        }
+    });
+        $('#puesto').on('change',function(){
+        var puestoID = $(this).val();
+        if(puestoID){
+            $.ajax({
+                type:'POST',
+                url:'./sentencias/select-departamento-puesto.php',
+                data:'id_puesto='+puestoID,
+                success:function(html){
+                    $('#nombre_asignado').html(html);
+                }
+            }); 
+        }else{
+            $('#nombre_asignado').html('<option value="">Seleccione puesto primero</option>'); 
+        }
+    });
 
-				$("#departamento").change(function(){
-					var id = $("#departamento").val();
-					$.get("./admin/puesto.php",{param_id:id})
-					.done(function(data){
-						$("#puesto").html(data);
-					})
-				})
-              $("#puesto").change(function(){
-					var id = $("#puesto").val();
-					$.get("./admin/nombre.php",{param_id:id})
-					.done(function(data){
-						$("#usuario").html(data);
-					})
-				})
-			
-            
-              $("#puesto").change(function(){
-					var id = $("#puesto").val();
-					$.get("./admin/asunto-consulta.php",{param_id:id})
-					.done(function(data){
-						$("#asunto").html(data);
-					})
-				})
-			})
-		</script>
-<script>
+            $('#puesto').on('change',function(){
+        var puestoID = $(this).val();
+        if(puestoID){
+            $.ajax({
+                type:'POST',
+                url:'./sentencias/select-departamento-puesto.php',
+                data:'idpuesto='+puestoID,
+                success:function(html){
+                    $('#email_asignado').html(html);
+                }
+            }); 
+        }else{
+            $('#email_asignado').html('<option value="">Seleccione puesto primero</option>'); 
+        }
+    });
+});
+</script>
+ <script>
 function mostrarImagen(input) {
  if (input.files && input.files[0]) {
   var reader = new FileReader();

@@ -1,35 +1,41 @@
 <?php include "./lib/config2.php"; if($_SESSION['email']!="" && $_SESSION['rol']=="2"){ ?>  
-
+<?php include('./sentencias/consulta.php');?>
         <?php     
             /* Todos los asuntos */
             $num=Mysql::consulta("SELECT G.grado,EL.nombre, EL.apellidos,P.puesto,A.asunto,A.estatus_a FROM asunto AS A
-  INNER JOIN puestos AS P ON  A.id_puesto = P.id_puesto  
-  INNER JOIN empleado_laboral AS EL ON EL.id_puesto = P.id_puesto 
-  INNER JOIN usuario AS U  ON   U.id_laboral = EL.idlaboral
-  INNER JOIN empleado_personal AS EP ON  U.id_personal = EP.idpersonal
-  INNER JOIN departamento AS D ON EL.id_departamento = D.id_departamento
-  INNER JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado");
+  LEFT JOIN puestos AS P ON  A.idpuesto = P.id_puesto 
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento 
+  LEFT JOIN empleado_laboral AS EL ON EL.idpuesto = P.id_puesto 
+  LEFT JOIN usuario AS U  ON   U.idusuario = EL.idusuario
+  LEFT JOIN empleado_personal AS EP ON  U.idusuario = EP.idusuario
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado");
       $total_asunto = mysqli_num_rows($num);
             /* Altas asuntos*/
             $alta_asunto=Mysql::consulta("SELECT G.grado,EL.nombre, EL.apellidos,P.puesto,A.asunto,A.estatus_a FROM asunto AS A
-  INNER JOIN puestos AS P ON  A.id_puesto = P.id_puesto  
-  INNER JOIN empleado_laboral AS EL ON EL.id_puesto = P.id_puesto 
-  INNER JOIN usuario AS U  ON   U.id_laboral = EL.idlaboral
-  INNER JOIN empleado_personal AS EP ON  U.id_personal = EP.idpersonal
-  INNER JOIN departamento AS D ON EL.id_departamento = D.id_departamento
-  INNER JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado WHERE estatus_a = 1");
+  LEFT  JOIN puestos AS P ON  A.idpuesto = P.id_puesto 
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento 
+  LEFT JOIN empleado_laboral AS EL ON EL.idpuesto = P.id_puesto 
+  LEFT JOIN usuario AS U  ON   U.idusuario = EL.idusuario
+  LEFT JOIN empleado_personal AS EP ON  U.idusuario = EP.idusuario
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado WHERE estatus_a = 1");
             $num_baja_alta = mysqli_num_rows($alta_asunto);
               /* Baja Asunto*/
             $baja_asunto=Mysql::consulta("SELECT G.grado,EL.nombre, EL.apellidos,P.puesto,A.asunto,A.estatus_a FROM asunto AS A
-  INNER JOIN puestos AS P ON  A.id_puesto = P.id_puesto  
-  INNER JOIN empleado_laboral AS EL ON EL.id_puesto = P.id_puesto 
-  INNER JOIN usuario AS U  ON   U.id_laboral = EL.idlaboral
-  INNER JOIN empleado_personal AS EP ON  U.id_personal = EP.idpersonal
-  INNER JOIN departamento AS D ON EL.id_departamento = D.id_departamento
-  INNER JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado WHERE estatus_a = 0");
+  LEFT  JOIN puestos AS P ON  A.idpuesto = P.id_puesto 
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento 
+  LEFT JOIN empleado_laboral AS EL ON EL.idpuesto = P.id_puesto 
+  LEFT JOIN usuario AS U  ON   U.idusuario = EL.idusuario
+  LEFT JOIN empleado_personal AS EP ON  U.idusuario = EP.idusuario
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado WHERE estatus_a = 0");
             $num_baja_asunto = mysqli_num_rows($baja_asunto);
           
         ?>
+ <?php
+//Get all departamento data
+$query = mysqli_query($con,"SELECT * FROM departamento WHERE estatus_dep = 1 LIMIT 1,10");
+//Count total number of rows
+$rowCount = $query-> num_rows;
+?>
 <div class="wrapper">
   <!-- Main Header -->
   <?php include "./inc/main-header.php"; ?>  
@@ -55,8 +61,8 @@
          <div class="row">
                     <div class="col-md-12 text-center">
                         <ul class="nav nav-pills nav-justified">
-                        <li ><a href="./admin.php?view=asunto-ticket"><i class="glyphicon glyphicon-flag"></i>&nbsp;&nbsp;Todos&nbsp;&nbsp;<span class="badge label label-info"><?php echo $total_asunto; ?></span></a></li>
-                        <li><a href="./admin.php?view=alta-asunto-ticket"><i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Alta Asunto&nbsp;&nbsp;<span class=" badge label label-primary"><?php echo $num_baja_alta; ?></span></a></li>
+                        <li ><a href="./admin.php?view=asunto-ticket&ticket=all"><i class="glyphicon glyphicon-flag"></i>&nbsp;&nbsp;Todos&nbsp;&nbsp;<span class="badge label label-info"><?php echo $total_asunto; ?></span></a></li>
+                        <li><a href="./admin.php?view=asunto-ticket&ticket=pending"><i class="glyphicon glyphicon-ok"></i>&nbsp;&nbsp;Alta Asunto&nbsp;&nbsp;<span class=" badge label label-primary"><?php echo $num_baja_alta; ?></span></a></li>
                         <li><a href="./admin.php?view=baja-asunto-ticket"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Baja Asunto&nbsp;&nbsp;<span class=" badge label label-danger"><?php echo $num_baja_asunto; ?></span></a></li>
                         </ul>
                     </div>
@@ -80,7 +86,7 @@
               </div>
                       <?php
                         include("modal/alta_asunto.php");
-                    ?>  
+                    ?>
       <div class="col-sm-3 pull-right form-group">
           <form action="buscar-asunto.php" method="get" class="form_search" >
 <div class="form-group">
@@ -111,25 +117,57 @@
                                 $regpagina = 15;
                                 $inicio = ($pagina > 1) ? (($pagina * $regpagina) - $regpagina) : 0;
 
-                                $selusers=mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM asunto AS A
-  INNER JOIN puestos AS P ON  A.id_puesto = P.id_puesto  
-  INNER JOIN empleado_laboral AS EL ON EL.id_puesto = P.id_puesto 
-  INNER JOIN usuario AS U  ON   U.id_laboral = EL.idlaboral
-  INNER JOIN empleado_personal AS EP ON  U.id_personal = EP.idpersonal
-  INNER JOIN departamento AS D ON EL.id_departamento = D.id_departamento
-  INNER JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado ORDER BY id_asunto DESC  LIMIT $inicio, $regpagina");
+                         
+                                                                                       
+                                if(isset($_GET['ticket'])){
+                                    if($_GET['ticket']=="all"){
+                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM asunto AS A
+  LEFT  JOIN puestos AS P ON  A.idpuesto = P.id_puesto 
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento 
+  LEFT JOIN empleado_laboral AS EL ON EL.idpuesto = P.id_puesto 
+  LEFT JOIN usuario AS U  ON   U.idusuario = EL.idusuario
+  LEFT JOIN empleado_personal AS EP ON  U.idusuario = EP.idusuario
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado ORDER BY id_asunto DESC LIMIT $inicio, $regpagina";
+                                    }elseif($_GET['ticket']=="pending"){
+                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM asunto AS A
+  LEFT  JOIN puestos AS P ON  A.idpuesto = P.id_puesto 
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento 
+  LEFT JOIN empleado_laboral AS EL ON EL.idpuesto = P.id_puesto 
+  LEFT JOIN usuario AS U  ON   U.idusuario = EL.idusuario
+  LEFT JOIN empleado_personal AS EP ON  U.idusuario = EP.idusuario
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado WHERE estatus_a = 1 LIMIT $inicio, $regpagina";
+                                    }else{
+                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM asunto AS A
+  LEFT  JOIN puestos AS P ON  A.idpuesto = P.id_puesto 
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento 
+  LEFT JOIN empleado_laboral AS EL ON EL.idpuesto = P.id_puesto 
+  LEFT JOIN usuario AS U  ON   U.idusuario = EL.idusuario
+  LEFT JOIN empleado_personal AS EP ON  U.idusuario = EP.idusuario
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado LIMIT $inicio, $regpagina";
+                                    }
+                                }else{
+                                    $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM asunto AS A
+  LEFT  JOIN puestos AS P ON  A.idpuesto = P.id_puesto 
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento 
+  LEFT JOIN empleado_laboral AS EL ON EL.idpuesto = P.id_puesto 
+  LEFT JOIN usuario AS U  ON   U.idusuario = EL.idusuario
+  LEFT JOIN empleado_personal AS EP ON  U.idusuario = EP.idusuario
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado LIMIT $inicio, $regpagina";
+                                }
 
+                                $selticket=mysqli_query($mysqli,$consulta);
                                 $totalregistros = mysqli_query($mysqli,"SELECT FOUND_ROWS()");
                                 $totalregistros = mysqli_fetch_array($totalregistros, MYSQLI_ASSOC);
                         
                                 $numeropaginas = ceil($totalregistros["FOUND_ROWS()"]/$regpagina);
-                                if(mysqli_num_rows($selusers)>0):
+                                if(mysqli_num_rows($selticket)>0):
                             ?>
                                  <table class="table table-hover">
                                   <thead>
                                     <tr>
                                         <th class="text-center">#</th>
                                          <th class="text-center">Nombre completo</th>
+                                         <th class="text-center">Departamento</th>
                                          <th class="text-center">Puesto</th>
                                         <th class="text-center">Asunto Asigando</th>
                                         <th class="text-center">Estatus</th>
@@ -139,30 +177,40 @@
                                <tbody>
                                    <?php
                                         $ct=$inicio+1;
-                                        while ($row=mysqli_fetch_array($selusers, MYSQLI_ASSOC)): 
+                                        while ($asunto=mysqli_fetch_array($selticket, MYSQLI_ASSOC)): 
+                            $iduser=$asunto['idusuario'];
+							$g=$asunto['grado'];
+							$n=$asunto['nombre'];
+							$a=$asunto['apellidos'];
+							$u=$asunto['usuario'];
+							$fp=$asunto['foto_perfil'];
+                            $d=$asunto['departamento'];	
+                            $pu=$asunto['puesto'];	
+                            $em=$asunto['email_usuario'];
                                     ?>
                                     <tr>
                                         <td class="text-center" scope="row" data-label="Registro"><?php echo $ct; ?></td>
-                                        <td class="text-center" data-label="Nombre Completo:"><?php echo $row['grado']; ?> <?php echo $row['nombre']; ?> <?php echo $row['apellidos']; ?></td>
-                                        <td class="text-center" data-label="asunto:"><?php echo $row['puesto']; ?></td>
-                                        <td class="text-center" data-label="asunto:"><?php echo utf8_decode($row['asunto']); ?></td>
+                                        <td class="text-center" data-label="Nombre Completo:"><?php echo $g?> <?php echo $n; ?> <?php echo $a?></td>
+                                        <td class="text-center" data-label="Departamento:"><?php echo $d?></td>
+                                        <td class="text-center" data-label="Puesto:"><?php echo $pu?></td>
+                                        <td class="text-center" data-label="asunto:"><?php echo utf8_decode($asunto['asunto']); ?></td>
                                           <td class="text-center" data-label="Solicitado:">
                                         <?php //pintamos de colorores los estados la actividad
-	switch ($row['estatus_a'])
+	switch ($asunto['estatus_a'])
 	{
 	case "1":
-		echo '<span class="label label-primary">'.($row["estatus_a"]= "Alta").'</span>';
+		echo '<span class="label label-primary">'.($asunto["estatus_a"]= "Alta").'</span>';
 		break;
         case "0":
-        echo '<span class="label label-danger">'.$row["estatus_a"]= "Baja".'</span>';
+        echo '<span class="label label-danger">'.$asunto["estatus_a"]= "Baja".'</span>';
        break;
 	}
 	?></td>
                                         <td class="text-center" data-label="Opciones:">
-                                      	<a href="#edit<?php echo $row['id_asunto']; ?>" data-toggle="modal" class="btn btn-sm btn-warning red-tooltip edit_data" data-toggle="tooltip" data-placement="right" id="tooltipex" title="Editar Asunto"><span class="glyphicon glyphicon-edit" ></span></a> 
-							<a href="#del<?php echo $row['id_asunto']; ?>" data-toggle="modal" class="btn btn-sm btn-danger" aria-hidden="true" data-toggle="tooltip" data-placement="left" id="tooltipex" title="Dar de Baja Asunto"><span class="glyphicon glyphicon-trash"></span></a>
+                                      	<a href="#edit<?php echo $asunto['id_asunto']; ?>" data-toggle="modal" class="btn btn-sm btn-warning red-tooltip edit_data" data-toggle="tooltip" data-placement="right" id="tooltipex" title="Editar Asunto"><span class="glyphicon glyphicon-edit" ></span></a> 
+							<a href="#del<?php echo $asunto['id_asunto']; ?>" data-toggle="modal" class="btn btn-sm btn-danger" aria-hidden="true" data-toggle="tooltip" data-placement="left" id="tooltipex" title="Dar de Baja Asunto"><span class="glyphicon glyphicon-trash"></span></a>
                                             
-                                    <?php include('modal/edit_asunto.php'); ?>
+                                    <?php include('./modal/edit_asunto.php'); ?>
                                     </td>
                                     </tr>
                                     <?php
@@ -229,10 +277,9 @@
     </section>
     <!-- /.content -->
   </div>
-
   <!-- Main Footer -->
 <?php include "./inc/footer.php"; ?> 
- 
+
   <!-- Add the sidebar's background. This div must be placed
   immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
@@ -291,7 +338,27 @@ $(document).ready(function(){
   $("a").tooltip();
 });
 </script>
-
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#departamento').on('change',function(){
+        var departamentoID = $(this).val();
+        if(departamentoID){
+            $.ajax({
+                type:'POST',
+                url:'./sentencias/select-departamento-puesto.php',
+                data:'departamento_id='+departamentoID,
+                success:function(html){
+                    $('#puesto').html(html);
+                
+                }
+            }); 
+        }else{
+            $('#puesto').html('<option value="">Seleccione puesto primero</option>');
+        }
+    });
+    
+});
+</script>
 
     <script>
 

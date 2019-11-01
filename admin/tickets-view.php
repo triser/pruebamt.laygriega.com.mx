@@ -1,4 +1,5 @@
 <?php if($_SESSION['email']!="" && $_SESSION['rol']=="2"){ ?>  
+<?php include('./sentencias/consulta.php');?>
   <?php     $status='estatus'; if ($status=1){$status_f="Activo";}else {$status_f="Baja";}  ?>
         <?php 
             if(isset($_POST['id_del'])){
@@ -29,59 +30,61 @@
             }
 
  /* Todos los tickets*/
-        $num_ticket_all=Mysql::consulta("
-SELECT* FROM tickets AS T
+        $num_ticket_all=Mysql::consulta("SELECT* FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
-   INNER JOIN puestos AS PU ON  A.id_puesto = PU.id_puesto
-    INNER JOIN empleado_laboral AS EL ON  EL.id_puesto = PU.id_puesto
-     INNER JOIN usuario AS U ON U.id_laboral = EL.idlaboral ORDER BY id DESC");
+  INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  INNER JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
+  INNER JOIN usuario AS U ON U.idusuario = EL.idusuario ORDER BY id DESC");
                 $num_total_all=mysqli_num_rows($num_ticket_all);
 
                 /* Tickets pendientes*/
-                $num_ticket_pend=Mysql::consulta("
-SELECT* FROM tickets AS T
+                $num_ticket_pend=Mysql::consulta("SELECT* FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
-   INNER JOIN puestos AS PU ON  A.id_puesto = PU.id_puesto
-    INNER JOIN empleado_laboral AS EL ON  EL.id_puesto = PU.id_puesto
-     INNER JOIN usuario AS U ON U.id_laboral = EL.idlaboral WHERE estatus_tk='Pendiente'");
+  INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  INNER JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
+  INNER JOIN usuario AS U ON U.idusuario = EL.idusuario WHERE estatus_tk='Pendiente'");
                 $num_total_pend=mysqli_num_rows($num_ticket_pend);
 
                 /* Tickets en proceso*/
-                $num_ticket_proceso=Mysql::consulta("
-SELECT* FROM tickets AS T
+                $num_ticket_proceso=Mysql::consulta("SELECT* FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
-   INNER JOIN puestos AS PU ON  A.id_puesto = PU.id_puesto
-    INNER JOIN empleado_laboral AS EL ON  EL.id_puesto = PU.id_puesto
-     INNER JOIN usuario AS U ON U.id_laboral = EL.idlaboral WHERE estatus_tk='En proceso'");
+  INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  INNER JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
+  INNER JOIN usuario AS U ON U.idusuario = EL.idusuario WHERE estatus_tk='En proceso'");
                 $num_total_proceso=mysqli_num_rows($num_ticket_proceso);
 
                 /* Tickets resueltos*/
-                $num_ticket_res=Mysql::consulta("
-SELECT* FROM tickets AS T
+                $num_ticket_res=Mysql::consulta("SELECT* FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
-   INNER JOIN puestos AS PU ON  A.id_puesto = PU.id_puesto
-    INNER JOIN empleado_laboral AS EL ON  EL.id_puesto = PU.id_puesto
-     INNER JOIN usuario AS U ON U.id_laboral = EL.idlaboral WHERE estatus_tk='Resuelto'");
+  INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  INNER JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
+  INNER JOIN usuario AS U ON U.idusuario = EL.idusuario WHERE estatus_tk='Resuelto'");
                 $num_total_res=mysqli_num_rows($num_ticket_res);
                 
                  /* Tickets resueltos*/
                 $num_ticket_can=Mysql::consulta("SELECT* FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
-   INNER JOIN puestos AS PU ON  A.id_puesto = PU.id_puesto
-    INNER JOIN empleado_laboral AS EL ON  EL.id_puesto = PU.id_puesto
-     INNER JOIN usuario AS U ON U.id_laboral = EL.idlaboral WHERE estatus_tk='Cancelado'");
+  INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  INNER JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
+  INNER JOIN usuario AS U ON U.idusuario = EL.idusuario WHERE estatus_tk='Cancelado'");
                 $num_total_can=mysqli_num_rows($num_ticket_can);
             ?>
+
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -90,7 +93,7 @@ SELECT* FROM tickets AS T
   <?php include "./inc/main-sidebar.php"; ?>  
   <!-- Content Wrapper. Contains page content -->
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+    <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -169,65 +172,72 @@ SELECT* FROM tickets AS T
                                     if($_GET['ticket']=="all"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
-   INNER JOIN puestos AS PU ON  A.id_puesto = PU.id_puesto
-    INNER JOIN empleado_laboral AS EL ON  EL.id_puesto = PU.id_puesto
-     INNER JOIN usuario AS U ON U.id_laboral = EL.idlaboral
+  INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  INNER JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
+  INNER JOIN usuario AS U ON U.idusuario = EL.idusuario
      ORDER BY id DESC LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="pending"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
-   INNER JOIN puestos AS PU ON  A.id_puesto = PU.id_puesto
-    INNER JOIN empleado_laboral AS EL ON  EL.id_puesto = PU.id_puesto
-     INNER JOIN usuario AS U ON U.id_laboral = EL.idlaboral
+  INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  INNER JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
+  INNER JOIN usuario AS U ON U.idusuario = EL.idusuario
      WHERE estatus_tk='Pendiente' LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="process"){
-                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM FROM tickets AS T
+                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
-   INNER JOIN puestos AS PU ON  A.id_puesto = PU.id_puesto
-    INNER JOIN empleado_laboral AS EL ON  EL.id_puesto = PU.id_puesto
-     INNER JOIN usuario AS U ON U.id_laboral = EL.idlaboral
+  INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  INNER JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
+  INNER JOIN usuario AS U ON U.idusuario = EL.idusuario
      WHERE estatus_tk='En proceso' LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="resolved"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
-   INNER JOIN puestos AS PU ON  A.id_puesto = PU.id_puesto
-    INNER JOIN empleado_laboral AS EL ON  EL.id_puesto = PU.id_puesto
-     INNER JOIN usuario AS U ON U.id_laboral = EL.idlaboral
+  INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  INNER JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
+  INNER JOIN usuario AS U ON U.idusuario = EL.idusuario
      WHERE estatus_tk='Resuelto' LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="cancelled"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
-   INNER JOIN puestos AS PU ON  A.id_puesto = PU.id_puesto
-    INNER JOIN empleado_laboral AS EL ON  EL.id_puesto = PU.id_puesto
-     INNER JOIN usuario AS U ON U.id_laboral = EL.idlaboral
+  INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  INNER JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
+  INNER JOIN usuario AS U ON U.idusuario = EL.idusuario
      WHERE estatus_tk='Cancelado' LIMIT $inicio, $regpagina";
                                     }else{
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
-   INNER JOIN puestos AS PU ON  A.id_puesto = PU.id_puesto
-    INNER JOIN empleado_laboral AS EL ON  EL.id_puesto = PU.id_puesto
-     INNER JOIN usuario AS U ON U.id_laboral = EL.idlaboral ticket ORDER BY id DESC LIMIT $inicio, $regpagina";
+  INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  INNER JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
+  INNER JOIN usuario AS U ON U.idusuario = EL.idusuario ORDER BY id DESC LIMIT $inicio, $regpagina";
                                     }
                                 }else{
                                     $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
-   INNER JOIN puestos AS PU ON  A.id_puesto = PU.id_puesto
-    INNER JOIN empleado_laboral AS EL ON  EL.id_puesto = PU.id_puesto
-     INNER JOIN usuario AS U ON U.id_laboral = EL.idlaboral ORDER BY id DESC LIMIT $inicio, $regpagina";
+  INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  INNER JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
+  INNER JOIN usuario AS U ON U.idusuario = EL.idusuario ORDER BY id DESC LIMIT $inicio, $regpagina";
                                 }
 
 
@@ -246,8 +256,9 @@ SELECT* FROM tickets AS T
                                         <th class="text-center" scope="col">#</th>
                                         <th class="text-center" scope="col">F.Apertura</th>
                                         <th class="text-center" scope="col">Serie</th>
-                                            <th class="text-center" scope="col">Nombre del Solicitante</th>
+                                        <th class="text-center" scope="col">Nombre del Solicitante</th>
                                         <th class="text-center" scope="col">Estado</th>
+                                         <th class="text-center" scope="col">Nombre del Destinatario</th>
                                         <th class="text-center" scope="col">Puesto Solicitado</th>
                                         <th class="text-center" scope="col">Prioridad</th>
                                         <th class="text-center" scope="col">Imagen</th>
@@ -264,7 +275,7 @@ SELECT* FROM tickets AS T
                                        <td class="text-center" scope="row" data-label="Registro"><?php echo $ct; ?></td>
                                         <td class="text-center" data-label="F.Apertura:"><?php echo $row['fecha_alta']; ?></td>
                                         <td class="text-center" data-label="Serie:"><?php echo $row['serie']; ?></td>
-                                        <td class="text-center" data-label="Nombre del Solicitante:"><?php echo $row['nombre']; ?></td>
+                                        <td class="text-center" data-label="Nombre del Solicitante:"><?php echo $row['grado']; ?>  <?php echo $row['nombre']; ?> <?php echo $row['apellidos']; ?></td>
                                                                 <td class="text-center" data-label="Estado:"><?php 
 	//pintamos de colorores los estados del ticket
 	switch ($row['estatus_tk'])
@@ -284,7 +295,8 @@ SELECT* FROM tickets AS T
 	}
 
 	?>
-                                          <td class="text-center" data-label="Puesto Asignado:"><?php echo $row['puesto']; ?></td>             
+                                         <td class="text-center" data-label="Nombre del Destinatario:"><?php echo $row['asignado']; ?></td>   
+                                       <td class="text-center" data-label="Puesto Asignado:"><?php echo $row['puesto']; ?></td>             
                                        <td class="text-center" data-label="Prioridad:"><?php 
 	//pintamos de colorores los estados del ticket
 	switch ($row['prioridad'])
@@ -375,32 +387,43 @@ SELECT* FROM tickets AS T
                         </nav>
                         <?php endif; ?>
 
-                    </div>
-                </div>
-            </div><!--container principal-->
-
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+ 
+  <!-- Main Footer -->
+<?php include "./inc/footer.php"; ?> 
+ 
+  <!-- Add the sidebar's background. This div must be placed
+  immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+   </div>
+<!-- ./wrapper -->
 <?php
 }else{
 ?>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4">
-                    <img src="./img/Stop.png" alt="Image" class="img-responsive animated slideInDown"/><br>
-                    <img src="./img/SadTux.png" alt="Image" class="img-responsive"/>
-                    
-                </div>
-                <div class="col-sm-7 animated flip">
-                    <h1 class="text-danger">Lo sentimos esta página es solamente para administradores del Sistema OM La Y Griega</h1>
-                    <h3 class="text-info text-center">Inicia sesión como administrador para poder acceder</h3>
-                </div>
-                <div class="col-sm-1">&nbsp;</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="img/Stop.png" alt="Image" class="img-responsive animated slideInDown"/><br>
+                <img src="img/SadTux.png" alt="Image" class="img-responsive"/>
             </div>
+            <div class="col-sm-7 animated flip">
+                <h1 class="text-danger">Lo sentimos esta página es solamente para usuarios del Sitema OT LA Y GRIEGA</h1>
+                <h3 class="text-info text-center"><a href="index.php"> Inicia sesión para poder acceder</a></h3>
+            </div>
+            <div class="col-sm-1">&nbsp;</div>
         </div>
-     
-    
+    </div>
 <?php
 }
-?>   <script type="text/javascript">
+?>
+<script type="text/javascript">
     lightbox.option({
       'resizeDuration': 200,
       'wrapAround': true

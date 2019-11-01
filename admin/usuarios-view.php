@@ -1,4 +1,4 @@
-<?php if($_SESSION['email']!="" && $_SESSION['rol']){ ?>  
+<?php include './lib/config2.php'; if($_SESSION['email']!="" && $_SESSION['rol']){ ?>  
 <?php include('./sentencias/consulta.php');?>
   <?php     $status='estatus'; if ($status=1){$status_f="Activo";}else {$status_f="Baja";}  ?>
         <?php 
@@ -30,25 +30,34 @@
             }
 
             /* Todos los users*/
-            $num_user=Mysql::consulta(" SELECT U.idusuario,GE.grado ,EL.nombre,EL.apellidos,U.email_usuario,D.departamento,P.puesto,U.usuario,U.foto_perfil,R.rol,U.estatus,U.fecha_alta_sis,U.fecha_update
-FROM  usuario AS U
+            $num_user=Mysql::consulta("SELECT U.idusuario,G.grado ,EL.nombre,EL.apellidos,U.email_usuario,D.departamento,P.puesto,U.usuario,U.foto_perfil,R.rol,U.estatus,U.fecha_alta_sis,U.fecha_update
+FROM usuario AS U 
  LEFT JOIN rol AS R  ON U.rol = R.idrol
-  LEFT JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idlaboral
- LEFT JOIN puestos AS P ON   EL.id_puesto = P.id_puesto
-  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento
-  LEFT JOIN grado_estudio AS GE ON EL.id_grado = GE.id_grado WHERE estatus = 1");
+  LEFT JOIN empleado_laboral AS EL ON  EL.idusuario = U.idusuario 
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado= G.id_grado
+ LEFT JOIN puestos AS P ON   EL.idpuesto = P.id_puesto
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento WHERE estatus = 1");
             $num_total_user = mysqli_num_rows($num_user);
               /* Todos los users abaja*/
-            $num_user=Mysql::consulta(" SELECT U.idusuario,GE.grado ,EL.nombre,EL.apellidos,U.email_usuario,D.departamento,P.puesto,U.usuario,U.foto_perfil,R.rol,U.estatus,U.fecha_alta_sis,U.fecha_update
-FROM  usuario AS U
+            $num_user=Mysql::consulta("SELECT U.idusuario,G.grado ,EL.nombre,EL.apellidos,U.email_usuario,D.departamento,P.puesto,U.usuario,U.foto_perfil,R.rol,U.estatus,U.fecha_alta_sis,U.fecha_update
+FROM usuario AS U 
  LEFT JOIN rol AS R  ON U.rol = R.idrol
-  LEFT JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idlaboral
- LEFT JOIN puestos AS P ON   EL.id_puesto = P.id_puesto
-  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento
-  LEFT JOIN grado_estudio AS GE ON EL.id_grado = GE.id_grado WHERE estatus = 0");
+  LEFT JOIN empleado_laboral AS EL ON  EL.idusuario = U.idusuario 
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado= G.id_grado
+ LEFT JOIN puestos AS P ON   EL.idpuesto = P.id_puesto
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento WHERE estatus = 0");
             $num_total_baja = mysqli_num_rows($num_user);
           
         ?>
+ <?php
+
+//Get all departamento data
+$query = mysqli_query($con,"SELECT * FROM departamento WHERE estatus_dep = 1");
+
+//Count total number of rows
+$rowCount = $query-> num_rows;
+?>
+
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -129,12 +138,12 @@ FROM  usuario AS U
                                 $regpagina = 15;
                                 $inicio = ($pagina > 1) ? (($pagina * $regpagina) - $regpagina) : 0;
 
-                                $selusers=mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM  usuario AS U
+                                $selusers=mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM usuario AS U 
  LEFT JOIN rol AS R  ON U.rol = R.idrol
-  LEFT JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idlaboral
- LEFT JOIN puestos AS P ON   EL.id_puesto = P.id_puesto
-  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento
-  LEFT JOIN grado_estudio AS GE ON EL.id_grado = GE.id_grado WHERE estatus
+  LEFT JOIN empleado_laboral AS EL ON  EL.idusuario = U.idusuario 
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado= G.id_grado
+ LEFT JOIN puestos AS P ON   EL.idpuesto = P.id_puesto
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento WHERE estatus
    = 1 ORDER BY U.idusuario LIMIT $inicio, $regpagina");
 
                                 $totalregistros = mysqli_query($mysqli,"SELECT FOUND_ROWS()");
@@ -162,15 +171,24 @@ FROM  usuario AS U
                                    <?php
                                         $ct=$inicio+1;
                                         while ($row=mysqli_fetch_array($selusers, MYSQLI_ASSOC)): 
+                            $iduser=$row['idusuario'];
+							$g=$row['grado'];
+							$n=$row['nombre'];
+							$a=$row['apellidos'];
+							$u=$row['usuario'];
+							$fp=$row['foto_perfil'];
+                            $d=$row['departamento'];	
+                            $pu=$row['puesto'];	
+                            $em=$row['email_usuario'];	
                                     ?>
                                     <tr>
                                         <td class="text-center" scope="row" data-label="Registro"><?php echo $ct; ?></td>
-                                        <td class="text-center" data-label="NOmbre:"><?php echo $row['grado']; ?> <?php echo $row['nombre']; ?> <?php echo $row['apellidos']; ?></td>
-                                        <td class="text-center" data-label="NOmbre:"><?php echo $row['usuario']; ?></td>
-                                         <td class="text-center" data-label="Foto:"> <a class="example-image-link" href="img/profiles/<?php echo $row['foto_perfil']; ?>" data-lightbox="example-set" data-title="<?php echo $row['nombre']; ?>"><img class="example-image" src="img/profiles/<?php echo $row['foto_perfil']; ?>" width="25" height="25"  alt=""/></a>
-                                        <td class="text-center" data-label="Area:"><?php echo $row['departamento']; ?></td>
-                                         <td class="text-center" data-label="Prioridad:"><?php echo $row['puesto']; ?> </td>
-                                        <td class="text-center" data-label="Solicitado:"><?php echo $row['email_usuario']; ?></td>
+                                        <td class="text-center" data-label="NOmbre:"><?php echo $g; ?> <?php echo $n; ?> <?php echo $a; ?></td>
+                                        <td class="text-center" data-label="NOmbre:"><?php echo $u; ?></td>
+                                         <td class="text-center" data-label="Foto:"> <a class="example-image-link" href="img/profiles/<?php echo $fp; ?>" data-lightbox="example-set" data-title="<?php echo $n; ?>"><img class="example-image" src="img/profiles/<?php echo $row['foto_perfil']; ?>" width="25" height="25"  alt=""/></a>
+                                        <td class="text-center" data-label="Area:"><?php echo $d ?></td>
+                                         <td class="text-center" data-label="Prioridad:"><?php echo $pu;?> </td>
+                                        <td class="text-center" data-label="Solicitado:"><?php echo $em; ?></td>
                                           <td class="text-center" data-label="Solicitado:">                                        <?php //pintamos de colorores los estados la actividad
 	switch ($row['rol'])
 	{
@@ -188,11 +206,11 @@ FROM  usuario AS U
                                           <td class="text-center" data-label="Solicitado:"><?php echo $status_f; ?></td>
                                         <td class="text-center" data-label="Opciones:">
                                         <button type="button" name="view" value="view" id="<?php echo $row["idusuario"]; ?>" class="btn btn-sm btn-default view_data "><span class="glyphicon glyphicon-eye-open"></span></button>
-                                        <a href="admin.php?view=edit-usuario&id=<?php echo $row['idusuario']; ?>" 
+                                           <a href="admin.php?view=edit-usuario&id=<?php echo $iduser; ?>" 
                                             class="btn btn-sm btn btn-info red-tooltip" data-toggle="tooltip" data-placement="right" id="tooltipex" title="Editar Usuario"><span class="glyphicon glyphicon-edit"></span></a>
-                                   <a href="edit.php?nik=<?php echo $row['idusuario']; ?>" title="Editar datos" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                                            <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-default<?php echo $row['idusuario']; ?>"><i class="fa fa-trash-o" aria-hidden="true" data-toggle="tooltip" data-placement="left" id="tooltipex" title="Eliminar Usuario"></i></a>
-
+                                                    <?php include('modal/laboral.php'); ?>
+                                          
                                         </td> 
                                      
                             <!------------------------ Inicio modal --------------------------------------->
@@ -214,9 +232,21 @@ FROM  usuario AS U
           <br>
               <hr>
               <p>Numero Fila: <span class="spantext"><?php echo $ct; ?></span></p>
-              <p>Nombre: <span class="spantext"><?php echo $row['descrip_titulo']; ?> <?php echo $row['nombre']; ?></span></p>
+              <p>Nombre: <span class="spantext"><?php echo $row['grado']; ?> <?php echo $row['nombre']; ?> <?php echo $row['apellidos']; ?></span></p>
 			<p>usuario: <span class="spantext"><?php echo $row['email_usuario']; ?></span></p>
-			<p>Tipo Usuario: <span class="spantext"><?php echo $row['rol']; ?></span></p>
+			<p>Tipo Usuario: <span class="spantext"> <?php //pintamos de colorores los estados la actividad
+	switch ($row['rol'])
+	{
+	case "Usuarios":
+		echo '<span class="label label-primary">'.$row["rol"]= "Usuarios".'</span>';
+		break;
+        case "Administrador":
+        echo '<span class="label label-danger">'.$row["rol"]= "Administrador".'</span>';
+       break;
+       case "SGC":
+        echo '<span class="label label-info">'.$row["rol"]= "SGC".'</span>';
+       break;
+	}?></span></p>
           <hr>
     Esta operación es irreversible
 
@@ -302,7 +332,7 @@ FROM  usuario AS U
     <!-- /.content -->
   </div>
      <?php include('./modal/info-users.php'); ?>
-
+   <?php include('modal/laboral-user.php'); ?>
   <!-- Main Footer -->
 <?php include "./inc/footer.php"; ?> 
  
@@ -375,73 +405,55 @@ $(document).ready(function () {
 });
 </script>
 <script>  
- $(document).ready(function() {
-    $('#add').click(function() {
-        $('#insert').val("Insert");
-        $('#insert_form')[0].reset();
-    });
-    $(document).on('click', '.edit_data', function() {
-        var employee_id = $(this).attr("id");
-        $.ajax({
-            url: "sentencias/edit-users.php",
-            method: "POST",
-            data: {
-                employee_id: employee_id
-            },
-            dataType: "json",
-            success: function(data) {
-                $('#name').val(data.name);
-                $('#address').val(data.address);
-                $('#gender').val(data.gender);
-                $('#designation').val(data.designation);
-                $('#salary').val(data.salary);
-                $('#employee_id').val(data.id);
-                $('#insert').val("Update");
-                $('#add_data_Modal').modal('show');
-            }
-        });
-    });
-    $('#insert_form').on("submit", function(event) {
-        event.preventDefault();
-        if ($('#name').val() == "") {
-            alert("Employee Name Required");
-        } else if ($('#address').val() == '') {
-            alert("Employee Address Required");
-        } else if ($('#designation').val() == '') {
-            alert("Employee Designation Required");
-        } else if ($('#salary').val() == '') {
-            alert("Employee Salary Required");
-        } else {
-            $.ajax({
-                url: "insert.php",
-                method: "POST",
-                data: $('#insert_form').serialize(),
-                beforeSend: function() {
-                    $('#insert').val("Inserting");
-                },
-                success: function(data) {
-                    $('#insert_form')[0].reset();
-                    $('#add_data_Modal').modal('hide');
-                    $('#employee_table').html(data);
-                }
-            });
-        }
-    });
-    $(document).on('click', '.view_data', function() {
-        var employee_id = $(this).attr("id");
-        if (employee_id != '') {
-            $.ajax({
-                url: "sentencias/info-users.php",
-                method: "POST",
-                data: {
-                    employee_id: employee_id
-                },
-                success: function(data) {
-                    $('#employee_detail').html(data);
-                    $('#dataModal').modal('show');
-                }
-            });
-        }
-    });
-});
+		$('#editProductModal').on('show.bs.modal', function (event) {
+	  var button = $(event.relatedTarget) // Button that triggered the modal
+		  var code = button.data('code') 
+		  $('#edit_code').val(code)
+		  var name = button.data('name') 
+		  $('#edit_name').val(name)
+		  var id = button.data('id') 
+		  $('#edit_id').val(id)
+		})
+
+		
+		$( "#edit_product" ).submit(function( event ) {
+		  var parametros = $(this).serialize();
+			$.ajax({
+					type: "POST",
+					url: "ajax/editar_producto.php",
+					data: parametros,
+					 beforeSend: function(objeto){
+						$("#resultados").html("Enviando...");
+					  },
+					success: function(datos){
+					$("#resultados").html(datos);
+					load(1);
+					$('#editProductModal').modal('hide');
+				  }
+			});
+		  event.preventDefault();
+		});
+		
  </script> 
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#departamento').on('change',function(){
+        var departamentoID = $(this).val();
+        if(departamentoID){
+            $.ajax({
+                type:'POST',
+                url:'./sentencias/select-departamento-puesto.php',
+                data:'departamento_id='+departamentoID,
+                success:function(html){
+                    $('#puesto').html(html);
+                
+                }
+            }); 
+        }else{
+            $('#puesto').html('<option value="">Seleccione puesto primero</option>');
+        }
+    });
+    
+});
+</script>
