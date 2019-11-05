@@ -17,7 +17,7 @@
 	
         
 			
-			$sql="INSERT INTO asunto (asunto, id_puesto) VALUES ('$asunto','$puesto')";
+			$sql="INSERT INTO asunto (asunto, idpuesto) VALUES ('$asunto','$puesto')";
 			$query_new_insert = mysqli_query($con,$sql);
 				if ($query_new_insert){
 					$messages[] = "El Asunto ha sido ingresado satisfactoriamente.";

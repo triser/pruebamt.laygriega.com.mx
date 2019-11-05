@@ -80,18 +80,23 @@ if(isset($_POST['update2'])){
                 $inicio = date('Y-m-d',$fn_update);
                 $cp_update		= mysqli_real_escape_string($con,(strip_tags($_POST['cp'], ENT_QUOTES))); 
                 $curp_update		= mysqli_real_escape_string($con,(strip_tags($_POST['curp'], ENT_QUOTES))); 
-                $c_update		= mysqli_real_escape_string($con,(strip_tags($_POST['colonia'], ENT_QUOTES))); 
-                $d_update		= mysqli_real_escape_string($con,(strip_tags($_POST['direccion'], ENT_QUOTES)));
-                $t_update		= mysqli_real_escape_string($con,(strip_tags($_POST['telefono'], ENT_QUOTES)));
+                $co_update		= mysqli_real_escape_string($con,(strip_tags($_POST['colonia'], ENT_QUOTES))); 
+                $di_update		= mysqli_real_escape_string($con,(strip_tags($_POST['direccion'], ENT_QUOTES)));
+                $tel_update		= mysqli_real_escape_string($con,(strip_tags($_POST['telefono'], ENT_QUOTES)));
+                $te_update		= mysqli_real_escape_string($con,(strip_tags($_POST['telefono_2'], ENT_QUOTES)));
+                $calle_update		= mysqli_real_escape_string($con,(strip_tags($_POST['entrecalle'], ENT_QUOTES)));
+                $n_update		= mysqli_real_escape_string($con,(strip_tags($_POST['numero'], ENT_QUOTES)));
                 $vicil_update		= mysqli_real_escape_string($con,(strip_tags($_POST['e_civil'], ENT_QUOTES)));
                 $sangre_update		= mysqli_real_escape_string($con,(strip_tags($_POST['sangre'], ENT_QUOTES)));
                 $generto_update		= mysqli_real_escape_string($con,(strip_tags($_POST['puesto'], ENT_QUOTES)));
+                $po_update		= mysqli_real_escape_string($con,(strip_tags($_POST['poblacion'], ENT_QUOTES)));
+                $es_update		= mysqli_real_escape_string($con,(strip_tags($_POST['estado'], ENT_QUOTES)));
                
 				
         		$update2 = mysqli_query($con, "UPDATE usuario AS U
             LEFT JOIN empleado_laboral AS EL ON   U.idusuario = EL.idusuario
              LEFT JOIN empleado_personal AS EP ON  U.idusuario = EP.idusuario
-            SET EL.idgrado='$grado_update' ,EL.nombre='$nombre_update', EL.apellidos='$apellidos_update', EL.nss='$nss_update', EP.telefono='$t_update', EP.colonia='$c_update', EP.direccion='$d_update', EP.cp='$cp_update', EP.curp='$curp_update', EP.fecha_naci='$inicio', EL.idpuesto='$puesto_update', EP.idcivil='$vicil_update',  EP.idgenero='$g_update', EP.idsangre='$sangre_update' WHERE U.idusuario='$id'") or die(mysqli_error($con)); 
+            SET EL.idgrado='$grado_update' ,EL.nombre='$nombre_update', EL.apellidos='$apellidos_update', EL.nss='$nss_update', EP.telefono='$tel_update', EP.telefono_2='$te_update',EP.colonia='$co_update', EP.direccion='$di_update',EP.numero='$n_update', EP.entrecalle='$calle_update', EP.cp='$cp_update', EP.curp='$curp_update',EP.poblacion='$po_update',EP.estado='$es_update', EP.fecha_naci='$inicio', EL.idpuesto='$puesto_update', EP.idcivil='$vicil_update',  EP.idgenero='$g_update', EP.idsangre='$sangre_update' WHERE U.idusuario='$id'") or die(mysqli_error($con)); 
 				if($update2){
 					echo  '
               <div class="alert alert-info alert-dismissible fade in col-sm-3 animated bounceInDown" role="alert" style="position:fixed; top:70px; right:10px; z-index:10;"> 
@@ -290,7 +295,7 @@ if(isset($_POST['update3'])){
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Rol de Usuario</label>
+                    <label for="inputName" class="col-sm-2 control-label">Tipo de Usuario</label>
 
                     <div class="col-sm-10">
                   <input class="form-control"  type="text" value="<?php echo utf8_encode($user['rol']); ?>" readonly>
@@ -305,13 +310,14 @@ if(isset($_POST['update3'])){
                       <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Nueva Contraseña</label>
                     <div class="col-sm-10">
-                  <input class="form-control" name="clave" type="password" value="" required>
+                  <input class="form-control" name="clave" type="password" value="" placeholder="Contraseña" required>
+                         <p class="text-info">La contraseña solo se modifica si escribes algo, en caso contrario no.</p>
                     </div>
                   </div>
                       <div class="form-group">
                            <div class="col-xs-12">
                                 <br>
-                                 <button type="submit" class="btn btn-sm btn-primary pull-right" name="update2" id="update2"><i class="fa fa-refresh fa-spin fa-1x fa-fw"></i>&nbsp;Actualizar</button>
+                                 <button type="submit" class="btn btn-sm btn-primary pull-right" name="update" id="update"><i class="fa fa-refresh fa-spin fa-1x fa-fw"></i>&nbsp;Actualizar</button>
                               <a href="./admin.php?view=usuarios" class="btn btn-sm btn-success"><i class="fa fa-reply"></i>&nbsp;&nbsp;Volver</a>
                             </div>
                       </div>
@@ -502,11 +508,22 @@ if(isset($_POST['update3'])){
                             </div>
                    </div>  
                 </div>
-        
-                <div class="col-md-4">
+                                  <div class="col-md-4">
                  <div class="form-group">
-                             <label class="col-md-2 control-label">Calle</label>
+                             <label class="col-md-2 control-label">Tel.2</label>
                             <div class='col-sm-8'>
+                                <div class="input-group">
+                                    <input class="form-control" name="telefono_2" type="text" value="<?php echo utf8_encode($user['telefono_2']); ?>" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                </div>
+                            </div>
+                   </div>  
+                </div>
+        
+                <div class="col-md-8">
+                 <div class="form-group">
+                             <label class="col-md-1 control-label">Direccion</label>
+                            <div class='col-sm-10'>
                                 <div class="input-group">
                                     <input class="form-control" name="direccion" type="text" value="<?php echo utf8_encode($user['direccion']); ?>">
                                     <span class="input-group-addon"><i class="fa fa-road"></i></span>
@@ -514,31 +531,31 @@ if(isset($_POST['update3'])){
                             </div>
                    </div>  
                 </div>
-                <div class="col-md-4">
+                           <div class="col-md-4">
                  <div class="form-group">
                              <label class="col-md-2 control-label">No</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="direccion" type="text" value="<?php echo utf8_encode($user['direccion']); ?>">
+                                    <input class="form-control" name="numero" type="text" value="<?php echo utf8_encode($user['numero']); ?>">
                                     <span class="input-group-addon"><i class="fa fa-home"></i></span>
                                 </div>
                             </div>
                    </div>  
                 </div>
-                 <div class="col-md-4">
+               <div class="col-md-4">
                  <div class="form-group">
-                             <label class="col-md-2 control-label">Colonia</label>
+                             <label class="col-md-2 control-label">%Calles</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="colonia" type="text" value="<?php echo utf8_encode($user['colonia']); ?>">
-                                    <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                    <input class="form-control" name="entrecalle" type="text" value="<?php echo utf8_encode($user['entrecalle']); ?>">
+                                    <span class="input-group-addon"><i class="fa fa-road"></i></span>
                                 </div>
                             </div>
                    </div>  
                 </div>
-             <div class="col-md-4">
+                             <div class="col-md-4">
                  <div class="form-group">
-                             <label class="col-md-2 control-label">Ciudad</label>
+                             <label class="col-md-2 control-label">Colonia</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
                                     <input class="form-control" name="colonia" type="text" value="<?php echo utf8_encode($user['colonia']); ?>">
@@ -558,20 +575,28 @@ if(isset($_POST['update3'])){
                             </div>
                    </div>  
                 </div>
-              <div class="col-md-4">
+             <div class="col-md-4">
                  <div class="form-group">
-                             <label class="col-md-2 control-label">Direccion</label>
+                             <label class="col-md-2 control-label">Poblacion</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="direccion" type="text" value="<?php echo utf8_encode($user['direccion']); ?>">
-                                    <span class="input-group-addon"><i class="fa fa-road "></i></span>
+                                    <input class="form-control" name="poblacion" type="text" value="<?php echo utf8_encode($user['poblacion']); ?>">
+                                    <span class="input-group-addon"><i class="fa fa-home"></i></span>
                                 </div>
                             </div>
                    </div>  
                 </div>
-                   
-                   
-                   
+                      <div class="col-md-4">
+                 <div class="form-group">
+                             <label class="col-md-2 control-label">Estado</label>
+                            <div class='col-sm-8'>
+                                <div class="input-group">
+                                    <input class="form-control" name="estado" type="text" value="<?php echo utf8_encode($user['estado']); ?>">
+                                    <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                </div>
+                            </div>
+                   </div>  
+                </div>
                       <div class="form-group">
                            <div class="col-xs-12">
                                 <br>

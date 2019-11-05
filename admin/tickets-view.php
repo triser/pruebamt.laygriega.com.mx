@@ -32,7 +32,7 @@
  /* Todos los tickets*/
         $num_ticket_all=Mysql::consulta("SELECT* FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
   INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
   INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
@@ -43,7 +43,7 @@
                 /* Tickets pendientes*/
                 $num_ticket_pend=Mysql::consulta("SELECT* FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
   INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
   INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
@@ -54,7 +54,7 @@
                 /* Tickets en proceso*/
                 $num_ticket_proceso=Mysql::consulta("SELECT* FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
   INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
   INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
@@ -65,7 +65,7 @@
                 /* Tickets resueltos*/
                 $num_ticket_res=Mysql::consulta("SELECT* FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
   INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
   INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
@@ -76,7 +76,7 @@
                  /* Tickets resueltos*/
                 $num_ticket_can=Mysql::consulta("SELECT* FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
   INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
   INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
@@ -97,13 +97,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-    Lista Usuarios
+    Lista de Ticket Generales
         <small>LA Y GRIEGA</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="./admin.php?view=administrador"><i class="fa fa-dashboard"></i> Inicio</a></li>
-        <li>Administrar Usuarios</li>
-        <li class="active">Registro de Usuarios</li>
+        <li>Administrar Ticket</li>
+        <li class="active">Registro de Tickets</li>
       </ol>
     </section>
        <section class="content-header">
@@ -172,7 +172,7 @@
                                     if($_GET['ticket']=="all"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
   INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
   INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
@@ -182,7 +182,7 @@
                                     }elseif($_GET['ticket']=="pending"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
   INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
   INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
@@ -192,7 +192,7 @@
                                     }elseif($_GET['ticket']=="process"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
   INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
   INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
@@ -202,7 +202,7 @@
                                     }elseif($_GET['ticket']=="resolved"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
   INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
   INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
@@ -212,7 +212,7 @@
                                     }elseif($_GET['ticket']=="cancelled"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
   INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
   INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
@@ -222,7 +222,7 @@
                                     }else{
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
   INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
   INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
@@ -232,7 +232,7 @@
                                 }else{
                                     $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+  INNER JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
   INNER JOIN asunto AS A ON T.id_asunto = A.id_asunto
   INNER JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
   INNER JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
@@ -252,7 +252,7 @@
                             ?>
                                  <table class="table table-hover">
                                   <thead>
-                                    <tr>
+                                    <tr class="ticket">
                                         <th class="text-center" scope="col">#</th>
                                         <th class="text-center" scope="col">F.Apertura</th>
                                         <th class="text-center" scope="col">Serie</th>
@@ -271,7 +271,7 @@
                                         $ct=$inicio+1;
                                         while ($row=mysqli_fetch_array($selticket, MYSQLI_ASSOC)): 
                                     ?>
-                                   <tr>
+                                   <tr class="hover">
                                        <td class="text-center" scope="row" data-label="Registro"><?php echo $ct; ?></td>
                                         <td class="text-center" data-label="F.Apertura:"><?php echo $row['fecha_alta']; ?></td>
                                         <td class="text-center" data-label="Serie:"><?php echo $row['serie']; ?></td>
@@ -318,7 +318,8 @@
                                         <td class="text-center" data-label="F.Entrega:"><?php echo $row['fechaE']; ?></td>
                                         <td class="text-center" data-label="Opciones:">
                                             <a href="./lib/pdf.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-print" aria-hidden="true"></i></a>
-                                            <a href="admin.php?view=ticketedit&id=<?php echo $row['id']; ?>" class="btn btn-sm btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                               <a href="admin.php?view=admin-detalle-tickets&id=<?php echo $row['id']; ?>" 
+                                            class="btn btn-sm btn btn-info red-tooltip" data-toggle="tooltip" data-placement="top" id="tooltipex" title="Agregar Comentario"><span class="glyphicon glyphicon-comment"></span></a>
                                             <a class="btn btn-sm btn-danger" title="Eliminar" data-target="#exampleModalCenter<?php echo $row['id']; ?>" data-toggle="modal" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>                                                                
                                         </td>
                            
@@ -428,6 +429,16 @@
       'resizeDuration': 200,
       'wrapAround': true
     })
+</script>
+  <style type="text/css">
+    .red-tooltip + .tooltip > .tooltip-arrow { border-right-color:#428bca; }
+    .red-tooltip + .tooltip > .tooltip-inner {background-color: #428bca;}
+</style>   
+        <script type="text/javascript">
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+  $("a").tooltip();
+});
 </script>
    <!-- LIGHTBOX PLUS JQUERY -->
     <script src="./js/lightbox-plus-jquery.min.js"></script>

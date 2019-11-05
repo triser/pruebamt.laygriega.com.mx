@@ -18,7 +18,7 @@ if($_SESSION['rol']!="2"){
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <?php
-            $WhiteList=["administrador","asesor-externo","usuarios","alta-usuario","config","edit-usuario","perfil","edit-perfil","actualizacion-cuenta","bajauser","tickets","alta-ticket","asunto-ticket","alta-asunto","alta-asunto-ticket","baja-asunto-ticket","tickets-recibidos-view"];
+            $WhiteList=["administrador","asesor-externo","usuarios","alta-usuario","config","edit-usuario","perfil","edit-perfil","actualizacion-cuenta","bajauser","tickets","alta-ticket","asunto-ticket","alta-asunto","alta-asunto-ticket","baja-asunto-ticket","tickets-recibidos","tickets-enviados","admin-detalle-tickets"];
             if(isset($_GET['view']) && in_array($_GET['view'], $WhiteList) && is_file("./admin/".$_GET['view']."-view.php")){
                 include "./admin/".$_GET['view']."-view.php";
             }else{

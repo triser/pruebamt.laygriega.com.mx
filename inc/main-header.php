@@ -131,7 +131,7 @@
               <!-- The user image in the navbar-->
              <img src="img/profiles/<?php echo $foto_perfil ?>" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs"><?php echo utf8_encode($_SESSION['usuario']); ?></span>
+              <span class="hidden-xs"><?php echo $grado." ".utf8_encode($nombre)." ".utf8_encode($apellidos);?></span>
             </a>
                  
             <ul class="dropdown-menu">

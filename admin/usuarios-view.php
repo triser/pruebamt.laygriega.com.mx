@@ -154,7 +154,7 @@ $rowCount = $query-> num_rows;
                             ?>
                                  <table class="table table-hover">
                                   <thead>
-                                    <tr>
+                                    <tr class="usuario">
                                         <th class="text-center">#</th>
                                          <th class="text-center">Nombre completo</th>
                                          <th class="text-center">Usuario</th>
@@ -162,8 +162,8 @@ $rowCount = $query-> num_rows;
                                         <th class="text-center">Departamento</th>
                                         <th class="text-center">Puesto</th>
                                         <th class="text-center">Email</th>
-                                        <th class="text-center">Rol</th>
-                                        <th class="text-center">estatus</th>
+                                        <th class="text-center">Tipo de Usuario</th>
+                                        <th class="text-center">Estatus</th>
                                         <th class="text-center">Opciones</th>
                                     </tr>
                                 </thead>
@@ -172,45 +172,48 @@ $rowCount = $query-> num_rows;
                                         $ct=$inicio+1;
                                         while ($row=mysqli_fetch_array($selusers, MYSQLI_ASSOC)): 
                             $iduser=$row['idusuario'];
-							$g=$row['grado'];
-							$n=$row['nombre'];
-							$a=$row['apellidos'];
+							$g=$row['grado']; $n=$row['nombre']; $a=$row['apellidos'];
 							$u=$row['usuario'];
 							$fp=$row['foto_perfil'];
                             $d=$row['departamento'];	
                             $pu=$row['puesto'];	
                             $em=$row['email_usuario'];	
+                            $r=$row['rol'];
                                     ?>
                                     <tr>
                                         <td class="text-center" scope="row" data-label="Registro"><?php echo $ct; ?></td>
                                         <td class="text-center" data-label="NOmbre:"><?php echo $g; ?> <?php echo $n; ?> <?php echo $a; ?></td>
                                         <td class="text-center" data-label="NOmbre:"><?php echo $u; ?></td>
                                          <td class="text-center" data-label="Foto:"> <a class="example-image-link" href="img/profiles/<?php echo $fp; ?>" data-lightbox="example-set" data-title="<?php echo $n; ?>"><img class="example-image" src="img/profiles/<?php echo $row['foto_perfil']; ?>" width="25" height="25"  alt=""/></a>
-                                        <td class="text-center" data-label="Area:"><?php echo $d ?></td>
-                                         <td class="text-center" data-label="Prioridad:"><?php echo $pu;?> </td>
-                                        <td class="text-center" data-label="Solicitado:"><?php echo $em; ?></td>
-                                          <td class="text-center" data-label="Solicitado:">                                        <?php //pintamos de colorores los estados la actividad
-	switch ($row['rol'])
+                                        <td class="text-center" data-label="Departamento:"><?php echo $d ?></td>
+                                         <td class="text-center" data-label="Puesto:"><?php echo $pu;?> </td>
+                                        <td class="text-center" data-label="Email Usuario:"><?php echo $em; ?></td>
+                                          <td class="text-center" data-label="Tipo de Usuario:">                                        <?php //pintamos de colorores datos de ROles
+	switch ($r)
 	{
 	case "Usuarios":
-		echo '<span class="label label-primary">'.($row["rol"]= "Usuarios").'</span>';
+		echo '<span class="label label-primary">'.$r= "Usuarios".'</span>';
 		break;
         case "Administrador":
-        echo '<span class="label label-danger">'.$row["rol"]= "Administrador".'</span>';
+        echo '<span class="label label-danger">'.$r= "Administrador".'</span>';
        break;
        case "SGC":
-        echo '<span class="label label-info">'.$row["rol"]= "SGC".'</span>';
+        echo '<span class="label label-info">'.$r= "SGC".'</span>';
        break;
 	}
 	?></td>
                                           <td class="text-center" data-label="Solicitado:"><?php echo $status_f; ?></td>
                                         <td class="text-center" data-label="Opciones:">
-                                        <button type="button" name="view" value="view" id="<?php echo $row["idusuario"]; ?>" class="btn btn-sm btn-default view_data "><span class="glyphicon glyphicon-eye-open"></span></button>
+                                            
+                                              <a class="btn btn-sm btn-default view_data" name="view" id="<?php echo $row['idusuario']; ?>"><i class="fa fa-eye" aria-hidden="true" data-toggle="tooltip" data-placement="left" id="tooltipex" title="Informacion Personal"></i></a> 
+                                            
+                                                <a class="btn btn-sm btn-warning datos_emer" name="view" id="<?php echo $row['idusuario']; ?>"><i class="fa fa-eye" aria-hidden="true" data-toggle="tooltip" data-placement="left" id="tooltipex" title="Informacion en caso de Emergencia"></i></a> 
+                                            
                                            <a href="admin.php?view=edit-usuario&id=<?php echo $iduser; ?>" 
                                             class="btn btn-sm btn btn-info red-tooltip" data-toggle="tooltip" data-placement="right" id="tooltipex" title="Editar Usuario"><span class="glyphicon glyphicon-edit"></span></a>
+                                            
                                            <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-default<?php echo $row['idusuario']; ?>"><i class="fa fa-trash-o" aria-hidden="true" data-toggle="tooltip" data-placement="left" id="tooltipex" title="Eliminar Usuario"></i></a>
-                                                    <?php include('modal/laboral.php'); ?>
-                                          
+                                             <?php include('./modal/info-users.php'); ?>
                                         </td> 
                                      
                             <!------------------------ Inicio modal --------------------------------------->
@@ -330,9 +333,8 @@ $rowCount = $query-> num_rows;
       <!-- /.row -->
     </section>
     <!-- /.content -->
+      
   </div>
-     <?php include('./modal/info-users.php'); ?>
-   <?php include('modal/laboral-user.php'); ?>
   <!-- Main Footer -->
 <?php include "./inc/footer.php"; ?> 
  
@@ -391,7 +393,7 @@ window.setTimeout(function() {
 });
 </script>
 
-<script type="text/javascript">
+<script>
 $(document).ready(function () {
    (function($) {
        $('#FiltrarContenido').keyup(function () {
@@ -404,38 +406,36 @@ $(document).ready(function () {
       }(jQuery));
 });
 </script>
-<script>  
-		$('#editProductModal').on('show.bs.modal', function (event) {
-	  var button = $(event.relatedTarget) // Button that triggered the modal
-		  var code = button.data('code') 
-		  $('#edit_code').val(code)
-		  var name = button.data('name') 
-		  $('#edit_name').val(name)
-		  var id = button.data('id') 
-		  $('#edit_id').val(id)
-		})
-
-		
-		$( "#edit_product" ).submit(function( event ) {
-		  var parametros = $(this).serialize();
-			$.ajax({
-					type: "POST",
-					url: "ajax/editar_producto.php",
-					data: parametros,
-					 beforeSend: function(objeto){
-						$("#resultados").html("Enviando...");
-					  },
-					success: function(datos){
-					$("#resultados").html(datos);
-					load(1);
-					$('#editProductModal').modal('hide');
-				  }
-			});
-		  event.preventDefault();
-		});
-		
- </script> 
-
+<script>
+     $(document).on('click', '.view_data', function(){
+  //$('#dataModal').modal();
+  var id_usuario = $(this).attr("id");
+  $.ajax({
+   url:"./sentencias/info-usuario.php",
+   method:"POST",
+   data:{id_usuario:id_usuario},
+   success:function(data){
+    $('#personal_detalles').html(data);
+    $('#dataModal').modal('show');
+   }
+  });
+ });
+ </script>
+<script>
+     $(document).on('click', '.datos_emer', function(){
+  //$('#dataModal').modal();
+  var id_usuario = $(this).attr("id");
+  $.ajax({
+   url:"./sentencias/info-emergencia.php",
+   method:"POST",
+   data:{id_usuario:id_usuario},
+   success:function(data){
+    $('#Emergencia_detalles').html(data);
+    $('#dataModale').modal('show');
+   }
+  });
+ });
+ </script>
 <script type="text/javascript">
 $(document).ready(function(){
     $('#departamento').on('change',function(){

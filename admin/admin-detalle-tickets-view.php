@@ -5,7 +5,7 @@
 	$sql = Mysql::consulta("SELECT T.id,T.serie,T.fecha_alta,G.grado,EL.nombre,EL.apellidos,U.email_usuario,D.departamento,PU.puesto,T.asignado,T.email_asignado,A.asunto,T.mensaje,T.imagen_tk,T.solucion, T.fechaE,E.estatus_tk,P.prioridad FROM usuario AS U
 LEFT JOIN tickets AS T ON  U.idusuario = T.id_usuario_tk 
 LEFT JOIN empleado_laboral AS EL ON   U.idusuario = EL.idusuario
-LEFT JOIN estatus_tk AS E ON T.idestatus_tk = E.id_estatus_tk
+LEFT JOIN estatus_tk AS E ON T.estatus_tks = E.id_estatus_tk
 LEFT JOIN prioridad_tk AS P ON T.id_prioridad_tk = P.id_prioridad_tk
 LEFT JOIN asunto AS A ON   T.id_asunto = A.id_asunto
 LEFT JOIN grado_estudio AS G  ON  EL.idgrado = G.id_grado 
@@ -131,7 +131,7 @@ LEFT JOIN departamento AS D ON  PU.id_depa = D.id_departamento WHERE id= '$id'")
               </table>
                 <div class="col-sm-12 col-xs-12" style="display: flex;">
                     <a class="btn btn-primary" style="margin-right:10px" id="btncomentar"><i class="fa fa-commenting-o">&nbsp;</i> Comentar</a>
-                     <a href="./admin.php?view=tickets-enviados" class="btn btn-default pull-right" style="margin-right: 5px;"><i class="fa fa-reply">&nbsp;</i> Regresar</a>
+                    <button class="btn btn-default pull-right" style="margin-right: 5px;" onclick="anterior()"><i class="fa fa-reply">&nbsp;</i> Regresar</button>
       </div>
             </div>
         
@@ -333,3 +333,9 @@ LEFT JOIN departamento AS D ON  PU.id_depa = D.id_departamento WHERE id= '$id'")
          });
 
          </script>
+
+<script>
+function anterior() {
+  window.history.back();
+}
+</script>

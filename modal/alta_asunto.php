@@ -20,17 +20,24 @@
      <br />
                        <br />
                         
-                           <label>Departamento Asignado</label>
-                            <select class="form-control" required name="puesto">
-                                <option value="0">Seleccione un Puesto:</option>
-                                     <?php 
-            $query = Mysql::consulta ("SELECT * FROM puestos");
-            while ($puesto = mysqli_fetch_array($query)){
-            echo "<option value='".$puesto['id_puesto']."'>".utf8_encode($puesto['puesto'])."</option>";
-            }?>
-                                
-                                
-        </select>
+                                            <label>Departamento</label>
+                                                  <select class="form-control" id="departamento">
+<option value="">Seleccione el Departamento</option>
+    <?php
+    if($rowCount > 0){
+         
+        while($row = mysqli_fetch_array($query)){ 
+            echo '<option value="'.$row['id_departamento'].'">'.utf8_encode($row['departamento']).'</option>';
+        }}
+    ?>
+</select>
+                        
+                      <br />
+                      
+                           <label>Puesto Asignado</label>
+                              <select class="form-control" name="puesto" id="puesto">
+  <option value="">Seleccione primero el Departamento</option>
+</select>
                         
                       <br />
                       

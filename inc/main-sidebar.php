@@ -16,7 +16,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-         <img src="img/profiles/<?php echo $foto_perfil;?>" class="img-circle"  alt="<?php echo $nombre;?>" >
+         <img src="img/profiles/<?php echo $foto_perfil;?>" class="img-circle"  alt="<?php echo $grado." ".utf8_encode($nombre);?>" >
         </div>
         <div class="pull-left info">
           <p><?php echo $grado." ".utf8_encode($nombre);?></p>
@@ -122,76 +122,31 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="./admin.php?view=tickets"><i class="fa fa-ticket"></i> Ticket´s</a></li>
-              <li><a href="./admin.php?view=alta-ticket"><i class="fa fa-ticket"></i>Alta Ticket´s</a></li>
+            <li><a href="./admin.php?view=tickets"><i class="fa fa-ticket"></i> Todos los Ticket´s</a></li>
+              <li><a href="./admin.php?view=tickets-enviados"><i class="fa fa-ticket"></i>Ticket´s Enviados</a></li>
+                <li><a href="./admin.php?view=tickets-recibidos"><i class="fa fa-ticket"></i>Ticket´s Recibidos</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-ticket"></i> <span>Administrar Asuntos Tk</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
                <li><a href="./admin.php?view=asunto-ticket"><i class="fa fa-ticket"></i>Asuntos Ticket´s</a></li>
           </ul>
         </li>
-          <!-- <li class="treeview">
-          <a href="#">
-            <i class="fa fa-folder-o"></i> <span>Administrar Actividad</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-folder-open-o"></i> Reporte de Act. Diaria</a></li>
-            <li class="treeview">
-              <a href="#"><i class="fa fa-folder-o"></i> Actividad Diaria
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-folder-open-o"></i> Actividad Diaria</a></li>
-                <li class="treeview">
-                  <a href="#"><i class="fa fa-folder-open-o"></i> Estado Actividad
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                  <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Urgente</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Medio Urgente</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>No Urgente</span></a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="#"><i class="fa fa-folder-o"></i> Actividad Semanal
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-folder-open-o"></i> Actividad Semanal</a></li>
-                <li class="treeview">
-                  <a href="#"><i class="fa fa-folder-open-o"></i> Estado Actividad
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                  <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Urgente</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Medio Urgente</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>No Urgente</span></a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>-->
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-user"></i> <span>Administrar Usuarios</span>
+            <i class="fa fa-users"></i> <span>Administrar Usuarios</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="./admin.php?view=usuarios"><i class="fa fa-users"></i> Usuarios</a></li>
-              <li><a href="./admin.php?view=admin"><i class="fa fa-users"></i>Adminstrador</a></li>
+            <li><a href="./admin.php?view=usuarios"><i class="fa fa-user-circle"></i> Usuarios</a></li>
           </ul>
         </li>
         <li class="treeview">

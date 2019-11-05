@@ -164,7 +164,7 @@ $rowCount = $query-> num_rows;
                             ?>
                                  <table class="table table-hover">
                                   <thead>
-                                    <tr>
+                                    <tr class="ticket_asunto">
                                         <th class="text-center">#</th>
                                          <th class="text-center">Nombre completo</th>
                                          <th class="text-center">Departamento</th>

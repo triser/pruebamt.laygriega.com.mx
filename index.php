@@ -14,7 +14,9 @@ if(isset($_POST['email_login']) && isset($_POST['pass_login'])){
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>AdminLTE 2 | Log in</title>
-        <?php include "./inc/links.php"; ?>        
+        <?php include "./inc/links.php"; ?> 
+            <!-- footer link-->
+        <?php include "./inc/links-footer.php"; ?> 
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
          <?php
@@ -88,7 +90,6 @@ if(isset($_POST['email_login']) && isset($_POST['pass_login'])){
                 <?php
             }
         ?>
-       <!-- footer link-->
-        <?php include "./inc/links-footer.php"; ?> 
+
 </body>
 </html>

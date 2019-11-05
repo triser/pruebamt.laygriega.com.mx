@@ -3,7 +3,7 @@
     $clave=md5(MysqlQuery::RequestPost("pass_login"));
     if($email!="" && $clave!=""){
             $sql=Mysql::consulta("SELECT U.idusuario,U.email_usuario, U.usuario,G.grado,EL.nombre,EL.apellidos,U.clave,U.foto_perfil, U.rol, U.estatus,U.fecha_alta_sis
-FROM usuario  AS U INNER JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idlaboral INNER JOIN grado_estudio AS G ON EL.id_grado = G.id_grado WHERE email_usuario= '$email' AND clave='$clave' AND rol='2' AND estatus ='1'");
+FROM usuario  AS U INNER JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario INNER JOIN grado_estudio AS G ON EL.idgrado = G.id_grado WHERE email_usuario= '$email' AND clave='$clave' AND rol='2' AND estatus ='1'");
             if(mysqli_num_rows($sql)>=1){
                 $reg=mysqli_fetch_array($sql, MYSQLI_ASSOC);
                $_SESSION['active'] = true;
@@ -44,7 +44,7 @@ FROM usuario  AS U INNER JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idla
         }       
            elseif($_SESSION['rol']="1") {   
             $sql=Mysql::consulta("SELECT U.idusuario,U.email_usuario, U.usuario,G.grado,EL.nombre,EL.apellidos,U.clave,U.foto_perfil, U.rol, U.estatus,U.fecha_alta_sis
-FROM usuario  AS U INNER JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idlaboral INNER JOIN grado_estudio AS G ON EL.id_grado = G.id_grado WHERE email_usuario= '$email' AND clave='$clave' AND rol='1' AND estatus ='1'");
+FROM usuario  AS U INNER JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario INNER JOIN grado_estudio AS G ON EL.idgrado = G.id_grado WHERE email_usuario= '$email' AND clave='$clave' AND rol='1' AND estatus ='1'");
             if(mysqli_num_rows($sql)>=1){
                 $reg=mysqli_fetch_array($sql, MYSQLI_ASSOC);
                $_SESSION['active'] = true;
@@ -74,7 +74,7 @@ FROM usuario  AS U INNER JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idla
            }
         } elseif($_SESSION['rol']="4") {   
             $sql=Mysql::consulta("SELECT U.idusuario,U.email_usuario, U.usuario,G.grado,EL.nombre,EL.apellidos,U.clave,U.foto_perfil, U.rol, U.estatus,U.fecha_alta_sis
-FROM usuario  AS U INNER JOIN empleado_laboral AS EL ON   U.id_laboral = EL.idlaboral INNER JOIN grado_estudio AS G ON EL.id_grado = G.id_grado WHERE email_usuario= '$email' AND clave='$clave' AND rol='4' AND estatus ='1'");
+FROM usuario  AS U INNER JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario INNER JOIN grado_estudio AS G ON EL.idgrado = G.id_grado WHERE email_usuario= '$email' AND clave='$clave' AND rol='4' AND estatus ='1'");
             if(mysqli_num_rows($sql)>=1){
                 $reg=mysqli_fetch_array($sql, MYSQLI_ASSOC);
                $_SESSION['active'] = true;

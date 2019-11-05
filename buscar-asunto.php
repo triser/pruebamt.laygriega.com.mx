@@ -3,8 +3,8 @@ session_start();
 include './lib/class_mysql.php';
 include './lib/config.php';
 include "./lib/config2.php";
-if($_SESSION['nombre']!="" && $_SESSION['rol']=="2"){ ?>  
-
+if($_SESSION['email']!="" && $_SESSION['rol']=="2"){ ?>  
+<?php include('./sentencias/consulta.php');?>
   <?php     $status='estatus_a'; if ($status=1){$status_f="Alta";}else {$status_f="Baja";}  ?>
         <?php 
             if(isset($_POST['id_del'])){
@@ -35,19 +35,40 @@ if($_SESSION['nombre']!="" && $_SESSION['rol']=="2"){ ?>
             }
 
            /* Todos los asuntos */
-            $num=Mysql::consulta("SELECT T.descrip_titulo,U.nombre,  U.apellidos, P.puesto, A.asunto, A.estatus_a
-FROM asunto AS A  LEFT JOIN puestos AS P ON   A.id_puesto = P.id_puesto LEFT JOIN usuario AS U ON  U.id_puesto = P.id_puesto LEFT JOIN titulo AS T ON U.id_titulo =T.id_titulo");
+            $num=Mysql::consulta("SELECT G.grado,EL.nombre, EL.apellidos,P.puesto,A.asunto,A.estatus_a FROM asunto AS A
+  LEFT JOIN puestos AS P ON  A.idpuesto = P.id_puesto 
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento 
+  LEFT JOIN empleado_laboral AS EL ON EL.idpuesto = P.id_puesto 
+  LEFT JOIN usuario AS U  ON   U.idusuario = EL.idusuario
+  LEFT JOIN empleado_personal AS EP ON  U.idusuario = EP.idusuario
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado");
       $total_asunto = mysqli_num_rows($num);
             /* Altas asuntos*/
-            $alta_asunto=Mysql::consulta("SELECT T.descrip_titulo,U.nombre,  U.apellidos, P.puesto, A.asunto, A.estatus_a
-FROM asunto AS A  LEFT JOIN puestos AS P ON   A.id_puesto = P.id_puesto LEFT JOIN usuario AS U ON  U.id_puesto = P.id_puesto LEFT JOIN titulo AS T ON U.id_titulo =T.id_titulo WHERE estatus_a = 1");
+            $alta_asunto=Mysql::consulta("SELECT G.grado,EL.nombre, EL.apellidos,P.puesto,A.asunto,A.estatus_a FROM asunto AS A
+  LEFT JOIN puestos AS P ON  A.idpuesto = P.id_puesto 
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento 
+  LEFT JOIN empleado_laboral AS EL ON EL.idpuesto = P.id_puesto 
+  LEFT JOIN usuario AS U  ON   U.idusuario = EL.idusuario
+  LEFT JOIN empleado_personal AS EP ON  U.idusuario = EP.idusuario
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado WHERE estatus_a = 1");
             $num_baja_alta = mysqli_num_rows($alta_asunto);
               /* Baja Asunto*/
-            $baja_asunto=Mysql::consulta("SELECT T.descrip_titulo,U.nombre,  U.apellidos, P.puesto, A.asunto, A.estatus_a
-FROM asunto AS A  LEFT JOIN puestos AS P ON   A.id_puesto = P.id_puesto LEFT JOIN usuario AS U ON  U.id_puesto = P.id_puesto LEFT JOIN titulo AS T ON U.id_titulo =T.id_titulo WHERE estatus_a = 0");
+            $baja_asunto=Mysql::consulta("SELECT G.grado,EL.nombre, EL.apellidos,P.puesto,A.asunto,A.estatus_a FROM asunto AS A
+  LEFT JOIN puestos AS P ON  A.idpuesto = P.id_puesto 
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento 
+  LEFT JOIN empleado_laboral AS EL ON EL.idpuesto = P.id_puesto 
+  LEFT JOIN usuario AS U  ON   U.idusuario = EL.idusuario
+  LEFT JOIN empleado_personal AS EP ON  U.idusuario = EP.idusuario
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado WHERE estatus_a = 0");
             $num_baja_asunto = mysqli_num_rows($baja_asunto);
           
         ?>
+ <?php
+//Get all departamento data
+$query = mysqli_query($con,"SELECT * FROM departamento WHERE estatus_dep = 1 LIMIT 1,10");
+//Count total number of rows
+$rowCount = $query-> num_rows;
+?>
 		<!DOCTYPE html>
 <html>
  <head>
@@ -156,27 +177,34 @@ FROM asunto AS A  LEFT JOIN puestos AS P ON   A.id_puesto = P.id_puesto LEFT JOI
 			$puesto = '';
 			if($busqueda == 'SOFTWARE Y HARDWARE')
 			{
-				$puesto = " OR rol LIKE '%36%' ";
-
-			}else if($busqueda == 'SCOMUNICACIÓN Y SEGURIDAD TI'){
-
 				$puesto = " OR rol LIKE '%37%' ";
+
+			}else if($busqueda == 'COMUNICACIÓN Y SEGURIDAD TI'){
+
+				$puesto = " OR rol LIKE '%38%' ";
 
 			}else if($busqueda == 'Asesor externo'){
 
-				$puesto = " OR rol LIKE '%3%' ";
+				$puesto = " OR rol LIKE '%74%' ";
 			}
 
                                 $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
                                 $regpagina = 15;
                                 $inicio = ($pagina > 1) ? (($pagina * $regpagina) - $regpagina) : 0;
 
-                                $selusers=mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * From asunto AS A  LEFT JOIN puestos AS P ON   A.id_puesto = P.id_puesto LEFT JOIN usuario AS U ON  U.id_puesto = P.id_puesto LEFT JOIN titulo AS T ON U.id_titulo = T.id_titulo WHERE 
-										( U.nombre LIKE '%$busqueda%' OR 
-											 U.apellidos LIKE '%$busqueda%' OR 
+                                $selusers=mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM asunto AS A
+  LEFT JOIN puestos AS P ON A.idpuesto = P.id_puesto 
+  LEFT JOIN departamento AS D ON P.id_depa = D.id_departamento 
+  LEFT JOIN empleado_laboral AS EL ON EL.idpuesto = P.id_puesto 
+  LEFT JOIN usuario AS U ON U.idusuario = EL.idusuario
+  LEFT JOIN empleado_personal AS EP ON U.idusuario = EP.idusuario
+  LEFT JOIN grado_estudio AS G ON EL.idgrado = G.id_grado WHERE 
+										( EL.nombre LIKE '%$busqueda%' OR 
+											 EL.apellidos LIKE '%$busqueda%' OR 
 											P.puesto LIKE '%$busqueda%' OR 
+                                           D.departamento LIKE '%$busqueda%' OR 
 											A.asunto LIKE '%$busqueda%' OR 
-											T.descrip_titulo  LIKE  '%$busqueda%' OR 
+											G.grado  LIKE  '%$busqueda%' OR 
                                             A.estatus_a  LIKE  '%$busqueda%')
                                             ORDER BY id_asunto DESC  LIMIT $inicio, $regpagina");
 
@@ -188,9 +216,10 @@ FROM asunto AS A  LEFT JOIN puestos AS P ON   A.id_puesto = P.id_puesto LEFT JOI
                             ?>
                                  <table class="table table-hover">
                                   <thead>
-                                    <tr>
+                                      <tr>
                                         <th class="text-center">#</th>
                                          <th class="text-center">Nombre completo</th>
+                                         <th class="text-center">Departamento</th>
                                          <th class="text-center">Puesto</th>
                                         <th class="text-center">Asunto Asigando</th>
                                         <th class="text-center">Estatus</th>
@@ -200,28 +229,38 @@ FROM asunto AS A  LEFT JOIN puestos AS P ON   A.id_puesto = P.id_puesto LEFT JOI
                                    <tbody>
                                    <?php
                                         $ct=$inicio+1;
-                                        while ($row=mysqli_fetch_array($selusers, MYSQLI_ASSOC)): 
+                                                while ($asunto=mysqli_fetch_array($selusers, MYSQLI_ASSOC)): 
+                            $iduser=$asunto['idusuario'];
+							$g=$asunto['grado'];
+							$n=$asunto['nombre'];
+							$a=$asunto['apellidos'];
+							$u=$asunto['usuario'];
+							$fp=$asunto['foto_perfil'];
+                            $d=$asunto['departamento'];	
+                            $pu=$asunto['puesto'];	
+                            $em=$asunto['email_usuario'];
                                     ?>
-                                    <tr>
+                                   <tr>
                                         <td class="text-center" scope="row" data-label="Registro"><?php echo $ct; ?></td>
-                                        <td class="text-center" data-label="Nombre Completo:"><?php echo $row['descrip_titulo']; ?> <?php echo $row['nombre']; ?> <?php echo $row['apellidos']; ?></td>
-                                        <td class="text-center" data-label="asunto:"><?php echo $row['puesto']; ?></td>
-                                        <td class="text-center" data-label="asunto:"><?php echo utf8_decode($row['asunto']); ?></td>
+                                        <td class="text-center" data-label="Nombre Completo:"><?php echo $g?> <?php echo $n; ?> <?php echo $a?></td>
+                                        <td class="text-center" data-label="Departamento:"><?php echo $d?></td>
+                                        <td class="text-center" data-label="Puesto:"><?php echo $pu?></td>
+                                        <td class="text-center" data-label="asunto:"><?php echo utf8_decode($asunto['asunto']); ?></td>
                                           <td class="text-center" data-label="Solicitado:">
                                         <?php //pintamos de colorores los estados la actividad
-	switch ($row['estatus_a'])
+	switch ($asunto['estatus_a'])
 	{
 	case "1":
-		echo '<span class="label label-primary">'.($row["estatus_a"]= "Alta").'</span>';
+		echo '<span class="label label-primary">'.($asunto["estatus_a"]= "Alta").'</span>';
 		break;
         case "0":
-        echo '<span class="label label-danger">'.($row["estatus_a"]= "Baja").'</span>';
+        echo '<span class="label label-danger">'.$asunto["estatus_a"]= "Baja".'</span>';
        break;
 	}
 	?></td>
                                         <td class="text-center" data-label="Opciones:">
-                                      	<a href="#edit<?php echo $row['id_asunto']; ?>" data-toggle="modal" class="btn btn-sm btn-warning red-tooltip edit_data" data-toggle="tooltip" data-placement="right" id="tooltipex" title="Editar Asunto"><span class="glyphicon glyphicon-edit" ></span></a> 
-							<a href="#del<?php echo $row['id_asunto']; ?>" data-toggle="modal" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="left" id="tooltipex" title="Dar de Baja Asunto"></span></a>
+                                      	<a href="#edit<?php echo $asunto['id_asunto']; ?>" data-toggle="modal" class="btn btn-sm btn-warning red-tooltip edit_data" data-toggle="tooltip" data-placement="right" id="tooltipex" title="Editar Asunto"><span class="glyphicon glyphicon-edit" ></span></a> 
+							<a href="#del<?php echo $asunto['id_asunto']; ?>" data-toggle="modal" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true" data-toggle="tooltip" data-placement="left" id="tooltipex" title="Dar de Baja Asunto"></span></a>
                                     <?php include('modal/edit_asunto.php'); ?>
                                     </td>
                                     </tr>
@@ -318,7 +357,6 @@ FROM asunto AS A  LEFT JOIN puestos AS P ON   A.id_puesto = P.id_puesto LEFT JOI
 <?php
 }
 ?>
-
 <script>
 $("#add_user" ).submit(function( event ) {
     $('#save_data').attr("disabled", true);
@@ -341,13 +379,37 @@ $("#add_user" ).submit(function( event ) {
 })
 // success
 </script>
-
-  <script>
-    $(document).ready(function(){
-    $("#provincia").load('sentencias/select-puesto-asunto.php');
-                            });
-    </script>
-
+<style type="text/css">
+    .red-tooltip + .tooltip > .tooltip-arrow { border-right-color:#428bca; }
+    .red-tooltip + .tooltip > .tooltip-inner {background-color: #428bca;}
+</style>   
+        <script type="text/javascript">
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+  $("a").tooltip();
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#departamento').on('change',function(){
+        var departamentoID = $(this).val();
+        if(departamentoID){
+            $.ajax({
+                type:'POST',
+                url:'./sentencias/select-departamento-puesto.php',
+                data:'departamento_id='+departamentoID,
+                success:function(html){
+                    $('#puesto').html(html);
+                
+                }
+            }); 
+        }else{
+            $('#puesto').html('<option value="">Seleccione puesto primero</option>');
+        }
+    });
+    
+});
+</script>
 
     <script>
 

@@ -29,65 +29,65 @@
                 /* Todos los tickets*/
                 $num_ticket_all=Mysql::consulta("SELECT T.id,T.serie,T.fecha_alta,G.grado,EL.nombre,EL.apellidos,U.email_usuario,PU.puesto,T.asignado,T.email_asignado,A.asunto,T.mensaje,T.imagen_tk,T.solucion, T.fechaE,E.estatus_tk,P.prioridad
 FROM tickets AS T
-  LEFT JOIN usuario AS U ON T.usuario_tk = U.idusuario
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
- LEFT JOIN empleado_laboral AS EL ON  U.id_laboral = EL.idlaboral
-LEFT JOIN puestos AS PU ON  EL.id_puesto = PU.id_puesto
-LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
-  LEFT JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado
+ LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
+LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
+LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
     WHERE T.email_asignado='$nombre_user' ORDER BY id DESC");
                 $num_total_all=mysqli_num_rows($num_ticket_all);
 
                 /* Tickets pendientes*/
                 $num_ticket_pend=Mysql::consulta("SELECT T.id,T.serie,T.fecha_alta,G.grado,EL.nombre,EL.apellidos,U.email_usuario,PU.puesto,T.asignado,T.email_asignado,A.asunto,T.mensaje,T.imagen_tk,T.solucion, T.fechaE,E.estatus_tk,P.prioridad
 FROM tickets AS T
-  LEFT JOIN usuario AS U ON T.usuario_tk = U.idusuario
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
- LEFT JOIN empleado_laboral AS EL ON  U.id_laboral = EL.idlaboral
-LEFT JOIN puestos AS PU ON  EL.id_puesto = PU.id_puesto
-LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
-  LEFT JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado
+ LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
+LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
+LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
   WHERE estatus_tk='Pendiente' and  T.email_asignado='$nombre_user'");
                 $num_total_pend=mysqli_num_rows($num_ticket_pend);
 
                 /* Tickets en proceso*/
                 $num_ticket_proceso=Mysql::consulta("SELECT T.id,T.serie,T.fecha_alta,G.grado,EL.nombre,EL.apellidos,U.email_usuario,PU.puesto,T.asignado,T.email_asignado,A.asunto,T.mensaje,T.imagen_tk,T.solucion, T.fechaE,E.estatus_tk,P.prioridad
 FROM tickets AS T
-  LEFT JOIN usuario AS U ON T.usuario_tk = U.idusuario
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
- LEFT JOIN empleado_laboral AS EL ON  U.id_laboral = EL.idlaboral
-LEFT JOIN puestos AS PU ON  EL.id_puesto = PU.id_puesto
-LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
-  LEFT JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado
+ LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
+LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
+LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
   WHERE estatus_tk='En proceso' and T.email_asignado='$nombre_user'");
                 $num_total_proceso=mysqli_num_rows($num_ticket_proceso);
 
                 /* Tickets resueltos*/
                 $num_ticket_res=Mysql::consulta("SELECT T.id,T.serie,T.fecha_alta,G.grado,EL.nombre,EL.apellidos,U.email_usuario,PU.puesto,T.asignado,T.email_asignado,A.asunto,T.mensaje,T.imagen_tk,T.solucion, T.fechaE,E.estatus_tk,P.prioridad
 FROM tickets AS T
-  LEFT JOIN usuario AS U ON T.usuario_tk = U.idusuario
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
- LEFT JOIN empleado_laboral AS EL ON  U.id_laboral = EL.idlaboral
-LEFT JOIN puestos AS PU ON  EL.id_puesto = PU.id_puesto
-LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
-  LEFT JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado
+ LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
+LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
+LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
   WHERE estatus_tk='Resuelto' and T.email_asignado='$nombre_user'");
                 $num_total_res=mysqli_num_rows($num_ticket_res);
                 
                  /* Tickets Cancelados*/
                 $num_ticket_can=Mysql::consulta("SELECT T.id,T.serie,T.fecha_alta,G.grado,EL.nombre,EL.apellidos,U.email_usuario,PU.puesto,T.asignado,T.email_asignado,A.asunto,T.mensaje,T.imagen_tk,T.solucion, T.fechaE,E.estatus_tk,P.prioridad
 FROM tickets AS T
-  LEFT JOIN usuario AS U ON T.usuario_tk = U.idusuario
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
- LEFT JOIN empleado_laboral AS EL ON  U.id_laboral = EL.idlaboral
-LEFT JOIN puestos AS PU ON  EL.id_puesto = PU.id_puesto
-LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
-  LEFT JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado
+ LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
+LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
+LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
   WHERE estatus_tk='Cancelados' and T.email_asignado='$nombre_user'");
                 $num_total_can=mysqli_num_rows($num_ticket_can);
             ?>
@@ -172,22 +172,22 @@ LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asun
                                 if(isset($_GET['ticket'])){
                                     if($_GET['ticket']=="all"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  LEFT JOIN usuario AS U ON T.usuario_tk = U.idusuario
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
- LEFT JOIN empleado_laboral AS EL ON  U.id_laboral = EL.idlaboral
-LEFT JOIN puestos AS PU ON  EL.id_puesto = PU.id_puesto
-LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
-  LEFT JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado WHERE T.email_asignado='$nombre_user' ORDER BY id DESC LIMIT $inicio, $regpagina";
+ LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
+LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
+LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado WHERE T.email_asignado='$nombre_user' ORDER BY id DESC LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="pending"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  LEFT JOIN usuario AS U ON T.usuario_tk = U.idusuario
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
- LEFT JOIN empleado_laboral AS EL ON  U.id_laboral = EL.idlaboral
-LEFT JOIN puestos AS PU ON  EL.id_puesto = PU.id_puesto
-LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
-  LEFT JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado
+ LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
+LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
+LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
   WHERE estatus_tk='Pendiente' and  T.email_asignado='$nombre_user'  LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="process"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
@@ -201,43 +201,43 @@ LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asun
   WHERE estatus_tk='En proceso' and  T.email_asignado='$nombre_user'  LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="resolved"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  LEFT JOIN usuario AS U ON T.usuario_tk = U.idusuario
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
- LEFT JOIN empleado_laboral AS EL ON  U.id_laboral = EL.idlaboral
-LEFT JOIN puestos AS PU ON  EL.id_puesto = PU.id_puesto
-LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
-  LEFT JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado
+ LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
+LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
+LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
   WHERE estatus_tk='Resuelto' and  T.email_asignado='$nombre_user' LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="cancelled"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  LEFT JOIN usuario AS U ON T.usuario_tk = U.idusuario
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
- LEFT JOIN empleado_laboral AS EL ON  U.id_laboral = EL.idlaboral
-LEFT JOIN puestos AS PU ON  EL.id_puesto = PU.id_puesto
-LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
-  LEFT JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado
+ LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
+LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
+LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
   WHERE estatus_tk='Cancelados' and  T.email_asignado='$nombre_user'  LIMIT $inicio, $regpagina";
                                     }else{
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  LEFT JOIN usuario AS U ON T.usuario_tk = U.idusuario
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
- LEFT JOIN empleado_laboral AS EL ON  U.id_laboral = EL.idlaboral
-LEFT JOIN puestos AS PU ON  EL.id_puesto = PU.id_puesto
-LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
-  LEFT JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado WHERE T.email_asignado='$nombre_user' ORDER BY id DESC LIMIT $inicio, $regpagina";
+ LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
+LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
+LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado WHERE T.email_asignado='$nombre_user' ORDER BY id DESC LIMIT $inicio, $regpagina";
                                     }
                                 }else{
                                     $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  LEFT JOIN usuario AS U ON T.usuario_tk = U.idusuario
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
- LEFT JOIN empleado_laboral AS EL ON  U.id_laboral = EL.idlaboral
-LEFT JOIN puestos AS PU ON  EL.id_puesto = PU.id_puesto
-LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
-  LEFT JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado WHERE T.email_asignado='$nombre_user' ORDER BY id DESC LIMIT $inicio, $regpagina";
+ LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
+LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
+LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado WHERE T.email_asignado='$nombre_user' ORDER BY id DESC LIMIT $inicio, $regpagina";
                                 }
 
 

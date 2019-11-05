@@ -2,10 +2,7 @@
 	background: #ffa726;
 	color: #fff;
 }
-.points_table_admin thead{
-	background: #26a69a;
-	color: #fff;
-}
+
 .table_admin thead{
 	background:#00acc1;
 	color: #fff;
@@ -35,10 +32,7 @@
 		background: #CC3366;
 		color: #fff;
 }
-.points_table_dia thead{
-		background: #0767AB !important;
-		color: #fff !important;
-}
+
 .points_table_sem thead{
 		background: #BF0310;
 		color: #fff;
@@ -282,8 +276,6 @@ font-size: 18px;
     padding:16px 16px;
     color:#FFF;
     border-bottom:2px dashed #014794;
-
-    
  }
 
 .modal-header3 h5 {
@@ -297,5 +289,34 @@ font-size: 14px;
 .spantext{
 color:dodgerblue;
  }
+
+.ticket{
+	background:#00acc1;
+	color: #fff;
+}
+
+.ticket_recibidos{
+	background: #0767AB !important;
+color: #fff !important;
+
+}
+.ticket_enviados{
+background: #3498db;
+		color: #fff;
+
+}
+.ticket_asunto{
+background: #2b99d8;
+		color: #fff;
+
+}
+.usuario{
+background: #faaa63 ;
+		color: #fff;
+}
+
+hover:hover {
+background-color: #014794;
+}
 
 

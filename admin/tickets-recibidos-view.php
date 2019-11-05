@@ -33,7 +33,7 @@
 FROM tickets AS T
   LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
  LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
 LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
 LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
@@ -46,7 +46,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
 FROM tickets AS T
   LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
  LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
 LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
 LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
@@ -59,7 +59,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
 FROM tickets AS T
   LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
  LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
 LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
 LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
@@ -72,7 +72,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
 FROM tickets AS T
   LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
  LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
 LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
 LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
@@ -85,7 +85,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
 FROM tickets AS T
   LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
  LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
 LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
 LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
@@ -105,13 +105,13 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-    Reporte de Tickets Solicitados
+    Tickets Recibidos
         <small>LA Y GRIEGA</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="./index.php?view=usuario"><i class="fa fa-dashboard"></i> Inicio</a></li>
         <li><a href="./index.php?view=tickets">Administrar Tickets</a></li>
-        <li class="active">Registro de Tickets</li>
+        <li class="active">Registro de Tickets Recibidos</li>
       </ol>
     </section>
        <section class="content-header">
@@ -176,7 +176,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
  LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
 LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
 LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
@@ -185,7 +185,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
  LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
 LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
 LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
@@ -205,7 +205,7 @@ LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asun
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
  LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
 LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
 LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
@@ -215,7 +215,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
  LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
 LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
 LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
@@ -225,7 +225,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
  LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
 LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
 LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
@@ -235,7 +235,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
                                     $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.idestatus_tk = E.id_estatus_tk
+ LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
  LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
 LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
 LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
@@ -254,7 +254,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
                             ?>
               <table class="table table-hover">
                    <thead>
-                  <tr>
+                  <tr class="ticket_recibidos">
                                         <th class="text-center" scope="col">#</th>
                                         <th class="text-center" scope="col">Apertura</th>
                                         <th class="text-center" scope="col">Serie</th>
@@ -302,7 +302,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
 		case "Resuelto":
 		echo '<span class="label label-primary">'.$row["estatus_tk"].'</span>';
 		break;
-        case "En proceso":
+        case "En Proceso":
         echo '<span class="label label-warning">'.$row["estatus_tk"].'</span>';
        break;
        case "Pendiente":
@@ -319,10 +319,13 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
                                         <td class="text-center" data-label="F.Entrega:"><?php echo $row['fechaE']; ?></td>
                                         <td class="text-center" data-label="Opciones:">
                                             <a class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal-default<?php echo $row['id']; ?>"><i class="fa fa-eye" aria-hidden="true" data-toggle="tooltip" data-placement="left" id="tooltipex" title="Ver Informacion"></i></a> 
-                                                           <!--ver lista de comentarios-->
+                                            <a href="#edit<?php echo $row['id']; ?>" data-toggle="modal" class="btn btn-sm btn-warning red-tooltip edit_data" data-toggle="tooltip" data-placement="right" id="tooltipex" title="Editar Asunto"><span class="glyphicon glyphicon-edit" ></span></a> 
+                                            
+                                             <!--ver lista de comentarios-->
                                           <a href="admin.php?view=admin-detalle-tickets&id=<?php echo $row['id']; ?>" 
                                             class="btn btn-sm btn btn-info red-tooltip" data-toggle="tooltip" data-placement="top" id="tooltipex" title="Agregar Comentario"><span class="glyphicon glyphicon-comment"></span></a>
                                              <a href="./lib/pdf.php?id=<?php echo $row['id'] ?>" class="btn btn-sm btn-success" target="_blank" data-toggle="tooltip" data-placement="right" id="tooltipex" title="Imprimir"><i class="fa fa-print" aria-hidden="true"></i></a>
+                                            <?php include('./modal/ticket.php'); ?>
                                         </td>
 
                                         <!------------------------ Inicio modal --------------------------------------->
@@ -543,6 +546,17 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
       'resizeDuration': 200,
       'wrapAround': true
     })
+</script>
+  <style type="text/css">
+    .red-tooltip + .tooltip > .tooltip-arrow { border-right-color:#428bca; }
+    .red-tooltip + .tooltip > .tooltip-inner {background-color: #428bca;}
+    .edit-tooltip + .tooltip > .tooltip-inner {background-color: #dd9a00;}
+</style>   
+        <script type="text/javascript">
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+  $("a").tooltip();
+});
 </script>
    <!-- LIGHTBOX PLUS JQUERY -->
     <script src="./js/lightbox-plus-jquery.min.js"></script>

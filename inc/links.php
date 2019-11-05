@@ -41,7 +41,8 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-
+ <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="plugins/iCheck/all.css">
 <!-- ChartJS -->
 <script src="bower_components/chart.js/Chart.js"></script>
 <!-- FastClick -->

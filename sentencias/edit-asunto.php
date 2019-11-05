@@ -2,12 +2,12 @@
 	
 	$id=$_GET['id'];
 	$asunto=$_POST['asunto'];
-	$id_puesto=$_POST['id_puesto'];
+	$id_puesto=$_POST['puesto'];
 
    include "../lib/config2.php";//Contiene funcion que conecta a la base de datos
 	
 			
-			$sql=("UPDATE asunto set  asunto='$asunto', id_puesto='$id_puesto' where id_asunto='$id'");
+			$sql=("UPDATE asunto set  asunto='$asunto', idpuesto='$id_puesto' where id_asunto='$id'");
 			$query_update = mysqli_query($con,$sql);
 				if ($query_update){
 				echo "<script language=\"javascript\">
