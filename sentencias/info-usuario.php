@@ -26,7 +26,7 @@ $anios=round((time() - strtotime($row['fecha_naci'])) / 31556926);
      $output .= '
      <tr>  
             <td class = "text-left" width="20%"><label>Personal:</label></td>  
-            <td class = "text-left text-blue" width="33%">'.$row["grado"].' '.$row["nombre"].' '.$row["apellidos"].'</td> 
+            <td class = "text-left text-blue" width="33%">'.$row["grado"].' '.utf8_encode($row["nombre"]).' '.utf8_encode($row["apellidos"]).'</td> 
             <td class = "text-left"><label>Fecha de Alta:</label></td>  
             <td class = "text-blue" width="30%">'.$row["fecha_alta_sis"].'</td>  
         </tr>

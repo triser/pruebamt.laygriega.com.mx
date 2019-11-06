@@ -57,7 +57,7 @@
                     <div class="col-md-6">
                         <div class="profile-head">
                                     <h5>
-                                         <label><?php echo $reg['grado']?> <?php echo $reg['nombre']?> <?php echo $reg['apellidos']?></label>
+                                         <label><?php echo $reg['grado']?> <?php echo utf8_encode($reg['nombre'])?> <?php echo utf8_encode($reg['apellidos'])?></label>
                                     </h5>
                                     <h6>
                                       <?php echo utf8_encode ($reg['departamento'])?>
@@ -88,7 +88,7 @@
                                                 <label>Nombre</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p><?php echo $reg['nombre']?></p>
+                                                <p><?php echo utf8_encode($reg['nombre'])?></p>
                                             </div>
                                         </div>           
                                         <div class="row">
@@ -96,7 +96,7 @@
                                                 <label>Apellidos</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p> <?php echo $reg['apellidos']?></p>
+                                                <p> <?php echo utf8_encode($reg['apellidos'])?></p>
                                             </div>
                                         </div>
                                         <div class="row">

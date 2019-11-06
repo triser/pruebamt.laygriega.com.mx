@@ -128,11 +128,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre">Nombre:</label>
-                                    <input name="nombre" type="text" class="form-control" id="nombre" value="<?php echo $nombre;?>" readonly >
+                                    <input name="nombre" type="text" class="form-control" id="nombre" value="<?php echo utf8_encode($nombre);?>" readonly >
                                 </div>
                                 <div class="form-group">
                                     <label for="apellidos">Apellidos:</label>
-                                    <input name="apellidos" type="text" class="form-control" id="apellidos" value="<?php echo $apellidos;?>" readonly>
+                                    <input name="apellidos" type="text" class="form-control" id="apellidos" value="<?php echo utf8_encode($apellidos);?>" readonly>
                                 </div>
                                    <div class="form-group">
                                     <label for="anterior_password">Contraseña Anterior</label>
