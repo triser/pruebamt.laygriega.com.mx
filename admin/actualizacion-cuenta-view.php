@@ -99,7 +99,7 @@
                             <div id="load_img">
                                 <img class="img-responsive" width="100%" src="img/profiles/<?php echo $foto_perfil;?>" alt="Imagen de Perfil">
                                 </div>
-                                <h3 class="profile-username text-center"><?php echo $grado;?> <?php echo $nombre;?> <?php echo $apellidos;?></h3>
+                                <h3 class="profile-username text-center"><?php echo $grado." ".utf8_encode($nombre)." ".utf8_encode($apellidos);?></h3>
                                 <p class="text-muted text-center mail-text"><?php echo $email;?></p>
                             </div><!-- /.box-body -->
                         </div><!-- /.box -->
