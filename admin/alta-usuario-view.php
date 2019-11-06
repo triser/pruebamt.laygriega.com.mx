@@ -58,10 +58,10 @@ $res4=mysqli_query($con,$sql3);//El campo ID de esta tabla es AUTO_INCREMENT
         $email_reg = $_POST['email_reg'];
 
         //Preparamos el mensaje de contacto/ /
-        $cabeceras = "From: Registro de cuenta al Sistema de Orden de Mejora LA Y GRIEGA"; //La persona que envia el correo
+        $cabeceras = "From: Registro de cuenta al Sistema Multiple LA Y GRIEGA"; //La persona que envia el correo
         $asunto = "Datos de cuenta"; //El asunto
         $email_to = "$email_reg, sistemaom@laygriega.com.mx"; //cambiar por tu email
-        $mensaje_mail="Hola ".$nombre_reg.", Gracias por registrarte al Sistema OM de Abarrotes LA Y GRIEGA. Los datos de tu cuenta son los siguientes:
+        $mensaje_mail="Hola ".$nombre_reg.", Gracias por registrarte al Sistema Multiple de Abarrotes LA Y GRIEGA. Los datos de tu cuenta son los siguientes:
          \nNombre Completo: ".$nombre_reg."
         \nApellidos: ".$apellidos_reg."
          \nNombre de usuario: ".$user_reg."

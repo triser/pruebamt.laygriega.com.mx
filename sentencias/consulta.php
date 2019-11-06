@@ -9,6 +9,7 @@ FROM usuario AS U LEFT JOIN empleado_laboral AS EL ON  EL.idusuario = U.idusuari
         $email = $row['email_usuario'];
         $foto_perfil = $row['foto_perfil'];
         $usuario = $row['usuario'];
+          $id_usuario = $row['idusuario'];
   
     }
 

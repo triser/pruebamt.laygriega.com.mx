@@ -103,11 +103,17 @@
                                 <p class="text-muted text-center mail-text"><?php echo $email;?></p>
                             </div><!-- /.box-body -->
                         </div><!-- /.box -->
-                 <span class="btn btn-success btn-file" style="width: 100%; margin-top: 5px;">
-                           Imagen de perfil: 
+                    <span class="btn btn-success btn-file" style="width: 100%; margin-top: 5px;">
+                       <form method="post" id="formulario" enctype="multipart/form-data">
+                           <input type="hidden" name="id_edit" value="<?php echo $id_usuario;?>">
+                          Cambiar Imagen de perfil: <input type="file" name="file">
+                      </form>
                     </span>
-                   
+                    <div id="respuesta"></div>
+                    
+                  
                 </div> 
+            
                 <div class="col-md-1"></div>
                 <div class="col-md-6">
                                 <div class="box box-success"><!-- general form elements -->
@@ -163,6 +169,25 @@
   immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </div>
+    <script>
+    $(function(){
+        $("input[name='file']").on("change", function(){
+            var formData = new FormData($("#formulario")[0]);
+            var ruta = "process/update-perfil.php";
+            $.ajax({
+                url: ruta,
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(datos)
+                {
+                    $("#respuesta").html(datos);
+                }
+            });
+        });
+    });
+</script>
     <?php
 }else{
 ?>
