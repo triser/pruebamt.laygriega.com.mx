@@ -1,7 +1,8 @@
 <link rel="shortcut icon" href="./img/logo2.ico" />
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
- <!-- estilos ING. JESUS VILLATORO -->
+<meta charset="UTF-8" />
+<!-- estilos ING. JESUS VILLATORO -->
   <link rel="stylesheet" href="./css/estilo-boton-table.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />

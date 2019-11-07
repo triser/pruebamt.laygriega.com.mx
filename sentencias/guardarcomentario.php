@@ -4,19 +4,14 @@
     $hora_actual=strftime("%H:%M:%S");
 
 
-session_start();
 include '../lib/class_mysql.php';
 include '../lib/config.php';
     if(isset($_GET['envia'])){
     $comentario=$_GET['comentario'];    
     $id=$_GET['id'];
     $date=date('Y/m/d');
-    if( $_SESSION['rol']='1'){
-       $nombre_user=$_SESSION['nombreusuario'];
-    }
-    elseif($_SESSION['rol']='2'){  
-        $nombre_user=$_SESSION['nombreadmin'];
-    }
+     $nombre_user=$_GET['idusuario'];      
+  
     if(MysqlQuery::Guardar("detalle_ticket", "id_ticket,id_usuario,comentario,fecha,hra_coment","'$id','$nombre_user','$comentario','$date','  $hora_actual'")){
 
       echo '<script>alert("Su comentario se guardo correctamente")</script>';

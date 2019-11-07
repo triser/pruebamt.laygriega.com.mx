@@ -32,49 +32,49 @@
                 /* Todos los tickets*/
                 $num_ticket_all=Mysql::consulta("SELECT T.id_usuario_tk, T.serie, T.fecha_alta,T.asignado,T.email_asignado,PU.puesto,A.asunto,T.mensaje,T.imagen_tk,T.solucion, T.fechaE, E.estatus_tk,P.prioridad
 FROM tickets AS T
-  INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
-INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
-  INNER JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto WHERE T.id_usuario_tk ='$iduser' ORDER BY id DESC");
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
+  LEFT JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
+  LEFT JOIN asunto AS A ON   T.id_asunto = A.id_asunto
+  LEFT JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto WHERE T.id_usuario_tk ='$iduser' ORDER BY id DESC");
                 $num_total_all=mysqli_num_rows($num_ticket_all);
 
                 /* Tickets pendientes*/
                 $num_ticket_pend=Mysql::consulta("SELECT T.id_usuario_tk, T.serie, T.fecha_alta,T.asignado,T.email_asignado,PU.puesto,A.asunto,T.mensaje,T.imagen_tk,T.solucion, T.fechaE, E.estatus_tk,P.prioridad
 FROM tickets AS T
-  INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
-INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
-  INNER JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
+  LEFT JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
+  LEFT JOIN asunto AS A ON   T.id_asunto = A.id_asunto
+  LEFT JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
   WHERE estatus_tk='Pendiente' and T.id_usuario_tk ='$iduser'");
                 $num_total_pend=mysqli_num_rows($num_ticket_pend);
 
                 /* Tickets en proceso*/
                 $num_ticket_proceso=Mysql::consulta("SELECT T.id_usuario_tk, T.serie, T.fecha_alta,T.asignado,T.email_asignado,PU.puesto,A.asunto,T.mensaje,T.imagen_tk,T.solucion, T.fechaE, E.estatus_tk,P.prioridad
 FROM tickets AS T
-  INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
-INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
-  INNER JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
+  LEFT JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
+  LEFT JOIN asunto AS A ON   T.id_asunto = A.id_asunto
+  LEFT JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
   WHERE estatus_tk='En proceso' and  T.id_usuario_tk ='$iduser'");
                 $num_total_proceso=mysqli_num_rows($num_ticket_proceso);
 
                 /* Tickets resueltos*/
                 $num_ticket_res=Mysql::consulta("SELECT T.id_usuario_tk, T.serie, T.fecha_alta,T.asignado,T.email_asignado,PU.puesto,A.asunto,T.mensaje,T.imagen_tk,T.solucion, T.fechaE, E.estatus_tk,P.prioridad
 FROM tickets AS T
-  INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
-INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
-  INNER JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
+  LEFT JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
+  LEFT JOIN asunto AS A ON   T.id_asunto = A.id_asunto
+  LEFT JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
   WHERE estatus_tk='Resuelto' and  T.id_usuario_tk ='$iduser'");
                 $num_total_res=mysqli_num_rows($num_ticket_res);
                 
                  /* Tickets Cancelados*/
                 $num_ticket_can=Mysql::consulta("SELECT T.id_usuario_tk, T.serie, T.fecha_alta,T.asignado,T.email_asignado,PU.puesto,A.asunto,T.mensaje,T.imagen_tk,T.solucion, T.fechaE, E.estatus_tk,P.prioridad
 FROM tickets AS T
-  INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
-INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
-  INNER JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
+  LEFT JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
+  LEFT JOIN asunto AS A ON   T.id_asunto = A.id_asunto
+  LEFT JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
   WHERE estatus_tk='Cancelados' and  T.id_usuario_tk ='$iduser'");
                 $num_total_can=mysqli_num_rows($num_ticket_can);
             ?>
@@ -94,8 +94,8 @@ INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
         <small>LA Y GRIEGA</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="./index.php?view=usuario"><i class="fa fa-dashboard"></i> Inicio</a></li>
-        <li><a href="./index.php?view=tickets">Administrar Tickets</a></li>
+        <li><a href="./admin.php?view=usuario"><i class="fa fa-dashboard"></i> Inicio</a></li>
+        <li><a href="./admin.php?view=tickets">Administrar Tickets</a></li>
         <li class="active">Registro de Tickets enviados</li>
       </ol>
     </section>
@@ -104,11 +104,11 @@ INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
           <div class="row">
                     <div class="col-md-12">
                         <ul class="nav nav-pills nav-justified">
-                            <li><a href="./index.php?view=tickets&ticket&ticket=all"><i class="fa fa-list"></i>&nbsp;&nbsp;Todas las Ordenes&nbsp;&nbsp;<span class="label label-primary"><?php echo $num_total_all; ?></span></a></li>
-                            <li><a href="./index.php?view=tickets&ticket=pending"><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Ordenes pendientes&nbsp;&nbsp;<span class="label label-danger"><?php echo $num_total_pend; ?></span></a></li>
-                            <li><a href="./index.php?view=tickets&ticket=process"><i class="fa fa-folder-open"></i>&nbsp;&nbsp;Ordenes en proceso&nbsp;&nbsp;<span class="label label-warning"><?php echo $num_total_proceso; ?></span></a></li>
-                            <li><a href="./index.php?view=tickets&ticket=resolved"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Ordenes resueltos&nbsp;&nbsp;<span class="label label-success"><?php echo $num_total_res; ?></span></a></li>
-                            <li><a href="./index.php?view=tickets&ticket=cancelled"><i class="fa fa-minus-square"></i>&nbsp;&nbsp;Ordenes Cancelados&nbsp;&nbsp;<span class="label label-danger"><?php echo $num_total_can; ?></span></a></li>
+                            <li><a href="./admin.php?view=tickets-enviados&ticket&ticket=all"><i class="fa fa-list"></i>&nbsp;&nbsp;Todas las Ordenes&nbsp;&nbsp;<span class="label label-primary"><?php echo $num_total_all; ?></span></a></li>
+                            <li><a href="./admin.php?view=tickets-enviados&ticket=pending"><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Ordenes pendientes&nbsp;&nbsp;<span class="label label-danger"><?php echo $num_total_pend; ?></span></a></li>
+                            <li><a href="./admin.php?view=tickets-enviados&ticket=process"><i class="fa fa-folder-open"></i>&nbsp;&nbsp;Ordenes en proceso&nbsp;&nbsp;<span class="label label-warning"><?php echo $num_total_proceso; ?></span></a></li>
+                            <li><a href="./admin.php?view=tickets-enviados&ticket=resolved"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Ordenes resueltos&nbsp;&nbsp;<span class="label label-success"><?php echo $num_total_res; ?></span></a></li>
+                            <li><a href="./admin.php?view=tickets-enviados&ticket=cancelled"><i class="fa fa-minus-square"></i>&nbsp;&nbsp;Ordenes Cancelados&nbsp;&nbsp;<span class="label label-danger"><?php echo $num_total_can; ?></span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -164,51 +164,51 @@ INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
                                 if(isset($_GET['ticket'])){
                                     if($_GET['ticket']=="all"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
-INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
-  INNER JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto  WHERE  T.id_usuario_tk ='$iduser' ORDER BY id DESC LIMIT $inicio, $regpagina";
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
+  LEFT JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
+  LEFT JOIN asunto AS A ON   T.id_asunto = A.id_asunto
+  LEFT JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto  WHERE  T.id_usuario_tk ='$iduser' ORDER BY id DESC LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="pending"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
-INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
-  INNER JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
-  WHERE estatus_tk='Pendiente' AND T.id_usuario_tk ='$iduser' LIMIT $inicio, $regpagina";
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
+  LEFT JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
+  LEFT JOIN asunto AS A ON   T.id_asunto = A.id_asunto
+  LEFT JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
+  WHERE estatus_tk='Pendiente' AND T.id_usuario_tk ='$iduser' ORDER BY id DESC LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="process"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
-INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
-  INNER JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
+  LEFT JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
+  LEFT JOIN asunto AS A ON   T.id_asunto = A.id_asunto
+  LEFT JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
   WHERE estatus_tk='En proceso' and T.id_usuario_tk ='$iduser'  LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="resolved"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
-INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
-  INNER JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
+  LEFT JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
+  LEFT JOIN asunto AS A ON   T.id_asunto = A.id_asunto
+  LEFT JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
   WHERE estatus_tk='Resuelto' and T.id_usuario_tk ='$iduser' LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="cancelled"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
-INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
-  INNER JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
+  LEFT JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
+  LEFT JOIN asunto AS A ON   T.id_asunto = A.id_asunto
+  LEFT JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto
   WHERE estatus_tk='Cancelados' and T.id_usuario_tk ='$iduser' LIMIT $inicio, $regpagina";
                                     }else{
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
-INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
-  INNER JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto WHERE T.id_usuario_tk ='$iduser' ORDER BY id DESC LIMIT $inicio, $regpagina";
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
+  LEFT JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
+  LEFT JOIN asunto AS A ON   T.id_asunto = A.id_asunto
+  LEFT JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto WHERE T.id_usuario_tk ='$iduser' ORDER BY id DESC LIMIT $inicio, $regpagina";
                                     }
                                 }else{
                                     $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  INNER JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  INNER JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
-INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
-  INNER JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto WHERE  T.id_usuario_tk ='$iduser'  ORDER BY id DESC LIMIT $inicio, $regpagina";
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
+  LEFT JOIN estatus_tk AS E ON  T.estatus_tks = E.id_estatus_tk 
+  LEFT JOIN asunto AS A ON   T.id_asunto = A.id_asunto
+  LEFT JOIN puestos AS PU ON   A.idpuesto = PU.id_puesto WHERE  T.id_usuario_tk ='$iduser'  ORDER BY id DESC LIMIT $inicio, $regpagina";
                                 }
 
 
@@ -272,7 +272,7 @@ INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
 		case "Resuelto":
 		echo '<span class="label label-primary">'.$row["estatus_tk"].'</span>';
 		break;
-        case "En proceso":
+        case "En Proceso":
         echo '<span class="label label-warning">'.$row["estatus_tk"].'</span>';
        break;
        case "Pendiente":
@@ -432,7 +432,7 @@ INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
                                     </li>
                                 <?php else: ?>
                                     <li>
-                                        <a href="./index.php?view=tickets&ticket=<?php echo $ticketselected; ?>&pagina=<?php echo $pagina-1; ?>" aria-label="Previous">
+                                        <a href="./admin.php?view=tickets-enviados&ticket=<?php echo $ticketselected; ?>&pagina=<?php echo $pagina-1; ?>" aria-label="Previous">
                                             <span aria-hidden="true">&larr;</span>&nbsp;Anterior
                                         </a>
                                     </li>
@@ -442,9 +442,9 @@ INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
                                 <?php
                                     for($i=1; $i <= $numeropaginas; $i++ ){
                                         if($pagina == $i){
-                                            echo '<li class="active"><a href="./index.php?view=tickets&ticket='.$ticketselected.'&pagina='.$i.'">'.$i.'</a></li>';
+                                            echo '<li class="active"><a href="./admin.php?view=tickets-enviados&ticket='.$ticketselected.'&pagina='.$i.'">'.$i.'</a></li>';
                                         }else{
-                                            echo '<li><a href="./index.php?view=tickets&ticket='.$ticketselected.'&pagina='.$i.'">'.$i.'</a></li>';
+                                            echo '<li><a href="./admin.php?view=tickets-enviados&ticket='.$ticketselected.'&pagina='.$i.'">'.$i.'</a></li>';
                                         }
                                     }
                                 ?>
@@ -458,7 +458,7 @@ INNER JOIN asunto AS A ON   T.id_asunto = A.id_asunto
                                     </li>
                                 <?php else: ?>
                                     <li>
-                                        <a href="./index.php?view=tickets&ticket=<?php echo $ticketselected; ?>&pagina=<?php echo $pagina+1; ?>" aria-label="Previous">
+                                        <a href="./admin.php?view=tickets-enviados&ticket=<?php echo $ticketselected; ?>&pagina=<?php echo $pagina+1; ?>" aria-label="Previous">
                                             <span aria-hidden="true">&rarr;</span>&nbsp;Siguiente
                                         </a>
                                     </li>

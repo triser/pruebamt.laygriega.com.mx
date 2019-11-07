@@ -61,44 +61,62 @@ imagejpeg($lienzo, $destino1, 80);
 			
           /*Fin codigo numero de ticket*/
           $fecha_ticket=  MysqlQuery::RequestPost('fecha_ticket');
-          $hra_ticket=  date_default_timezone_set('America/Mexico_city'); echo date("h:i:s A");
+        $email_solicitante= MysqlQuery::RequestPost('email_solicitante');
          $nombre_asignado=  MysqlQuery::RequestPost('nombre_asignado');
          $email_asignado= MysqlQuery::RequestPost('email_asignado');
-          $puesto_ticket= MysqlQuery::RequestPost('puesto_ticket');
-          $departamento_ticket= MysqlQuery::RequestPost('departamento_ticket');
+          $puesto_ticket= MysqlQuery::RequestPost('puesto');
+          $departamento_ticket= MysqlQuery::RequestPost('departamento');
 	      $prioridad_ticket= MysqlQuery::RequestPost('prioridad_ticket');
           $asunto_ticket= MysqlQuery::RequestPost('asunto_ticket');        
           $descripcion_ticket=  MysqlQuery::RequestPost('descripcion_ticket');
 			
 			//Enviamos el mensaje ala Bd
-			
+   date_default_timezone_set('America/Mexico_City');
+    setlocale(LC_TIME, 'es_MX.UTF-8');
+    $hora_actual=strftime("%H:%M:%S");	
 			 
-$sql3 = "INSERT INTO tickets (asignado, fecha_alta, hra_creacion, serie ,id_usuario_tk, id_asunto, mensaje, imagen_tk , id_prioridad_tk) VALUES ('$nombre_asignado','$fecha_ticket', '$hra_ticket', '$id_ticket', '$iduser', '$asunto_ticket', '$descripcion_ticket', '$destino1', '$prioridad_ticket')";
+$sql3 = "INSERT INTO tickets (asignado, fecha_alta, hra_creacion, serie ,id_usuario_tk, email_asignado,id_asunto, mensaje, imagen_tk , id_prioridad_tk) VALUES ('$nombre_asignado','$fecha_ticket', '$hora_actual', '$id_ticket', '$iduser', '$email_asignado', '$asunto_ticket', ' $descripcion_ticket', '$destino1', '$prioridad_ticket')";
 $res4=mysqli_query($con,$sql3);//El campo ID de esta tabla es AUTO_INCREMENT  
     
     
            if ($res4){
-        $nombre_asignado = utf8_decode($_POST['nombre_asignado']);
-        $nombre_s = utf8_decode($_POST['nombre_s']);
-        $user_reg = $_POST['user_reg'];
-        $clave_reg2 = $_POST['clave_reg'];
-        $email_reg = $_POST['email_reg'];
+    	  /*
+            ----------Enviar correo con los datos del
+            ----------*/
+            	 /*Fin codigo numero de ticket*/
+          $nombre_s = utf8_decode($_POST['nombre_s']);
+          $email_asignado = $_POST['email_asignado'];
+          $email_solicitante = $_POST['email_solicitante'];
+          $departamento_ticket = $_POST['departamento'];
+          $puesto_ticket = $_POST['puesto'];
+          $fecha_ticket = $_POST['fecha_ticket'];
 
-        //Preparamos el mensaje de contacto/ /
-        $cabeceras = "From: Registro de cuenta al Sistema de Orden de Mejora LA Y GRIEGA"; //La persona que envia el correo
-        $asunto = "Datos de cuenta"; //El asunto
-        $email_to = "$email_reg, sistemaom@laygriega.com.mx"; //cambiar por tu email
-        $mensaje_mail="Hola ".$nombre_asignado.", Gracias por registrarte al Sistema OM de Abarrotes LA Y GRIEGA. Los datos de tu cuenta son los siguientes:
-         \nNombre Completo: ".$nombre_s."
-         \nNombre de usuario: ".$user_reg."
-        \nClave: ".$clave_reg2."
-        \nEmail: ".$email_reg."
-        \n Para poder accesar Visitanos: http://www.sistemaom.laygriega.com.mx";
+		
+		  //Preparamos el mensaje de contacto
+			
+		  $cabeceras = "From: SOLICITUD DE TICKET LA Y GRIEGA"; //La persona que envia el correo
+		  $asunto= "Numero de Folio de Ticket "; //El asunto
+		  $email_to = "$email_asignado, sistemaom@laygriega.com.mx"; //cambiar por tu email
+		  $mensaje_mail="Hola ".$nombre_s.", El sistema MTL le envia una solicitud de Tickets, Solicitado por el usuario ".$nombre." ".$apellidos." adjunto con los siguiente datos que son los siguientes. 
+          Su Orden ID es: ".$id_ticket.",
+		  \n Solicitado Con Fecha: ".$fecha_ticket.",
+           
+		  \n Para poder Consultar la Solicitud enviada, Visitanos en el siguiente Enlace: http://sistemaom.laygriega.com.mx";
 
-        //Enviamos el mensaje y comprobamos el resultado
-        if (@mail($email_to, $asunto ,$mensaje_mail ,$cabeceras ));
-/*
-
+               
+               	
+		  $cabeceras = "From: SOLICITUD ENVIADA SISTEMA MLT"; //La persona que envia el correo
+		  $asunto= "Numero de Folio de Ticket "; //El asunto
+		  $email_to = "$email_solicitante, sistemaom@laygriega.com.mx"; //cambiar por tu email
+		  $mensaje_mail="Hola ".$nombre." ".$apellidos.",Gracias por reportarnos su problema! Buscaremos una solucion para su problema lo mas pronto posible. Su Orden ID es: ".$id_ticket.",
+		  \n Solicitado Con Fecha: ".$fecha_ticket.",
+          \n Dirigido o solicitado al departamento: ".$departamento_ticket.",
+            \n Dirigido o solicitado al Puesto: ".$puesto_ticket.",
+		  \n Para poder Consultar su estatus de Su Orden De Trabajo, Visitanos en el siguiente Enlace: http://sistemaom.laygriega.com.mx";
+               
+               
+		  //Enviamos el mensaje y comprobamos el resultado
+		  if (@mail($email_to, $asunto ,$mensaje_mail ,$cabeceras )) ;
 
     	  /*
             ----------Enviar correo con los datos del
@@ -211,7 +229,7 @@ $rowCount = $query-> num_rows;
                 
                        <div class="form-group">
               	<label>Departamento Asignado:</label>
-		<select class="form-control" id="departamento">
+		<select class="form-control" id="departamento" name="departamento" required>
     <option value="">Seleccione depto</option>
     <?php
     if($rowCount > 0){
@@ -262,7 +280,7 @@ $rowCount = $query-> num_rows;
               <!-- /.form-group -->
        <div class="form-group">
                    <label>Puesto Asignado:</label>
-<select class="form-control" name="puesto" id="puesto">
+<select class="form-control" name="puesto" id="puesto" required>
     <option value="">Seleccione departamento primero</option>
 </select>
 
@@ -287,22 +305,24 @@ $rowCount = $query-> num_rows;
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control"  name="email_ticket"readonly value="<?php echo utf8_encode($_SESSION['email']); ?>">
+                  <input type="text" class="form-control"  name="email_solicitante"readonly value="<?php echo utf8_encode($_SESSION['email']); ?>">
                 </div>
                 <!-- /.input group -->
               </div>
                <!-- /.form-group -->
   		<div class = "form-group">
               <label>Asunto:</label>
-						<select class="form-control" name="asunto_ticket" id="asunto">
+						<select class="form-control" name="asunto_ticket" id="asunto" required>
     <option value="">Seleccione puesto primero</option>
 </select>
 						</div>
+                
               <!-- /.form-group -->
+                
                     <div class="form-group">
                    <label>Prioridad:</label>
-                       <select class="form-control" required name="prioridad_ticket">
-                                <option value="0">Seleccione un Priridad:</option>
+                       <select class="form-control" name="prioridad_ticket" required>
+                                <option value="">Seleccione un Priridad:</option>
                                      <?php 
             $query = Mysql::consulta ("SELECT * FROM prioridad_tk");
             while ($puesto = mysqli_fetch_array($query)){
@@ -312,20 +332,19 @@ $rowCount = $query-> num_rows;
               </div>
               <!-- /.form-group -->
             </div>
-                               <!-- /.form-group -
-                      <div class="col-md-1">
+                               <!-- /.form-group -->
+                      <div class="col-md-3">
               <div class="form-group">
                               <div class="image view view-first">
-                            <img class="thumb-image" style="width: 100%; display: block;" src="img/tickets.jpg" alt="image" />
+                            <img class="thumb-image" style="width: 60%; display: block; align:left;" src="img/tickets.jpg" alt="image" />
                         </div>
-                  </input group 
-                </div>--
+                </div>
        
-            </div>-->
+            </div>
                  <div class="col-md-9">
   		<div class = "form-group">
 					<label>Requerimiento:</label>
-                  <textarea class="form-control" rows="4"  name="descripcion_ticket" placeholder="Por favor de Describir el problema que presenta"  pattern="[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-]+{1,400}" ></textarea>
+                  <textarea class="form-control" rows="4"  name="descripcion_ticket" placeholder="Por favor de Describir el problema que presenta"  pattern="[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-]+{1,400}" required></textarea>
 						</div></div>
                     
               <div class="col-md-9">
@@ -338,11 +357,11 @@ $rowCount = $query-> num_rows;
               </div>
                   </div>
             <!-- /.col -->
-                         <div class="row no-print">
+        <div class="row no-print">
         <div class="col-xs-6">
-          <button name="guardar" type="submit" class="btn btn-primary pull-right"><i class="fa fa-credit-card"></i> Guardar
+          <button name="guardar" type="submit" class="btn btn-primary pull-right"><i class="fa fa-save"></i>&nbsp; Guardar
           </button>
-            <a href="./admin.php?view=tickets" class="btn btn-default pull-right" style="margin-right: 5px;"><i class="fa fa-print"></i> Cancelar</a>
+            <a href="./admin.php?view=tickets" class="btn btn-default pull-right" style="margin-right: 5px;"><i class="fa fa-reply"></i>&nbsp; Cancelar</a>
       
         </div>
       </div>

@@ -140,7 +140,7 @@
                 <img src="img/profiles/<?php echo $foto_perfil ?>" class="img-circle" alt="User Image">
 
                 <p>
-              <?php echo $grado." ".utf8_encode($nombre);?>
+              <?php echo $grado." ".utf8_encode($nombre)." ".utf8_encode($apellidos);?>
             <small>Miembro desde <?php echo date('M. Y',strtotime($_SESSION['fecha_alta']));?></small> 
                 </p>
               </li>

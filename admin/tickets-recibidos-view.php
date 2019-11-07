@@ -109,8 +109,8 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
         <small>LA Y GRIEGA</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="./index.php?view=usuario"><i class="fa fa-dashboard"></i> Inicio</a></li>
-        <li><a href="./index.php?view=tickets">Administrar Tickets</a></li>
+        <li><a href="./admin.php?view=usuario"><i class="fa fa-dashboard"></i> Inicio</a></li>
+        <li><a href="./admin.php?view=tickets">Administrar Tickets</a></li>
         <li class="active">Registro de Tickets Recibidos</li>
       </ol>
     </section>
@@ -119,11 +119,11 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
           <div class="row">
                     <div class="col-md-12">
                         <ul class="nav nav-pills nav-justified">
-                            <li><a href="./index.php?view=tickets&ticket&ticket=all"><i class="fa fa-list"></i>&nbsp;&nbsp;Todas las Ordenes&nbsp;&nbsp;<span class="label label-primary"><?php echo $num_total_all; ?></span></a></li>
-                            <li><a href="./index.php?view=tickets&ticket=pending"><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Ordenes pendientes&nbsp;&nbsp;<span class="label label-danger"><?php echo $num_total_pend; ?></span></a></li>
-                            <li><a href="./index.php?view=tickets&ticket=process"><i class="fa fa-folder-open"></i>&nbsp;&nbsp;Ordenes en proceso&nbsp;&nbsp;<span class="label label-warning"><?php echo $num_total_proceso; ?></span></a></li>
-                            <li><a href="./index.php?view=tickets&ticket=resolved"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Ordenes resueltos&nbsp;&nbsp;<span class="label label-success"><?php echo $num_total_res; ?></span></a></li>
-                            <li><a href="./index.php?view=tickets&ticket=cancelled"><i class="fa fa-minus-square"></i>&nbsp;&nbsp;Ordenes Cancelados&nbsp;&nbsp;<span class="label label-danger"><?php echo $num_total_can; ?></span></a></li>
+                            <li><a href="./admin.php?view=tickets-recibidos&ticket&ticket=all"><i class="fa fa-list"></i>&nbsp;&nbsp;Todas las Ordenes&nbsp;&nbsp;<span class="label label-primary"><?php echo $num_total_all; ?></span></a></li>
+                            <li><a href="./admin.php?view=tickets-recibidos&ticket=pending"><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Ordenes pendientes&nbsp;&nbsp;<span class="label label-danger"><?php echo $num_total_pend; ?></span></a></li>
+                            <li><a href="./admin.php?view=tickets-recibidos&ticket=process"><i class="fa fa-folder-open"></i>&nbsp;&nbsp;Ordenes en proceso&nbsp;&nbsp;<span class="label label-warning"><?php echo $num_total_proceso; ?></span></a></li>
+                            <li><a href="./admin.php?view=tickets-recibidos&ticket=resolved"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Ordenes resueltos&nbsp;&nbsp;<span class="label label-success"><?php echo $num_total_res; ?></span></a></li>
+                            <li><a href="./admin.php?view=tickets-recibidos&ticket=cancelled"><i class="fa fa-minus-square"></i>&nbsp;&nbsp;Ordenes Cancelados&nbsp;&nbsp;<span class="label label-danger"><?php echo $num_total_can; ?></span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -190,17 +190,17 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
 LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
 LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
   LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
-  WHERE estatus_tk='Pendiente' and  T.email_asignado='$email'  LIMIT $inicio, $regpagina";
+  WHERE estatus_tk='Pendiente' and  T.email_asignado='$email' ORDER BY id DESC LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="process"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  LEFT JOIN usuario AS U ON T.usuario_tk = U.idusuario
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
- LEFT JOIN estatus_tk AS E  ON  T.id_estatus_tk = E.id_estatus_tk
- LEFT JOIN empleado_laboral AS EL ON  U.id_laboral = EL.idlaboral
-LEFT JOIN puestos AS PU ON  EL.id_puesto = PU.id_puesto
-LEFT JOIN asunto AS A ON A.id_puesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
-  LEFT JOIN grado_estudio AS G ON  EL.id_grado = G.id_grado
-  WHERE estatus_tk='En proceso' and  T.email_asignado='$email'  LIMIT $inicio, $regpagina";
+ LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+ LEFT JOIN empleado_laboral AS EL ON  U.idusuario = EL.idusuario
+LEFT JOIN puestos AS PU ON  EL.idpuesto = PU.id_puesto
+LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunto
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
+ WHERE estatus_tk='En Proceso' AND T.email_asignado='$email' ORDER BY id DESC LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="resolved"){
                                         $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
   LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
@@ -303,7 +303,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
 		echo '<span class="label label-primary">'.$row["estatus_tk"].'</span>';
 		break;
         case "En Proceso":
-        echo '<span class="label label-warning">'.$row["estatus_tk"].'</span>';
+        echo '<span class="label label-danger">'.$row["estatus_tk"].'</span>';
        break;
        case "Pendiente":
         echo '<span class="label label-success">'.$row["estatus_tk"].'</span>';
@@ -467,7 +467,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
                                     </li>
                                 <?php else: ?>
                                     <li>
-                                        <a href="./index.php?view=tickets&ticket=<?php echo $ticketselected; ?>&pagina=<?php echo $pagina-1; ?>" aria-label="Previous">
+                                        <a href="./admin.php?view=tickets-recibidos&ticket=<?php echo $ticketselected; ?>&pagina=<?php echo $pagina-1; ?>" aria-label="Previous">
                                             <span aria-hidden="true">&larr;</span>&nbsp;Anterior
                                         </a>
                                     </li>
@@ -477,9 +477,9 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
                                 <?php
                                     for($i=1; $i <= $numeropaginas; $i++ ){
                                         if($pagina == $i){
-                                            echo '<li class="active"><a href="./index.php?view=tickets&ticket='.$ticketselected.'&pagina='.$i.'">'.$i.'</a></li>';
+                                            echo '<li class="active"><a href="./admin.php?view=tickets-recibidos&ticket='.$ticketselected.'&pagina='.$i.'">'.$i.'</a></li>';
                                         }else{
-                                            echo '<li><a href="./index.php?view=tickets&ticket='.$ticketselected.'&pagina='.$i.'">'.$i.'</a></li>';
+                                            echo '<li><a href="./admin.php?view=tickets-recibidos&ticket='.$ticketselected.'&pagina='.$i.'">'.$i.'</a></li>';
                                         }
                                     }
                                 ?>
@@ -493,7 +493,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
                                     </li>
                                 <?php else: ?>
                                     <li>
-                                        <a href="./index.php?view=tickets&ticket=<?php echo $ticketselected; ?>&pagina=<?php echo $pagina+1; ?>" aria-label="Previous">
+                                        <a href="./admin.php?view=tickets-recibidos&ticket=<?php echo $ticketselected; ?>&pagina=<?php echo $pagina+1; ?>" aria-label="Previous">
                                             <span aria-hidden="true">&rarr;</span>&nbsp;Siguiente
                                         </a>
                                     </li>

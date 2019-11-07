@@ -1,4 +1,5 @@
-<?php if($_SESSION['nombre']!="" && $_SESSION['rol']=="2"){ ?>  
+<?php include './lib/config2.php'; if($_SESSION['email']!="" && $_SESSION['rol']){ ?>  
+<?php include('./sentencias/consulta.php');?>
   <?php     $status='estatus'; if ($status=0){$status_f="Activo";}else {$status_f="Baja";}  ?>
         <?php 
             if(isset($_POST['id_del'])){
@@ -29,12 +30,22 @@
             }
 
             /* Todos los users*/
-            $num_user=Mysql::consulta("SELECT U.idusuario,U.nombre,U.apellidos,U.email_usuario,U.usuario,U.foto_perfil,R.rol,U.estatus,U.fecha_alta_sis,U.direccion,U.tipo_sangre,U.telefono,U.nss,U.fechaingreso,T.descrip_titulo,D.departamento,P.puesto
-FROM usuario AS U LEFT JOIN titulo AS T ON U.id_titulo = T.id_titulo LEFT JOIN puestos AS P ON  U.id_puesto = P.id_puesto LEFT JOIN  departamento AS D ON  U.id_departamento = D.id_departamento LEFT JOIN  rol AS R ON  U.rol = R.idrol WHERE estatus = 1");
+            $num_user=Mysql::consulta("SELECT U.idusuario,G.grado ,EL.nombre,EL.apellidos,U.email_usuario,D.departamento,P.puesto,U.usuario,U.foto_perfil,R.rol,U.estatus,U.fecha_alta_sis,U.fecha_update
+FROM usuario AS U 
+ LEFT JOIN rol AS R  ON U.rol = R.idrol
+  LEFT JOIN empleado_laboral AS EL ON  EL.idusuario = U.idusuario 
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado= G.id_grado
+ LEFT JOIN puestos AS P ON   EL.idpuesto = P.id_puesto
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento WHERE estatus = 1");
             $num_total_user = mysqli_num_rows($num_user);
               /* Todos los users abaja*/
-            $num_user=Mysql::consulta("SELECT U.idusuario,U.nombre,U.apellidos,U.email_usuario,U.usuario,U.foto_perfil,R.rol,U.estatus,U.fecha_alta_sis,U.direccion,U.tipo_sangre,U.telefono,U.nss,U.fechaingreso,T.descrip_titulo,D.departamento,P.puesto
-FROM usuario AS U LEFT JOIN titulo AS T ON U.id_titulo = T.id_titulo LEFT JOIN puestos AS P ON  U.id_puesto = P.id_puesto LEFT JOIN  departamento AS D ON  U.id_departamento = D.id_departamento LEFT JOIN  rol AS R ON  U.rol = R.idrol WHERE estatus = 0");
+            $num_user=Mysql::consulta("SELECT U.idusuario,G.grado ,EL.nombre,EL.apellidos,U.email_usuario,D.departamento,P.puesto,U.usuario,U.foto_perfil,R.rol,U.estatus,U.fecha_alta_sis,U.fecha_update
+FROM usuario AS U 
+ LEFT JOIN rol AS R  ON U.rol = R.idrol
+  LEFT JOIN empleado_laboral AS EL ON  EL.idusuario = U.idusuario 
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado= G.id_grado
+ LEFT JOIN puestos AS P ON   EL.idpuesto = P.id_puesto
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento WHERE estatus = 0");
             $num_total_baja = mysqli_num_rows($num_user);
           
         ?>
@@ -102,7 +113,12 @@ FROM usuario AS U LEFT JOIN titulo AS T ON U.id_titulo = T.id_titulo LEFT JOIN p
                                 $regpagina = 15;
                                 $inicio = ($pagina > 1) ? (($pagina * $regpagina) - $regpagina) : 0;
 
-                                $selusers=mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * From  usuario AS U LEFT JOIN titulo AS T ON U.id_titulo = T.id_titulo LEFT JOIN puestos AS P ON  U.id_puesto = P.id_puesto LEFT JOIN  departamento AS D ON  U.id_departamento = D.id_departamento LEFT JOIN  rol AS R ON  U.rol = R.idrol WHERE estatus = 0 ORDER BY idusuario LIMIT $inicio, $regpagina");
+                                $selusers=mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM usuario AS U 
+ LEFT JOIN rol AS R  ON U.rol = R.idrol
+  LEFT JOIN empleado_laboral AS EL ON  EL.idusuario = U.idusuario 
+  LEFT JOIN grado_estudio AS G ON  EL.idgrado= G.id_grado
+ LEFT JOIN puestos AS P ON   EL.idpuesto = P.id_puesto
+  LEFT JOIN departamento AS D ON  P.id_depa = D.id_departamento WHERE estatus = 0 ORDER BY U.idusuario  LIMIT $inicio, $regpagina");
 
                                 $totalregistros = mysqli_query($mysqli,"SELECT FOUND_ROWS()");
                                 $totalregistros = mysqli_fetch_array($totalregistros, MYSQLI_ASSOC);
@@ -129,11 +145,19 @@ FROM usuario AS U LEFT JOIN titulo AS T ON U.id_titulo = T.id_titulo LEFT JOIN p
                                    <?php
                                         $ct=$inicio+1;
                                         while ($row=mysqli_fetch_array($selusers, MYSQLI_ASSOC)): 
+                                                                                      $iduser=$row['idusuario'];
+							$g=$row['grado']; $n=$row['nombre']; $a=$row['apellidos'];
+							$u=$row['usuario'];
+							$fp=$row['foto_perfil'];
+                            $d=$row['departamento'];	
+                            $pu=$row['puesto'];	
+                            $em=$row['email_usuario'];	
+                            $r=$row['rol'];
                                     ?>
                                     <tr>
                                         <td class="text-center" scope="row" data-label="Registro"><?php echo $ct; ?></td>
-                                        <td class="text-center" data-label="NOmbre:"><?php echo $row['descrip_titulo']; ?> <?php echo $row['nombre']; ?></td>
-                                        <td class="text-center" data-label="NOmbre:"><?php echo $row['usuario']; ?></td>
+                                        <td class="text-center" data-label="Nombre Completo:"><?php echo $g; ?> <?php echo $n; ?> <?php echo $a; ?></td>
+                                        <td class="text-center" data-label="Usuario:"><?php echo $row['usuario']; ?></td>
                                          <td class="text-center" data-label="Foto:"> <a class="example-image-link" href="img/profiles/<?php echo $row['foto_perfil']; ?>" data-lightbox="example-set" data-title="<?php echo $row['nombre']; ?>"><img class="example-image" src="img/profiles/<?php echo $row['foto_perfil']; ?>" width="25" height="25"  alt=""/></a>
                                         <td class="text-center" data-label="Area:"><?php echo $row['departamento']; ?></td>
                                          <td class="text-center" data-label="Prioridad:"><?php echo $row['puesto']; ?> </td>

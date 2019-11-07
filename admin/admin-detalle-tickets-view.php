@@ -130,7 +130,7 @@ LEFT JOIN departamento AS D ON  PU.id_depa = D.id_departamento WHERE id= '$id'")
                 </tr>
               </table>
                 <div class="col-sm-12 col-xs-12" style="display: flex;">
-                    <a class="btn btn-primary" style="margin-right:10px" id="btncomentar"><i class="fa fa-commenting-o">&nbsp;</i> Comentar</a>
+                    <a class="btn btn-primary" style="margin-right:10px" id="btncomentar"><i class="fa fa-comments-o">&nbsp;</i> Comentar</a>
                     <button class="btn btn-default pull-right" style="margin-right: 5px;" onclick="anterior()"><i class="fa fa-reply">&nbsp;</i> Regresar</button>
       </div>
             </div>
@@ -138,10 +138,12 @@ LEFT JOIN departamento AS D ON  PU.id_depa = D.id_departamento WHERE id= '$id'")
                                    <!--FORMULARIO QUE ENVIA EL COMENTARIO-->
   <form class="form-horizontal" role="form" id="formcomenta" action="sentencias/guardarcomentario.php" method="GET">
   <div class="form-group" style="margin-right:100px">
+         <input type="hidden" name="idusuario" id="idusuario" value="<?php echo $iduser?>">
     <label for="inputEmail3" class="col-sm-2 control-label">Comentario</label>
     <div class="col-sm-10">
       <textarea type="text" rows="5" class="form-control" name="comentario" id="comentariotext" placeholder="Escriba aqui su comentario" required></textarea>
       <input type="hidden" name="id" value="<?php echo "$id"?>">
+     
     </div>
   </div>
   <div class="form-group">
@@ -171,8 +173,10 @@ LEFT JOIN departamento AS D ON  PU.id_depa = D.id_departamento WHERE id= '$id'")
                                 $regpagina = 15;
                                 $inicio = ($pagina > 1) ? (($pagina * $regpagina) - $regpagina) : 0;
 
-                                $selusers=mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS tk
- INNER JOIN  detalle_ticket AS dtk ON tk.id=dtk.id_ticket where id_ticket='$id'  LIMIT $inicio, $regpagina");
+                                $selusers=mysqli_query($mysqli,"SELECT SQL_CALC_FOUND_ROWS * FROM usuario AS U
+ INNER JOIN empleado_laboral AS EL ON u.idusuario = EL.idusuario
+  INNER JOIN grado_estudio AS G ON EL.idgrado = G.id_grado
+  INNER JOIN detalle_ticket AS DTK ON  DTK.id_usuario = U.idusuario WHERE id_ticket='$id' ORDER BY id LIMIT $inicio, $regpagina");
 
 
                                 $totalregistros = mysqli_query($mysqli,"SELECT FOUND_ROWS()");
@@ -201,7 +205,7 @@ LEFT JOIN departamento AS D ON  PU.id_depa = D.id_departamento WHERE id= '$id'")
 
                 <span class="time"><i class="fa fa-clock-o"></i> <?php echo utf8_decode($row['hra_coment'])?></span>
 
-                <h3 class="timeline-header"><a href=""><?php echo $ct; ?> <?php echo $row['id_usuario']; ?></a></h3>
+                <h3 class="timeline-header"><a href=""><?php echo $ct; ?> <?php echo $row['grado']; ?> <?php echo $row['nombre']; ?> <?php echo $row['apellidos']; ?></a></h3>
 
                 <div class="timeline-body">
                 <?php echo $row['comentario']; ?>
@@ -287,9 +291,10 @@ LEFT JOIN departamento AS D ON  PU.id_depa = D.id_departamento WHERE id= '$id'")
 
     </section>
     <!-- /.content -->
-        <!-- Main Footer -->
+     </div>
+  <!-- Main Footer -->
 <?php include "./inc/footer.php"; ?> 
-  </div>
+
   <!-- /.content-wrapper -->
 
   <!-- /.control-sidebar -->

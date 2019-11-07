@@ -1,3 +1,4 @@
+
 <?php include './lib/config2.php'; if(!$_SESSION['email']=="" && $_SESSION['rol']=="2"){ ?>
 <?php include('./sentencias/consulta.php');?>
                         <?php
@@ -197,9 +198,9 @@ if(isset($_POST['update3'])){
             <div class="box-body box-profile">
               <img class="profile-user-img img-responsive img-circle" src="img/profiles/<?php echo $user['foto_perfil']?>" alt="User profile picture">
 
-              <h3 class="profile-username text-center text-color"><?php echo utf8_encode($user['grado']); ?> <?php echo utf8_encode($user['nombre']); ?> <?php echo utf8_encode($user['apellidos']); ?></h3>
+              <h3 class="profile-username text-center text-color"><?php echo $user['grado']; ?> <?php echo $user['nombre']; ?> <?php echo utf8_encode($user['apellidos']); ?></h3>
 
-              <p class="text-muted text-center"><?php echo utf8_encode ($user['departamento'])?></p>
+              <p class="text-muted text-center"><?php echo $user['departamento']?></p>
 
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
@@ -237,14 +238,14 @@ if(isset($_POST['update3'])){
 
               <strong><i class="fa fa-map-marker margin-r-5"></i> Direccion y telefono</strong>
 
-              <p class="text-muted"><?php echo utf8_encode ($user['direccion'])?>   </p>   <span class="label label-primary"><i class="fa fa-phone margin-r-5"></i> <?php echo utf8_encode ($user['telefono'])?></span>
+              <p class="text-muted"><?php echo $user['direccion']?>   </p>   <span class="label label-primary"><i class="fa fa-phone margin-r-5"></i> <?php echo utf8_encode ($user['telefono'])?></span>
 
               <hr>
 
               <strong><i class="fa fa-pencil margin-r-5"></i> Nuemro de Seguro Social y Tipo de Sangre</strong>
 
               <p>
-                <span class="label label-info"><?php echo utf8_encode ($user['nss'])?></span>  <span class="label label-danger"><?php echo utf8_encode ($user['sangre'])?></span>
+                <span class="label label-info"><?php echo $user['nss']?></span>  <span class="label label-danger"><?php echo $user['sangre']?></span>
               </p>
               <hr>
 
@@ -336,7 +337,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-2 control-label">Titulo</label>
                             <div class='col-sm-8'>
                                       <div class="input-group">
-                                          <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                          <span class="input-group-addon"><i class="fa fa-graduation-cap"></i></span>
                                     <select class="form-control" name="titulo">
                                       <option value="<?php echo $user['idgrado']?>"><?php echo utf8_encode($user['grado'])?>  (Actual)</option>
                                <?php 
@@ -354,7 +355,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-2 control-label">Nombre</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="nombre" type="text" value="<?php echo utf8_encode($user['nombre']); ?>">
+                                    <input class="form-control" name="nombre" type="text" value="<?php echo $user['nombre']; ?>">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                 </div>
                             </div>
@@ -365,7 +366,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-2 control-label">Apellidos</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="apellidos" type="text" value="<?php echo utf8_encode($user['apellidos']); ?>">
+                                    <input class="form-control" name="apellidos" type="text" value="<?php echo $user['apellidos']; ?>">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                 </div>
                             </div>
@@ -379,12 +380,12 @@ if(isset($_POST['update3'])){
                                     <div class="input-group">
                                          <span class="input-group-addon"><i class="fa fa-sitemap"></i></span>
                                             <select class="form-control" id="departamento">
-   <option value="<?php echo $user['id_departamento']?>"><?php echo utf8_encode ($user['departamento'])?>  (Actual)</option>
+   <option value="<?php echo $user['id_departamento']?>"><?php echo $user['departamento']?>  (Actual)</option>
     <?php
     if($rowCount > 0){
          
         while($row = mysqli_fetch_array($query)){ 
-            echo '<option value="'.$row['id_departamento'].'">'.utf8_encode($row['departamento']).'</option>';
+            echo '<option value="'.$row['id_departamento'].'">'.$row['departamento'].'</option>';
         }}
     ?>
 </select>
@@ -399,7 +400,7 @@ if(isset($_POST['update3'])){
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-sitemap"></i></span>
                                     <select class="form-control" name="puesto" id="puesto">
-    <option value="<?php echo $user['idpuesto']?>"><?php echo utf8_encode ($user['puesto'])?>  (Actual)</option>
+    <option value="<?php echo $user['idpuesto']?>"><?php echo $user['puesto']?>  (Actual)</option>
 </select>
                                 </div>
                             </div>
@@ -412,7 +413,7 @@ if(isset($_POST['update3'])){
                                 <div class="input-group">
                                        <span class="input-group-addon"><i class="fa fa-child"></i></span>
                                        <select class="form-control" name="genero">
-                                  <option value="<?php echo $user['idgenero']?>"><?php echo utf8_encode ($user['genero'])?> (Actual)</option>
+                                  <option value="<?php echo $user['idgenero']?>"><?php echo $user['genero']?> (Actual)</option>
                                     <?php 
                                                 $civil = Mysql::consulta ("SELECT * FROM genero LIMIT 1,3");
                                                 while ($e_civil = mysqli_fetch_array($civil)){
@@ -428,7 +429,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-2 control-label">F. Nac</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="fn" type="date" value="<?php echo utf8_encode($user['fecha_naci']); ?>">
+                                    <input class="form-control" name="fn" type="date" value="<?php echo $user['fecha_naci']; ?>">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
                             </div>
@@ -441,9 +442,9 @@ if(isset($_POST['update3'])){
                                     <div class="input-group">
                                          <span class="input-group-addon"><i class="fa fa-male"></i></span>
                                     <select class="form-control" name="e_civil">
-                                  <option value="<?php echo $user['idcivil']?>"><?php echo utf8_encode ($user['estado_civil'])?> (Actual)</option>
+                                  <option value="<?php echo $user['idcivil']?>"><?php echo $user['estado_civil']?> (Actual)</option>
                                     <?php 
-                                                $civil = Mysql::consulta ("SELECT * FROM estado_civil LIMIT 1,8");
+                                                $civil = Mysql::consulta ("SELECT * FROM estado_civil LIMIT 1,9");
                                                 while ($e_civil = mysqli_fetch_array($civil)){
                                                 echo "<option value='".$e_civil['id_civil']."'>".$e_civil['estado_civil']."</option>";
                                                     }?>
@@ -460,7 +461,7 @@ if(isset($_POST['update3'])){
                                     <div class="input-group">
                                           <span class="input-group-addon"><i class="fa fa-heartbeat"></i></span>
                                     <select class="form-control" name="sangre">
-                                  <option value="<?php echo $user['id_sangre']?>"><?php echo utf8_encode ($user['sangre'])?> (Actual)</option>
+                                  <option value="<?php echo $user['id_sangre']?>"><?php echo $user['sangre']?> (Actual)</option>
                                     <?php
                                     $san = Mysql::consulta ("SELECT * FROM tipo_sangre LIMIT 1,9");
                                                 while ($valores = mysqli_fetch_array($san)){
@@ -477,7 +478,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-2 control-label">Curp</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="curp" type="text" value="<?php echo utf8_encode($user['curp']); ?>">
+                                    <input class="form-control" name="curp" type="text" value="<?php echo $user['curp']; ?>">
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                 </div>
                             </div>
@@ -490,7 +491,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-2 control-label">NSS</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="nss" type="text" value="<?php echo utf8_encode($user['nss']); ?>">
+                                    <input class="form-control" name="nss" type="text" value="<?php echo $user['nss']; ?>">
                                     <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
                                 </div>
                             </div>
@@ -502,7 +503,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-2 control-label">Telefono</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="telefono" type="text" value="<?php echo utf8_encode($user['telefono']); ?>" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                                    <input class="form-control" name="telefono" type="text" value="<?php echo $user['telefono']; ?>" data-inputmask='"mask": "(999) 999-9999"' data-mask>
                                     <span class="input-group-addon"><i class="fa fa-phone"></i></span>
                                 </div>
                             </div>
@@ -513,7 +514,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-2 control-label">Tel.2</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="telefono_2" type="text" value="<?php echo utf8_encode($user['telefono_2']); ?>" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                                    <input class="form-control" name="telefono_2" type="text" value="<?php echo $user['telefono_2']; ?>" data-inputmask='"mask": "(999) 999-9999"' data-mask>
                                     <span class="input-group-addon"><i class="fa fa-phone"></i></span>
                                 </div>
                             </div>
@@ -525,7 +526,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-1 control-label">Direccion</label>
                             <div class='col-sm-10'>
                                 <div class="input-group">
-                                    <input class="form-control" name="direccion" type="text" value="<?php echo utf8_encode($user['direccion']); ?>">
+                                    <input class="form-control" name="direccion" type="text" value="<?php echo $user['direccion']; ?>">
                                     <span class="input-group-addon"><i class="fa fa-road"></i></span>
                                 </div>
                             </div>
@@ -536,7 +537,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-2 control-label">No</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="numero" type="text" value="<?php echo utf8_encode($user['numero']); ?>">
+                                    <input class="form-control" name="numero" type="text" value="<?php echo $user['numero']; ?>">
                                     <span class="input-group-addon"><i class="fa fa-home"></i></span>
                                 </div>
                             </div>
@@ -547,7 +548,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-2 control-label">%Calles</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="entrecalle" type="text" value="<?php echo utf8_encode($user['entrecalle']); ?>">
+                                    <input class="form-control" name="entrecalle" type="text" value="<?php echo $user['entrecalle']; ?>">
                                     <span class="input-group-addon"><i class="fa fa-road"></i></span>
                                 </div>
                             </div>
@@ -558,7 +559,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-2 control-label">Colonia</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="colonia" type="text" value="<?php echo utf8_encode($user['colonia']); ?>">
+                                    <input class="form-control" name="colonia" type="text" value="<?php echo $user['colonia']; ?>">
                                     <span class="input-group-addon"><i class="fa fa-home"></i></span>
                                 </div>
                             </div>
@@ -569,7 +570,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-2 control-label">CP</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="cp" type="text" value="<?php echo utf8_encode($user['cp']); ?>">
+                                    <input class="form-control" name="cp" type="text" value="<?php echo $user['cp']; ?>">
                                     <span class="input-group-addon"><i class="fa fa-home"></i></span>
                                 </div>
                             </div>
@@ -580,7 +581,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-2 control-label">Poblacion</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="poblacion" type="text" value="<?php echo utf8_encode($user['poblacion']); ?>">
+                                    <input class="form-control" name="poblacion" type="text" value="<?php echo $user['poblacion']; ?>">
                                     <span class="input-group-addon"><i class="fa fa-home"></i></span>
                                 </div>
                             </div>
@@ -591,7 +592,7 @@ if(isset($_POST['update3'])){
                              <label class="col-md-2 control-label">Estado</label>
                             <div class='col-sm-8'>
                                 <div class="input-group">
-                                    <input class="form-control" name="estado" type="text" value="<?php echo utf8_encode($user['estado']); ?>">
+                                    <input class="form-control" name="estado" type="text" value="<?php echo $user['estado']; ?>">
                                     <span class="input-group-addon"><i class="fa fa-home"></i></span>
                                 </div>
                             </div>
