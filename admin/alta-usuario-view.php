@@ -1,8 +1,9 @@
 <?php include './lib/config2.php';  if($_SESSION['email']!="" && $_SESSION['rol']=="2"){ ?>  
 <?php
     if(isset($_POST['user_reg']) && isset($_POST['clave_reg']) && isset($_POST['nom_complete_reg']) && isset($_POST['apellidos_reg']))  {
-        $nombre_reg=MysqlQuery::RequestPost('nom_complete_reg');
-        $apellidos_reg=MysqlQuery::RequestPost('apellidos_reg');
+        
+        $nombre_reg 	= mysqli_real_escape_string($con,(strip_tags($_POST['nom_complete_reg'], ENT_QUOTES)));
+        $apellidos_reg 	= mysqli_real_escape_string($con,(strip_tags($_POST['apellidos_reg'], ENT_QUOTES)));
         $user_reg=MysqlQuery::RequestPost('user_reg');
         $clave_reg=md5(MysqlQuery::RequestPost('clave_reg'));
         $clave_reg2=MysqlQuery::RequestPost('clave_reg');

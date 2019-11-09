@@ -16,4 +16,5 @@
     }
 // Change character set to utf8
 mysqli_set_charset($con,"utf8");
+
 ?>

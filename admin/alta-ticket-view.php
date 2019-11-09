@@ -61,14 +61,14 @@ imagejpeg($lienzo, $destino1, 80);
 			
           /*Fin codigo numero de ticket*/
           $fecha_ticket=  MysqlQuery::RequestPost('fecha_ticket');
-        $email_solicitante= MysqlQuery::RequestPost('email_solicitante');
-         $nombre_asignado=  MysqlQuery::RequestPost('nombre_asignado');
-         $email_asignado= MysqlQuery::RequestPost('email_asignado');
+          $email_solicitante= MysqlQuery::RequestPost('email_solicitante');
+          $nombre_asignado 	= mysqli_real_escape_string($con,(strip_tags($_POST['nombre_asignado'], ENT_QUOTES)));
+          $email_asignado= MysqlQuery::RequestPost('email_asignado');
           $puesto_ticket= MysqlQuery::RequestPost('puesto');
           $departamento_ticket= MysqlQuery::RequestPost('departamento');
 	      $prioridad_ticket= MysqlQuery::RequestPost('prioridad_ticket');
-          $asunto_ticket= MysqlQuery::RequestPost('asunto_ticket');        
-          $descripcion_ticket=  MysqlQuery::RequestPost('descripcion_ticket');
+          $asunto_ticket= MysqlQuery::RequestPost('asunto_ticket'); 
+          $descripcion_ticket 	= mysqli_real_escape_string($con,(strip_tags($_POST['descripcion_ticket'], ENT_QUOTES)));
 			
 			//Enviamos el mensaje ala Bd
    date_default_timezone_set('America/Mexico_City');
@@ -267,7 +267,7 @@ $rowCount = $query-> num_rows;
                   <label>Nombre del Solicitante:</label>
 
                   <div class="input-group">
-                    <input type="text" class="form-control" name="nombre_s" readonly value="<?php echo $grado." ".utf8_encode($nombre)." ".utf8_encode($apellidos);?>
+                    <input type="text" class="form-control" name="nombre_s" readonly value="<?php echo $grado." ".$nombre." ".$apellidos;?>
 ">
 
                     <div class="input-group-addon">
@@ -305,7 +305,7 @@ $rowCount = $query-> num_rows;
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control"  name="email_solicitante"readonly value="<?php echo utf8_encode($_SESSION['email']); ?>">
+                  <input type="text" class="form-control"  name="email_solicitante"readonly value="<?php echo $_SESSION['email']; ?>">
                 </div>
                 <!-- /.input group -->
               </div>
