@@ -18,7 +18,7 @@
   
               <hr>
               <p>Numero Fila: <span class="spantext"><?php echo $ct; ?></span></p>
-      <p>Nombre: <span class="spantext"><?php echo $drow['grado']; ?> <?php echo utf8_encode($drow['nombre']); ?> <?php echo utf8_encode($drow['apellidos']);; ?></span></p>
+      <p>Nombre: <span class="spantext"><?php echo $drow['grado']; ?> <?php echo $drow['nombre']; ?> <?php echo $drow['apellidos'];; ?></span></p>
 			<p>Puesto: <span class="spantext"><?php echo $drow['puesto']; ?></span></p>
 			<p>Asunto: <span class="spantext"><?php echo $drow['asunto']; ?></span></p>
           <hr>
@@ -98,7 +98,7 @@ LEFT JOIN departamento AS D ON  PU.id_depa = D.id_departamento WHERE id='".$row[
 						</div>
 						<div class="col-lg-9">
                                <select class="form-control" name="estado_ticket">
-                                      <option value="<?php echo $trow['id_estatus_tk']?>"><?php echo utf8_encode($trow['estatus_tk'])?>  (Actual)</option>
+                                      <option value="<?php echo $trow['id_estatus_tk']?>"><?php echo $trow['estatus_tk']?>  (Actual)</option>
                                <?php 
                                                 $ti = Mysql::consulta ("SELECT * FROM estatus_tk");
                                                 while ($valores = mysqli_fetch_array($ti)){
@@ -180,7 +180,7 @@ LEFT JOIN departamento AS D ON  PU.id_depa = D.id_departamento WHERE id='".$row[
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                            <input class="form-control"  type="text" name="fecha2_ticket" value="<?php echo utf8_encode(strftime("%Y-%m-%d")) ?>" readonly>
+                            <input class="form-control"  type="text" name="fecha2_ticket" value="<?php echo strftime("%Y-%m-%d") ?>" readonly>
 						</div>
                             </div>
                         <div class="col-lg-4">

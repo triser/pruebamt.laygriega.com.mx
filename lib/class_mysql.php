@@ -7,7 +7,7 @@ class Mysql {
             echo "Error en el servidor, verifique sus datos";
         }
         /* Codificar la información de la base de datos a UTF8*/
-        mysqli_set_charset($con, 'utf8_decode');
+        mysqli_set_charset($con, 'utf8');
         return $con;  
     }
 

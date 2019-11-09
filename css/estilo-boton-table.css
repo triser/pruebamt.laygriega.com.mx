@@ -318,5 +318,8 @@ background: #faaa63 ;
 hover:hover {
 background-color: #014794;
 }
-
+.label-prioridad{
+background-color: #e7e6e6;
+    border: #d5d5d5;
+}
 

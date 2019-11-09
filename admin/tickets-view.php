@@ -30,58 +30,58 @@
             }
 
  /* Todos los tickets*/
-        $num_ticket_all=Mysql::consulta("SELECT* FROM tickets AS T
-  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+        $num_ticket_all=Mysql::consulta("   SELECT * FROM tickets AS T 
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN asunto AS A ON T.id_asunto = A.id_asunto
-  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
-  LEFT JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  LEFT JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario
   LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
-  LEFT JOIN usuario AS U ON U.idusuario = EL.idusuario ORDER BY id DESC");
+  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk ORDER BY id DESC");
                 $num_total_all=mysqli_num_rows($num_ticket_all);
 
                 /* Tickets pendientes*/
-                $num_ticket_pend=Mysql::consulta("SELECT* FROM tickets AS T
-  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+                $num_ticket_pend=Mysql::consulta("   SELECT * FROM tickets AS T 
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN asunto AS A ON T.id_asunto = A.id_asunto
-  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
-  LEFT JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  LEFT JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario
   LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
-  LEFT JOIN usuario AS U ON U.idusuario = EL.idusuario WHERE estatus_tk='Pendiente'");
+  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk  WHERE estatus_tk='Pendiente'");
                 $num_total_pend=mysqli_num_rows($num_ticket_pend);
 
                 /* Tickets en proceso*/
-                $num_ticket_proceso=Mysql::consulta("SELECT* FROM tickets AS T
-  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+                $num_ticket_proceso=Mysql::consulta("   SELECT * FROM tickets AS T 
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN asunto AS A ON T.id_asunto = A.id_asunto
-  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
-  LEFT JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  LEFT JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario
   LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
-  LEFT JOIN usuario AS U ON U.idusuario = EL.idusuario WHERE estatus_tk='En proceso'");
+  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk  WHERE estatus_tk='En proceso'");
                 $num_total_proceso=mysqli_num_rows($num_ticket_proceso);
 
                 /* Tickets resueltos*/
-                $num_ticket_res=Mysql::consulta("SELECT* FROM tickets AS T
-  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+                $num_ticket_res=Mysql::consulta("   SELECT * FROM tickets AS T 
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN asunto AS A ON T.id_asunto = A.id_asunto
-  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
-  LEFT JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  LEFT JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario
   LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
-  LEFT JOIN usuario AS U ON U.idusuario = EL.idusuario WHERE estatus_tk='Resuelto'");
+  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk  WHERE estatus_tk='Resuelto'");
                 $num_total_res=mysqli_num_rows($num_ticket_res);
                 
                  /* Tickets resueltos*/
-                $num_ticket_can=Mysql::consulta("SELECT* FROM tickets AS T
-  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+                $num_ticket_can=Mysql::consulta("   SELECT * FROM tickets AS T 
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN asunto AS A ON T.id_asunto = A.id_asunto
-  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
-  LEFT JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  LEFT JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario
   LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
-  LEFT JOIN usuario AS U ON U.idusuario = EL.idusuario WHERE estatus_tk='Cancelado'");
+  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk  WHERE estatus_tk='Cancelado'");
                 $num_total_can=mysqli_num_rows($num_ticket_can);
             ?>
 
@@ -108,7 +108,7 @@
     </section>
        <section class="content-header">
     </section>
-                      <div class="row">
+         <div class="row">
                     <div class="col-md-12">
                         <ul class="nav nav-pills nav-justified">
                             <li><a href="./admin.php?view=tickets&ticket=all"><i class="fa fa-list"></i>&nbsp;&nbsp;Todas las Ordenes&nbsp;&nbsp;<span class="label label-primary"><?php echo $num_total_all; ?></span></a></li>
@@ -170,74 +170,74 @@
                                 
                                 if(isset($_GET['ticket'])){
                                     if($_GET['ticket']=="all"){
-                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T 
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN asunto AS A ON T.id_asunto = A.id_asunto
-  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
-  LEFT JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  LEFT JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario
   LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
-  LEFT JOIN usuario AS U ON U.idusuario = EL.idusuario
+  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
      ORDER BY id DESC LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="pending"){
-                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T 
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN asunto AS A ON T.id_asunto = A.id_asunto
-  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
-  LEFT JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  LEFT JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario
   LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
-  LEFT JOIN usuario AS U ON U.idusuario = EL.idusuario
+  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
      WHERE estatus_tk='Pendiente' LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="process"){
-                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T 
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN asunto AS A ON T.id_asunto = A.id_asunto
-  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
-  LEFT JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  LEFT JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario
   LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
-  LEFT JOIN usuario AS U ON U.idusuario = EL.idusuario
+  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
      WHERE estatus_tk='En proceso' LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="resolved"){
-                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T 
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN asunto AS A ON T.id_asunto = A.id_asunto
-  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
-  LEFT JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  LEFT JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario
   LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
-  LEFT JOIN usuario AS U ON U.idusuario = EL.idusuario
+  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
      WHERE estatus_tk='Resuelto' LIMIT $inicio, $regpagina";
                                     }elseif($_GET['ticket']=="cancelled"){
-                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T 
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN asunto AS A ON T.id_asunto = A.id_asunto
-  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
-  LEFT JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  LEFT JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario
   LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
-  LEFT JOIN usuario AS U ON U.idusuario = EL.idusuario
+  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
      WHERE estatus_tk='Cancelado' LIMIT $inicio, $regpagina";
                                     }else{
-                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+                                        $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T 
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN asunto AS A ON T.id_asunto = A.id_asunto
-  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
-  LEFT JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  LEFT JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario
   LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
-  LEFT JOIN usuario AS U ON U.idusuario = EL.idusuario ORDER BY id DESC LIMIT $inicio, $regpagina";
+  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk ORDER BY id DESC LIMIT $inicio, $regpagina";
                                     }
                                 }else{
-                                    $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T
-  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk
-  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+                                    $consulta="SELECT SQL_CALC_FOUND_ROWS * FROM tickets AS T 
+  LEFT JOIN usuario AS U ON T.id_usuario_tk = U.idusuario
   LEFT JOIN asunto AS A ON T.id_asunto = A.id_asunto
-  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
-  LEFT JOIN empleado_laboral AS EL ON  EL.idpuesto = PU.id_puesto
+  LEFT JOIN empleado_laboral AS EL ON U.idusuario = EL.idusuario
   LEFT JOIN grado_estudio AS G ON  EL.idgrado = G.id_grado
-  LEFT JOIN usuario AS U ON U.idusuario = EL.idusuario ORDER BY id DESC LIMIT $inicio, $regpagina";
+  LEFT JOIN puestos AS PU ON  A.idpuesto = PU.id_puesto
+  LEFT JOIN estatus_tk AS E  ON  T.estatus_tks = E.id_estatus_tk
+  LEFT JOIN prioridad_tk AS P ON  T.id_prioridad_tk = P.id_prioridad_tk ORDER BY id DESC LIMIT $inicio, $regpagina";
                                 }
 
 
@@ -257,10 +257,10 @@
                                         <th class="text-center" scope="col">F.Apertura</th>
                                         <th class="text-center" scope="col">Serie</th>
                                         <th class="text-center" scope="col">Nombre del Solicitante</th>
-                                        <th class="text-center" scope="col">Estado</th>
-                                         <th class="text-center" scope="col">Nombre del Destinatario</th>
-                                        <th class="text-center" scope="col">Puesto Solicitado</th>
                                         <th class="text-center" scope="col">Prioridad</th>
+                                         <th class="text-center" scope="col">Nombre del Destinatario</th>
+                                        <th class="text-center" scope="col">Puesto Destinatario</th>
+                                        <th class="text-center" scope="col">Estado</th>
                                         <th class="text-center" scope="col">Imagen</th>
                                         <th class="text-center" scope="col">F.Entrega</th>
                                         <th class="text-center" scope="col">Opciones</th>
@@ -276,28 +276,7 @@
                                         <td class="text-center" data-label="F.Apertura:"><?php echo $row['fecha_alta']; ?></td>
                                         <td class="text-center" data-label="Serie:"><?php echo $row['serie']; ?></td>
                                         <td class="text-center" data-label="Nombre del Solicitante:"><?php echo $row['grado']; ?>  <?php echo $row['nombre']; ?> <?php echo $row['apellidos']; ?></td>
-                                                                <td class="text-center" data-label="Estado:"><?php 
-	//pintamos de colorores los estados del ticket
-	switch ($row['estatus_tk'])
-	{
-		case "Resuelto":
-		echo '<span class="btn btn-info btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
-		break;
-        case "En proceso":
-        echo '<span class="btn btn-success btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
-        break;
-		case "Cancelado":
-		echo '<span class="btn btn-warning btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
-		break;
-        case "Pendiente":
-        echo '<span class="btn btn-danger btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
-       break;
-	}
-
-	?>
-                                         <td class="text-center" data-label="Nombre del Destinatario:"><?php echo $row['asignado']; ?></td>   
-                                       <td class="text-center" data-label="Puesto Asignado:"><?php echo $row['puesto']; ?></td>             
-                                       <td class="text-center" data-label="Prioridad:"><?php 
+                                        <td class="text-center" data-label="Prioridad:"><?php 
 	//pintamos de colorores los estados del ticket
 	switch ($row['prioridad'])
 	{
@@ -305,7 +284,7 @@
 		echo '<span class="btn btn-default btn-xs" disabled="disabled" style="color:red">'.$row["prioridad"].'</span>';
 		break;
         case "Medio Urgente":
-        echo '<spans class="btn btn-default btn-xs" disabled="disabled" style="color:orange">'.$row["prioridad"].'</span>';
+        echo '<spans class="btn btn-default btn-xs" disabled="disabled" style="color:green">'.$row["prioridad"].'</span>';
         break;
 		case "No Urgente":
 		echo '<span class="btn btn-default btn-xs" disabled="disabled" style="color:blue">'.$row["prioridad"].'</span>';
@@ -314,16 +293,151 @@
 
 	?>
 </td>
+                                 <td class="text-center" data-label="Nombre del Destinatario:"><?php echo $row['asignado']; ?></td>   
+                                       <td class="text-center" data-label="Puesto Asignado:"><?php echo $row['puesto']; ?></td>             
+                                        <td class="text-center" data-label="Estado:"><?php 
+	//pintamos de colorores los estados del ticket
+	switch ($row['estatus_tk'])
+	{
+		case "Resuelto":
+		echo '<span class="btn btn-success  btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
+		break;
+        case "En Proceso":
+        echo '<span class="btn btn-warning btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
+        break;
+		case "Cancelado":
+		echo '<span class="btn btn-danger btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
+		break;
+        case "Pendiente":
+        echo '<span class="btn btn-danger btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
+       break;
+	}
+
+	?>
+      </td>  
                                         <td class="text-center" data-label="Imagen:"><a class="example-image-link" href="<?php echo $row['imagen_tk']; ?>" data-lightbox="example-set" data-title="<?php echo $row['mensaje']; ?>"><img src="<?php echo $row['imagen_tk']; ?>" width="25" height="25" class="property_img"/></a></td>
                                         <td class="text-center" data-label="F.Entrega:"><?php echo $row['fechaE']; ?></td>
                                         <td class="text-center" data-label="Opciones:">
-                                            <a href="./lib/pdf.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-print" aria-hidden="true"></i></a>
+                                             <a class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal-default<?php echo $row['id']; ?>"><i class="fa fa-eye" aria-hidden="true" data-toggle="tooltip" data-placement="left" id="tooltipex" title="Ver Informacion"></i></a> 
                                                <a href="admin.php?view=admin-detalle-tickets&id=<?php echo $row['id']; ?>" 
-                                            class="btn btn-sm btn btn-info red-tooltip" data-toggle="tooltip" data-placement="top" id="tooltipex" title="Agregar Comentario"><span class="glyphicon glyphicon-comment"></span></a>
-                                            <a class="btn btn-sm btn-danger" title="Eliminar" data-target="#exampleModalCenter<?php echo $row['id']; ?>" data-toggle="modal" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>                                                                
+                                            class="btn btn-sm btn btn-info red-tooltip" data-toggle="tooltip" data-placement="top" id="tooltipex" title="Agregar Comentario"><span class="glyphicon glyphicon-comment"></span></a> 
+                                            <a href="./lib/pdf.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-success" target="_blank"><i class="fa fa-print" aria-hidden="true"></i></a>                                                           
                                         </td>
                            
-                                        
+                                          <!------------------------ Inicio modal --------------------------------------->
+ <div class="modal fade" id="modal-default<?php echo $row['id']; ?>">
+    <div class="modal-dialog">
+    
+    <!-- Modal content-->
+    <div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Informacion del Registro Seleccionado</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div id="info"></div>
+          </div>
+          <div class="col-lg-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+               Informacion Ticket Solicitados
+              </div>
+        <div class="modal-body">
+<dl class="param">
+  <dt>Numero de Fila: <?php echo $ct; ?></dt>
+</dl> 
+ <dl class="param">
+  <dt>Serie:</dt>
+  <dd> <?php echo $row['serie']; ?></dd>
+</dl> 
+    <dl class="param">
+  <dt>Fecha de Registro:</dt>
+  <dd> <?php echo $row['fecha_alta']; ?></dd>
+        </dl>
+ <dl class="param">
+  <dt>Nombre del Solicitante: <strong style="color:#ff6d49"> <?php echo $row['grado']; ?> <?php echo $row['nombre']; ?> <?php echo $row['apellidos']; ?></strong> </dt>
+</dl> 
+    <dl class="param">
+  <dt>Correo del Solicitante: </dt>
+  <dd> <?php echo $row['email_usuario']; ?></dd>
+</dl> 
+ <dl class="param">
+  <dt>Nombre Asignado: <strong style="color:#6e5fff"> <?php echo $row['asignado']; ?></strong> </dt>
+</dl> 
+ <dl class="param">
+  <dt>Correo Asignado: </dt>
+  <dd> <?php echo $row['email_asignado']; ?></dd>
+</dl> 
+<dl class="param">
+  <dt>Puesto Asignado: </dt>
+  <dd> <?php echo $row['puesto']; ?></dd>
+</dl> 
+<dl class="param">
+  <dt>Prioridad: </dt>
+  <dd> <?php 
+	//pintamos de colorores la prioridad deL TICKET
+	switch ($row['prioridad'])
+	{
+		case "Urgente":
+		echo '<span class="btn btn-default btn-xs" disabled="disabled" style="color:red">'.$row["prioridad"].'</span>';
+		break;
+        case "Medio Urgente":
+        echo '<spans class="btn btn-default btn-xs" disabled="disabled" style="color:green">'.$row["prioridad"].'</span>';
+        break;
+		case "No Urgente":
+		echo '<span class="btn btn-default btn-xs" disabled="disabled" style="color:blue">'.$row["prioridad"].'</span>';
+		break;
+	}
+
+	?>
+        </dd>
+</dl>
+<dl class="param">
+  <dt>Asunto: </dt>
+  <dd> <?php echo $row['asunto']; ?></dd>
+</dl> 
+<p><strong>Descripcion:</strong> <?php echo $row['mensaje'];?> </p>
+<dl class="param">
+  <dt>Estado: </dt>
+  <dd> <?php 
+	//pintamos de colorores los estados del Ticket
+	switch ($row['estatus_tk'])
+	{
+		case "Resuelto":
+		echo '<span class="label label-primary">'.$row["estatus_tk"].'</span>';
+		break;
+        case "En Proceso":
+        echo '<span class="label label-warning">'.$row["estatus_tk"].'</span>';
+       break;
+       case "Pendiente":
+        echo '<span class="label label-success">'.$row["estatus_tk"].'</span>';
+       break;
+       case "Cancelado":
+        echo '<span class="label label-danger">'.$row["estatus_tk"].'</span>';
+       break;
+	}
+
+	?>
+        </dd>
+</dl>
+</div> <!-- card-body.// -->
+
+
+<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+                   
+                </div>
+</div>
+
+</div>
+      
+</div>
+        </div>
+        </div>
+    </div>
+</div>   
                                     </tr>
                                     <?php
                                         $ct++;

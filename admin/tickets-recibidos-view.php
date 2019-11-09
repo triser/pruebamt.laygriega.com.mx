@@ -283,13 +283,13 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
 	switch ($row['prioridad'])
 	{
 		case "Urgente":
-		echo '<span class="btn btn-prio-urge btn-xs" disabled="disabled" style="color:red">'.$row["prioridad"].'</span>';
+		echo '<span class="btn btn-default btn-xs" disabled="disabled" style="color:red">'.$row["prioridad"].'</span>';
 		break;
         case "Medio Urgente":
-        echo '<spans class="btn btn-prio-mu btn-xs" disabled="disabled" style="color:blue">'.$row["prioridad"].'</span>';
+        echo '<spans class="btn btn-default btn-xs" disabled="disabled" style="color:green">'.$row["prioridad"].'</span>';
         break;
-		case "No urgente":
-		echo '<span class="btn btn-prio-no btn-xs" disabled="disabled" style="color:#00A11E">'.$row["prioridad"].'</span>';
+		case "No Urgente":
+		echo '<span class="btn btn-default btn-xs" disabled="disabled" style="color:blue">'.$row["prioridad"].'</span>';
 		break;
 	}
 
@@ -300,16 +300,16 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
 	switch ($row['estatus_tk'])
 	{
 		case "Resuelto":
-		echo '<span class="label label-primary">'.$row["estatus_tk"].'</span>';
+		echo '<span class="btn btn-success  btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
 		break;
         case "En Proceso":
-        echo '<span class="label label-danger">'.$row["estatus_tk"].'</span>';
-       break;
-       case "Pendiente":
-        echo '<span class="label label-success">'.$row["estatus_tk"].'</span>';
-       break;
-       case "Cancelado":
-        echo '<span class="label label-danger">'.$row["estatus_tk"].'</span>';
+        echo '<span class="btn btn-warning btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
+        break;
+		case "Cancelado":
+		echo '<span class="btn btn-danger btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
+		break;
+        case "Pendiente":
+        echo '<span class="btn btn-danger btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
        break;
 	}
 
@@ -363,7 +363,7 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
 </dl>
 <dl class="param">
   <dt>Nombre del Solicitante: </dt>
-  <dd> <?php echo $row['grado']; ?> <?php echo $row['nombre']; ?>  <?php echo $row['apellidos']; ?></dd>
+    <dd><strong style="color:#6e5fff">  <?php echo $row['grado']; ?> <?php echo $row['nombre']; ?>  <?php echo $row['apellidos']; ?></strong></dd>
 </dl>
              <dl class="param">
   <dt>Puesto: </dt>
@@ -380,13 +380,13 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
 	switch ($row['prioridad'])
 	{
 		case "Urgente":
-		echo '<span class="btn btn-prio-urge btn-xs" disabled="disabled" style="color:red">'.$row["prioridad"].'</span>';
+		echo '<span class="btn btn-default btn-xs" disabled="disabled" style="color:red">'.$row["prioridad"].'</span>';
 		break;
         case "Medio Urgente":
-        echo '<spans class="btn btn-prio-mu btn-xs" disabled="disabled" style="color:blue">'.$row["prioridad"].'</span>';
+        echo '<spans class="btn btn-default btn-xs" disabled="disabled" style="color:green">'.$row["prioridad"].'</span>';
         break;
-		case "No urgente":
-		echo '<span class="btn btn-prio-no btn-xs" disabled="disabled" style="color:#00A11E">'.$row["prioridad"].'</span>';
+		case "No Urgente":
+		echo '<span class="btn btn-default btn-xs" disabled="disabled" style="color:blue">'.$row["prioridad"].'</span>';
 		break;
 	}
 
@@ -405,19 +405,18 @@ LEFT JOIN asunto AS A ON A.idpuesto = PU.id_puesto AND  T.id_asunto = A.id_asunt
 	switch ($row['estatus_tk'])
 	{
 		case "Resuelto":
-		echo '<span class="label label-primary">'.$row["estatus_tk"].'</span>';
+		echo '<span class="btn btn-success  btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
 		break;
-        case "En proceso":
-        echo '<span class="label label-warning">'.$row["estatus_tk"].'</span>';
-       break;
-       case "Pendiente":
-        echo '<span class="label label-success">'.$row["estatus_tk"].'</span>';
-       break;
-       case "Cancelado":
-        echo '<span class="label label-danger">'.$row["estatus_tk"].'</span>';
+        case "En Proceso":
+        echo '<span class="btn btn-warning btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
+        break;
+		case "Cancelado":
+		echo '<span class="btn btn-danger btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
+		break;
+        case "Pendiente":
+        echo '<span class="btn btn-danger btn-xs" disabled="disabled">'.$row["estatus_tk"].'</span>';
        break;
 	}
-
 	?>
         </dd>
 </dl>

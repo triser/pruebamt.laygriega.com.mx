@@ -131,7 +131,7 @@
               <!-- The user image in the navbar-->
              <img src="img/profiles/<?php echo $foto_perfil ?>" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs"><?php echo $grado." ".utf8_encode($nombre)." ".utf8_encode($apellidos);?></span>
+              <span class="hidden-xs"><?php echo $grado." ".$nombre." ".$apellidos;?></span>
             </a>
                  
             <ul class="dropdown-menu">
@@ -140,7 +140,7 @@
                 <img src="img/profiles/<?php echo $foto_perfil ?>" class="img-circle" alt="User Image">
 
                 <p>
-              <?php echo $grado." ".utf8_encode($nombre)." ".utf8_encode($apellidos);?>
+              <?php echo $grado." ".$nombre." ".$apellidos;?>
             <small>Miembro desde <?php echo date('M. Y',strtotime($_SESSION['fecha_alta']));?></small> 
                 </p>
               </li>
@@ -282,7 +282,7 @@
               <!-- The user image in the navbar-->
              <img src="img/profiles/<?php echo $foto_perfil ?>" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs"><?php echo $grado." ".utf8_encode($nombre);?></span>
+              <span class="hidden-xs"><?php echo $grado." ".$nombre;?></span>
             </a>
                  
             <ul class="dropdown-menu">
@@ -291,7 +291,7 @@
                 <img src="img/profiles/<?php echo $foto_perfil ?>" class="img-circle" alt="User Image">
 
                 <p>
-                 <?php echo $grado." ".utf8_encode($nombre);?>
+                 <?php echo $grado." ".$nombre;?>
                     
                   <small>Miembro desde <?php echo date('M. Y',strtotime($_SESSION['fecha_alta']));?></small> 
                 </p>
@@ -433,7 +433,7 @@
               <!-- The user image in the navbar-->
              <img src="img/profiles/<?php echo $foto_perfil ?>" class="user-image" alt="User Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs"><?php echo utf8_encode($_SESSION['usuario']); ?></span>
+              <span class="hidden-xs"><?php echo $_SESSION['usuario']; ?></span>
             </a>
                  
             <ul class="dropdown-menu">
@@ -442,7 +442,7 @@
                 <img src="img/profiles/<?php echo $foto_perfil ?>" class="img-circle" alt="User Image">
 
                 <p>
-                 <?php echo $grado." ".utf8_encode($nombre);?>
+                 <?php echo $grado." ".$nombre;?>
                     
                   <small>Miembro desde <?php echo date('M. Y',strtotime($_SESSION['fecha_alta']));?></small> 
                 </p>

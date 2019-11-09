@@ -26,7 +26,7 @@ $anios=round((time() - strtotime($row['fecha_naci'])) / 31556926);
      $output .= '
      <tr>  
             <td class = "text-left" width="20%"><label>Personal:</label></td>  
-            <td class = "text-left text-blue" width="33%">'.$row["grado"].' '.utf8_encode($row["nombre"]).' '.utf8_encode($row["apellidos"]).'</td> 
+            <td class = "text-left text-blue" width="33%">'.$row["grado"].' '.$row["nombre"].' '.$row["apellidos"].'</td> 
             <td class = "text-left"><label>Fecha de Alta:</label></td>  
             <td class = "text-blue" width="30%">'.$row["fecha_alta_sis"].'</td>  
         </tr>
@@ -43,9 +43,9 @@ $anios=round((time() - strtotime($row['fecha_naci'])) / 31556926);
             <td class = "text-blue" width="30%">'.$row["estatus"].'</td>   
         </tr> 
            <td class = "text-left" width="20%"><label>Departamento:</label></td> 
-            <td class = "text-left text-blue" width="33%">'.utf8_encode($row["departamento"]).'</td> 
+            <td class = "text-left text-blue" width="33%">'.$row["departamento"].'</td> 
             <td class = "text-left"><label>puesto:</label></td>  
-            <td class = "text-blue" width="30%">'.utf8_encode($row["puesto"]).'</td>   
+            <td class = "text-blue" width="30%">'.$row["puesto"].'</td>   
         </tr>
           <td class = "text-left" width="20%"><label>Email Corporativo:</label></td> 
             <td class = "text-left text-blue" width="33%">'.$row["email_usuario"].'</td> 

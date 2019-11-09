@@ -25,7 +25,7 @@ if(isset($_POST["id_usuario"]))
      $output .= '
      <tr>  
             <td class = "text-left" width="20%"><label>Personal:</label></td>  
-           <td class = "text-left text-blue" width="33%">'.$row["grado"].' '.utf8_encode($row["nombre"]).' '.utf8_encode($row["apellidos"]).'</td>
+           <td class = "text-left text-blue" width="33%">'.$row["grado"].' '.$row["nombre"].' '.$row["apellidos"].'</td>
             <td class = "text-left"><label>Puesto:</label></td>  
             <td class = "text-blue" width="30%">'.$row["puesto"].'</td>  
         </tr>
@@ -33,23 +33,23 @@ if(isset($_POST["id_usuario"]))
           <td class = "text-left" width="20%"><label>Parentesco:</label></td> 
             <td class = "text-left text-blue" width="33%">'.$row["parentesco_eme"].'</td> 
             <td class = "text-left"><label>Parentesco (2):</label></td>  
-            <td class = "text-blue" width="30%">'.utf8_encode($row["parentesco_eme2"]).'</td>   
+            <td class = "text-blue" width="30%">'.$row["parentesco_eme2"].'</td>   
         </tr>
           <tr> 
         <td class = "text-left" width="20%"><label>Nombre:</label></td> 
-            <td class = "text-left text-blue" width="33%">'.utf8_encode($row["nombre_eme"]).'</td> 
+            <td class = "text-left text-blue" width="33%">'.$row["nombre_eme"].'</td> 
             <td class = "text-left"><label>Nombre  (2):</label></td>  
-            <td class = "text-blue" width="30%">'.utf8_encode($row["nombre_eme2"]).'</td>   
+            <td class = "text-blue" width="30%">'.$row["nombre_eme2"].'</td>   
         </tr> 
            <td class = "text-left" width="20%"><label>Telefeno:</label></td> 
             <td class = "text-left text-blue" width="33%">'.$row["telefono_eme"].'</td> 
             <td class = "text-left"><label>Telefono  (2):</label></td>  
-            <td class = "text-blue" width="30%">'.utf8_encode($row["telefono_eme2"]).'</td>   
+            <td class = "text-blue" width="30%">'.$row["telefono_eme2"].'</td>   
         </tr> 
            <td class = "text-left" width="20%"><label>Direccion:</label></td> 
             <td class = "text-left text-blue" width="33%">'.$row["direccion_eme"].'</td> 
             <td class = "text-left"><label>Direccion  (2):</label></td>  
-            <td class = "text-blue" width="30%">'.utf8_encode($row["direccion_eme2"]).'</td>   
+            <td class = "text-blue" width="30%">'.$row["direccion_eme2"].'</td>   
         </tr> 
           <tr> 
         <td class = "text-left" width="20%"><label>Colonia:</label></td> 
@@ -60,7 +60,7 @@ if(isset($_POST["id_usuario"]))
            <td class = "text-left" width="20%"><label>Ciudad:</label></td> 
             <td class = "text-left text-blue" width="33%">'.$row["ciudad_eme"].'</td> 
             <td class = "text-left"><label>Ciudad  (2):</label></td>  
-            <td class = "text-blue" width="30%">'.utf8_encode($row["ciudad_eme2"]).'</td>   
+            <td class = "text-blue" width="30%">'.$row["ciudad_eme2"].'</td>   
         </tr>
      ';
     }

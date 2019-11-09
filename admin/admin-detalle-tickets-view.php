@@ -1,5 +1,5 @@
 
-<?php if(isset($_SESSION['email']) && isset($_SESSION['rol'])){ ?>
+<?php include './lib/config2.php';  if(isset($_SESSION['email']) && isset($_SESSION['rol'])){ ?>
 <?php
 	$id = MysqlQuery::RequestGet('id');
 	$sql = Mysql::consulta("SELECT T.id,T.serie,T.fecha_alta,G.grado,EL.nombre,EL.apellidos,U.email_usuario,D.departamento,PU.puesto,T.asignado,T.email_asignado,A.asunto,T.mensaje,T.imagen_tk,T.solucion, T.fechaE,E.estatus_tk,P.prioridad FROM usuario AS U
@@ -71,11 +71,11 @@ LEFT JOIN departamento AS D ON  PU.id_depa = D.id_departamento WHERE id= '$id'")
                 </tr>
                 <tr>
                  <th>Departamento:</th>
-                  <td><?php echo utf8_encode($reg['departamento'])?></td>
+                  <td><?php echo $reg['departamento']?></td>
                 </tr>
                 <tr>
                   <th>Puesto:</th>
-                  <td> <?php echo utf8_encode($reg['puesto'])?></td>
+                  <td> <?php echo $reg['puesto']?></td>
                 </tr>
                 <tr>
                  
@@ -87,7 +87,7 @@ LEFT JOIN departamento AS D ON  PU.id_depa = D.id_departamento WHERE id= '$id'")
                  
                   <th>Descripcion</th>
                 
-               <td><?php echo utf8_encode($reg['mensaje'])?></td>
+               <td><?php echo $reg['mensaje']?></td>
                 </tr>
                 <tr>
                     
@@ -204,9 +204,9 @@ LEFT JOIN departamento AS D ON  PU.id_depa = D.id_departamento WHERE id= '$id'")
               <div class="timeline-item">
 
                 <span class="time"><i class="fa fa-clock-o"></i> <?php echo utf8_decode($row['hra_coment'])?></span>
-
-                <h3 class="timeline-header"><a href=""><?php echo $ct; ?> <?php echo $row['grado']; ?> <?php echo $row['nombre']; ?> <?php echo $row['apellidos']; ?></a></h3>
-
+ <div class="user-block">
+                <h4 class="timeline-header"><img class="img-circle img-bordered-sm" src="img/profiles/<?php echo $row['foto_perfil']; ?>" alt="User Image">&nbsp;&nbsp;&nbsp; <?php echo $row['grado']; ?> <?php echo $row['nombre']; ?> <?php echo $row['apellidos']; ?></h4>
+ </div>
                 <div class="timeline-body">
                 <?php echo $row['comentario']; ?>
                 </div>

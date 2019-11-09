@@ -16,10 +16,10 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-         <img src="img/profiles/<?php echo $foto_perfil;?>" class="img-circle"  alt="<?php echo $grado." ".utf8_encode($nombre);?>" >
+         <img src="img/profiles/<?php echo $foto_perfil;?>" class="img-circle"  alt="<?php echo $grado." ".$nombre;?>" >
         </div>
         <div class="pull-left info">
-          <p><?php echo $grado." ".utf8_encode($nombre);?></p>
+          <p><?php echo $grado." ".$nombre;?></p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
@@ -90,7 +90,7 @@
        <img src="img/profiles/<?php echo $foto_perfil ;?>" class="img-circle"  alt="<?php echo $nombre;?>" >
         </div>
         <div class="pull-left info">
-          <p><?php echo $grado." ".utf8_encode($nombre);?></p>
+          <p><?php echo $grado." ".$nombre;?></p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
@@ -171,7 +171,7 @@
          <img src="img/profiles/<?php echo $foto_perfil ;?>" class="img-circle"  alt="<?php echo $nombre;?>" >
         </div>
         <div class="pull-left info">
-         <p><?php echo $grado." ".utf8_encode($nombre);?></p>
+         <p><?php echo $grado." ".$nombre;?></p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
